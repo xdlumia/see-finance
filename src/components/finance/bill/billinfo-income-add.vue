@@ -1,0 +1,162 @@
+<!--账单管理
+/**
+* 账单管理详情收支流水新增
+* @/components/finance/bill 组件存放位置
+* @author web-王晓冬
+* @date 2018年11月2日
+**/
+-->
+<template>
+    <!-- 表单 -->
+    <el-form v-loading="loading" :model="addIncomeForm" :rules="addIncomeRules" ref="addIncomeForm" label-width="100px" class="mt15" >
+        <form-card>
+            <el-row>
+            <el-col :span="12">
+                <el-form-item label="收支状态" prop="incomeType">
+                    <el-select v-model="addIncomeForm.incomeType" size="small" style='width:100%' placeholder="请选择收支状态">
+                        <el-option label="收入" value="0"></el-option>
+                        <el-option label="支出" value="1"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="发生金额" prop="payCosts" :rules="[{required:true,type:'price'}]">
+                    <el-input maxlength="18" v-model.number="addIncomeForm.payCosts" size="small" placeholder="请填写金额"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="对方名称" prop="accountName">
+                    <el-input maxlength="18" type="text" v-model.trim="addIncomeForm.accountName" size="small" placeholder="请填写名称"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="收支日期" prop="accountDate" >
+                    <el-date-picker
+                    style='width:100%'
+                    v-model="addIncomeForm.accountDate"
+                    size="small"
+                    type="datetime"
+                    value-format='timestamp'
+                    placeholder="请选择日期时间"
+                    >
+                    </el-date-picker>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item prop="accountPhone"  label="联系方式" :rules="[{ required: false },{type:'telePhone', message: '请输入正确的联系方式'}]">
+                    <el-input maxlength="20" type="text" v-model.trim="addIncomeForm.accountPhone" size="small" placeholder="请填写联系方式"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="对方账号" >
+                    <el-input maxlength="32" type="text" v-model.trim="addIncomeForm.accountNumber" size="small" placeholder="请填写对方账号"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="汇款方式" prop="payMethod">
+                    <d-select
+                    v-model="addIncomeForm.payMethod"
+                    valueKey="code"
+                    size="small"
+                    dicCode='FM_FUKUAN_FS'
+                    placeholder="请选择汇款方式">
+                    </d-select>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="收款机构" prop="accountDesc" >
+                    <el-input maxlength="32" type="text" v-model.trim="addIncomeForm.accountDesc" size="small" placeholder="请填写收款机构"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="流水凭证号" prop="serialNumber">
+                    <el-input maxlength="32" type="text" v-model.trim="addIncomeForm.serialNumber" size="small" placeholder="请填写流水凭证号"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="24">
+                <el-form-item label="备注" prop="transferNotes" >
+                    <el-input maxlength="32" type="textarea" v-model.trim="addIncomeForm.transferNotes"  size="small" placeholder="请填写备注"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span='24' class='ac'>
+                <el-button @click="dialogInfo.visible = false" size='small' >取消</el-button>
+                <el-button type="primary" @click="submitForm" size='small' >提交</el-button>
+            </el-col>
+            </el-row>
+        </form-card>
+    </el-form>
+</template>
+<script>
+export default {
+  // components
+  components: {},
+  props: ["dialogInfo"],
+  // data
+  data() {
+    return {
+      loading:false,
+      addIncomeForm: {
+        incomeType: "", //收支状态
+        payCosts: "", //发生金额
+        accountName: "", //对方名称
+        accountDate: "", //收支日期
+        accountPhone: "", //联系方式
+        accountNumber: "", //对方账号
+        payMethod: "", //汇款方式
+        accountDesc: "", //收款机构
+        serialNumber: "", //凭证流水号
+        transferNotes: "", //备注
+        billId: this.dialogInfo.billId
+      },
+      addIncomeRules: {
+        incomeType: [{ required: true, message: "请选择收支状态" }],
+        accountName: [{ required: true, message: "请输入对方帐户名" }],
+        accountDate: [{ required: true, message: "请选择日期时间" }]
+      }
+    };
+  },
+  // created
+  created() {},
+  // mounted
+  // activited
+  // update
+  // beforeRouteUpdate
+  // metods
+  methods: {
+    //筛选提交
+    submitForm(formName) {
+
+      //新增流水匹配保存
+      this.$refs.addIncomeForm.validate(valid => {
+        if (valid) {
+          //通过验证
+          this.loading = true
+          //发送请求保存
+          this.$api.seeFinanceService.saveMatchFinance(this.addIncomeForm)
+            .then(res => {
+              if (res.code == 200) {
+                //关闭弹出框
+                this.dialogInfo.visible = false;
+                this.$emit("submit", "incomeTable");
+              }
+            })
+            .finally(res=>{
+                this.loading = false
+            })
+        }
+      });
+    }
+  },
+  // filter
+  // computed
+  watch: {}
+};
+</script>
+<style scoped>
+.handle-filter {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+}
+</style>
+

@@ -1,0 +1,245 @@
+<!--财务组件：财务-账单管理-筛选
+/**
+* 财务组件：财务-账单管理-筛选
+* @/components/finance/bill/index.vue 组件存放位置
+* @author web-王晓冬
+* @date 2018年10月18日
+**/
+-->
+<template>
+    <!-- 筛选对话框 -->
+    <el-popover placement="bottom" width="390" v-model="filterFlag" trigger="click">
+        <el-form :model="params" ref="params" size="mini" label-width="125px">
+            <div class="ar mt10 d-text-blue d-pointer" @click="resetFormItem('params')">清空筛选</div>
+            <el-form-item label="账单筛选" prop="billCode">
+                <el-input
+                    type="text"
+                    v-model.trim="params.billCode"
+                    style="width:100%"
+                    placeholder="请输入账单编号"
+                    size="mini"
+                ></el-input>
+            </el-form-item>
+            <el-form-item label="合同号" prop="contractCode">
+                <el-input
+                    type="text"
+                    v-model.trim="params.contractCode"
+                    style="width:100%"
+                    placeholder="请输入合同号"
+                    size="mini"
+                ></el-input>
+            </el-form-item>
+            <el-form-item label="对方名称" prop="accountName">
+                <el-input
+                    type="text"
+                    v-model.trim="params.accountName"
+                    placeholder="请输入名称"
+                    style="width:100%"
+                    size="mini"
+                ></el-input>
+            </el-form-item>
+            <el-form-item label="楼盘名称" prop="communityName">
+                <el-input
+                    type="text"
+                    v-model.trim="params.communityName"
+                    placeholder="请输入名称"
+                    style="width:100%"
+                    size="mini"
+                ></el-input>
+            </el-form-item>
+            <el-form-item label="费用类型" style="width:100%" size="mini" prop="feeType">
+                <d-select
+                    placeholder="请选择费用类型"
+                    v-model="params.feeType"
+                    valueKey="code"
+                    size="mini"
+                    dicCode="ZD_FY_LX"
+                ></d-select>
+            </el-form-item>
+            <el-form-item label="逾期状态" style="width:100%" size="mini" class="mb5" prop="overDays">
+                <el-select v-model="params.overDays" style="width:100%" placeholder="请选择逾期状态">
+                    <el-option label="正常" value="1"></el-option>
+                    <el-option label="逾期" value="2"></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item
+                label="结清状态"
+                style="width:100%"
+                size="mini"
+                class="mb5"
+                prop="settleStatus"
+            >
+                <el-select v-model="params.settleStatus" style="width:100%" placeholder="请选择结清状态">
+                    <el-option label="未结清" value="0"></el-option>
+                    <el-option label="已结清" value="1"></el-option>
+                    <el-option label="关闭" value="2"></el-option>
+                    <el-option label="转退租结算" value="3"></el-option>
+                    <el-option label="全部" value="9"></el-option>
+                </el-select>
+            </el-form-item>
+
+            <!-- <el-form-item label="账单类型" style='width:100%'  size='mini'  class='mb5' prop='billType'>
+              <el-select v-model="params.billType" style='width:100%' placeholder="请选择账单类型">
+                  <el-option label="收款" value="0"></el-option>
+                  <el-option label="付款" value="1"></el-option>
+                  <el-option label="全部" value="9"></el-option>
+              </el-select>
+            </el-form-item>-->
+            <el-form-item label="计费周期开始时间" size="mini" class="mb5" prop="feeStartArr">
+                <el-date-picker
+                    style="width:100%"
+                    v-model="feeStartArr"
+                    type="daterange"
+                    value-format="timestamp"
+                    :picker-options="$pickerOptionsRange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    align="right"
+                ></el-date-picker>
+            </el-form-item>
+            <el-form-item label="计费周期结束时间" size="mini" class="mb5" prop="feeEndArr">
+                <el-date-picker
+                    style="width:100%"
+                    v-model="feeEndArr"
+                    type="daterange"
+                    value-format="timestamp"
+                    :picker-options="$pickerOptionsRange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    align="right"
+                ></el-date-picker>
+            </el-form-item>
+            <el-form-item label="收/付款日期" size="mini" class="mb5" prop="accountDateArry">
+                <el-date-picker
+                    style="width:100%"
+                    v-model="accountDateArry"
+                    type="daterange"
+                    value-format="timestamp"
+                    :picker-options="$pickerOptionsRange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    align="right"
+                ></el-date-picker>
+            </el-form-item>
+            <el-row>
+                <el-col :span="24" class="ac">
+                    <el-button type="primary" @click="submitForm('params')" size="mini">确定</el-button>
+                    <el-button @click="resetForm('params')" size="mini">取消</el-button>
+                </el-col>
+            </el-row>
+        </el-form>
+        <el-button size="small" class="ml5" type="text" slot="reference">
+            <i class="iconfont icon-filter mr20"></i>
+        </el-button>
+    </el-popover>
+</template>
+<script>
+    export default {
+        // components
+        components: {
+        },
+        props: ['params'],
+        // data
+        data () {
+            return {
+                filterFlag: false
+            };
+        },
+        // created
+        created () {
+
+        },
+        // mounted
+        // activited
+        // update
+        // beforeRouteUpdate
+        // metods
+        methods: {
+            //清空筛选条件
+            resetFormItem (formName) {
+                this.accountDateArry = []
+                this.feeStartArr = []
+                this.feeEndArr = []
+                this.$refs[formName].resetFields();
+            },
+            //取消筛选
+            resetForm (formName) {
+                this.accountDateArry = []
+                this.feeStartArr = []
+                this.feeEndArr = []
+                this.$refs[formName].resetFields();
+                this.filterFlag = false;
+            },
+            //筛选提交
+            submitForm (formName) {
+                this.$emit('submit')
+            },
+        },
+        // filter
+        computed: {
+            /**
+             * 将表单中的日期数组字段迁移出来
+             * 原因：表单元素提交数据时不需要提交下列字段
+             */
+            // 收/付款日期数组
+            accountDateArry: {
+                get () {
+                    let arr = []
+                    if (this.params.payStartDate && this.params.payEndDate) {
+                        arr[0] = this.params.payStartDate
+                        arr[1] = this.params.payEndDate
+                    }
+                    return arr
+                },
+                set (arr) {
+                    this.params.payStartDate = arr[0];
+                    this.params.payEndDate = arr[1];
+                }
+            },
+            // 计费周期开始时间数组
+            feeStartArr: {
+                get () {
+                    let arr = []
+                    if (this.params.feeStartbeginDate && this.params.feeStartFinishDate) {
+                        arr[0] = this.params.feeStartbeginDate
+                        arr[1] = this.params.feeStartFinishDate
+                    }
+                    return arr
+                },
+                set (arr) {
+                    this.params.feeStartbeginDate = arr[0];
+                    this.params.feeStartFinishDate = arr[1];
+                }
+            },
+            // 计费周期结束时间数组
+            feeEndArr: {
+                get () {
+                    let arr = []
+                    if (this.params.feeEndbeginDate && this.params.feeEndFinishDate) {
+                        arr[0] = this.params.feeEndbeginDate
+                        arr[1] = this.params.feeEndFinishDate
+                    }
+                    return arr
+                },
+                set (arr) {
+                    this.params.feeEndbeginDate = arr[0];
+                    this.params.feeEndFinishDate = arr[1];
+                }
+            }
+        },
+        watch: {
+        }
+    };
+</script>
+<style scoped>
+    .handle-filter {
+        position: absolute;
+        right: 5px;
+        top: 0px;
+    }
+</style>
+
