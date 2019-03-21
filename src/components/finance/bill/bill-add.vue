@@ -1,7 +1,7 @@
 <!--财务组件-财务管理-新增账单组件：新增账单组件
 /**
 * 财务管理：新增账单组件
-* @/components/finance/bill-add.vue 组件存放位置
+* @/components/finance/new-bill.vue 组件存放位置
 * @author web-高鹏
 * @date 2018年8月7日
 **/

@@ -92,6 +92,8 @@ export default {
           //发送请求
           this.$api.seeFinanceService.betchPrintBill(params)
             .then(res => {
+                // 打印数据
+                window.open(res.data)
                 // 关闭侧边栏
                 this.dialogInfo.visible = false
                 // 提交刷新

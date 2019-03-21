@@ -10,7 +10,7 @@
     <div>
         <div class="d-relative">
             <el-row style="height:30px">
-                <el-col :span="14">
+                <el-col :span="15">
                     <!-- <el-checkbox :indeterminate="isFundIndeterminate" v-model="Fund" @change="checkAllFund">全选</el-checkbox> -->
                     <article class="d-text-gray">
                         收付款方(笔):
@@ -19,7 +19,7 @@
                         </el-checkbox-group>
                     </article>
                 </el-col>
-                <el-col :span="10">
+                <el-col :span="9">
                     <!-- <el-checkbox :indeterminate="isUnclearIndeterminate" v-model="checkAll" @change="checkAllUnclear">全选</el-checkbox> -->
                     <article class="d-text-gray">
                         未接清(笔):
@@ -366,35 +366,20 @@
         methods: {
             //导出
             exportTable () {
-                var allDelIdStr = "";
+                let strParams = `token=${localStorage.token}&finger=${localStorage.finger}&`
                 this.multipleSelection.forEach(item => {
-                    allDelIdStr += "&ids=" + item.id;
+                    strParams += "&ids=" + item.id;
                 })
-                let params =
-                    "token=" +
-                    localStorage.token +
-                    "&finger=" +
-                    localStorage.finger +
-                    "&billType=" +
-                    this.queryForm.billType +
-                    "&accountName=" +
-                    this.queryForm.accountName +
-                    "&feeType=" +
-                    this.queryForm.feeType +
-                    "&payStartDate=" +
-                    this.queryForm.payStartDate +
-                    "&payEndDate=" +
-                    this.queryForm.payEndDate +
-                    "&overDays=" +
-                    this.queryForm.overDays +
-                    "&settleStatus=" +
-                    this.queryForm.settleStatus +
-                    "&sidx=" +
-                    this.queryForm.sidx +
-                    "&order=" +
-                    this.queryForm.order +
-                    allDelIdStr;
-                window.location.href = baseURL.seeFinanceService + "/fbill/export?" + params;
+                for(let key in this.queryForm){
+                    if(this.queryForm[key] instanceof Array){
+                        this.queryForm[key].forEach(item => {
+                           strParams += `${key}=${item}&`
+                        })
+                    }else{
+                        strParams += `${key}=${this.queryForm[key]}&`
+                    }
+                }
+                window.location.href = baseURL.seeFinanceService + "/fbill/export?" + strParams;
             },
             // 切换账单类型
             // tabsHandle (data) {
