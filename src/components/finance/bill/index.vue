@@ -22,7 +22,7 @@
                 <el-col :span="9">
                     <!-- <el-checkbox :indeterminate="isUnclearIndeterminate" v-model="checkAll" @change="checkAllUnclear">全选</el-checkbox> -->
                     <article class="d-text-gray">
-                        未接清(笔):
+                        未结清(笔):
                         <el-checkbox-group class="d-inline" v-model="queryForm.unclearedArray" @change="tableReload()">
                             <el-checkbox v-for="(item,index) of unclearedData" :key="index" :label="item.value">{{item.label}}({{item.count}})</el-checkbox>
                         </el-checkbox-group>
@@ -320,7 +320,7 @@
                     {label:'业主应付',value:4,count:0,},
                     {label:'其他',value:5,count:0,},
                 ],
-                // 未接清筛选数据
+                // 未结清筛选数据
                 unclearedData:[
                     {label:'本期',value:1,count:0,key:'currentPeriodCount'},
                     {label:'逾期',value:2,count:0,key:'overdueCount'},
@@ -512,7 +512,7 @@
                 this.$api.seeFinanceService.getFbillUnclearedStatistics(params)
                 .then(res=>{
                     let data = res.data || {}
-                    // 根据数据key值获取未接清count
+                    // 根据数据key值获取未结清count
                     this.unclearedData.forEach(item => {
                         item.count = data[item.key] || 0
                     })
