@@ -253,8 +253,8 @@
     </el-scrollbar>
   </side-popup>
 </template>
-<script>
-import auditRecord from "@/views/housecondition/centralized/contractComponents/audit-record"
+<script> 
+import auditRecord from "./audit-record"
 export default {
   components: {
       auditRecord,
