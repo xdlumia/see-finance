@@ -7,7 +7,18 @@
 **/
 -->
 <template>
-    <div>
+    <div class="d-relative">
+        <!-- 责任人设置 -->
+        <dutySetting
+            title="分配财务-收据记录责任人" 
+            parent="收据记录" size="16" 
+            class="d-absolute"
+            style="right: 10px;top: -47px;"
+            :syscode="syscode" 
+            color="#666"
+            pageCode="asystem_finance_1014"
+            module="finance"
+        ></dutySetting>
         <!-- 表格 -->
         <d-table
             style="height:calc(100vh - 150px)"
@@ -94,6 +105,7 @@ export default {
   // data
   data() {
     return {
+      syscode:this.$local.fetch("userInfo").syscode, //系统编码
       authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
       receiptStatus:{
           0:'未开具',

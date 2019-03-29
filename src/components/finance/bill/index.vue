@@ -58,6 +58,18 @@
                     v-if="authorityBtn.includes('asystem_finance_1004')"
                     @click="bulkPrintBill()"
                 >批量打印</el-button>
+                <!-- 责任人设置 -->
+                <dutySetting
+                    title="分配财务-账单管理责任人" 
+                    parent="账单管理" size="16" 
+                    color="#666"
+                    :syscode="syscode" 
+                    pageCode="asystem_finance_1001"
+                    module="finance"
+                ></dutySetting>
+                <!-- <dutySetting key="1" title="分配已成交合同责任人" parent="已成交合同" size="16" syscode="asysbusiness" pageCode="asystem_contract_bargain_1009"
+                    v-if="authorityButtons.includes('asystem_contract_res_1001')&&activeContract=='seeContractService.getContractList'" module="contract"
+                ></dutySetting> -->
                 <!-- 筛选组件 -->
                 <bill-filter @submit="tableReload" :params="queryForm"></bill-filter>
             </div>
@@ -296,6 +308,7 @@
         // data
         data () {
             return {
+                syscode:this.$local.fetch("userInfo").syscode, //系统编码
                 authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
                 billIdInfo: "",
                 billCodeInfo: "", //帐单编号查询

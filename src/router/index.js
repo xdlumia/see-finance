@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import systemRoute from '../components';
-import { version } from 'moment';
 
 var Employee = systemRoute.Employee,
     Dept = systemRoute.Dept,
