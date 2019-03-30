@@ -360,7 +360,8 @@
                     sidx: "",
                     order: "",
                     limit: 15,
-                    page: 1
+                    page: 1,
+                    systemCode:this.$local.fetch('userInfo').syscode
                 },
                 isShirk:false, //是否显示金额统计
             };
@@ -369,7 +370,7 @@
         created () {
             // 根据条件统计客户账单数量
             this.queryFbillClientTypeStatistics(this.queryForm)
-            // 根据条件统计客户账单数量
+            // 根据条件统计客户未结清数量
             this.getFbillUnclearedStatistics(this.queryForm)
         },
         // mounted

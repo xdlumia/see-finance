@@ -148,7 +148,8 @@ export default {
       queryForm: {
         status: [1], //结清状态
         limit: 15,
-        page: 1
+        page: 1,
+        systemCode:this.$local.fetch('userInfo').syscode
       },
     };
   },

@@ -23,6 +23,7 @@
         <!-- 表格 -->
         <d-table
             style="height:calc(100vh - 150px)"
+            :params="{limit:15,page:1,systemCode:syscode}"
             ref="table"
             api="seeFinanceService.getFreceiptList"
             size="small">
