@@ -105,7 +105,7 @@
                     v-model="feeEndArr"
                     type="daterange"
                     value-format="timestamp"
-                    :picker-options="$pickerOptionsRange"
+                    :picker-options="$dateOptionsAfter"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
@@ -128,7 +128,8 @@
             <el-row>
                 <el-col :span="24" class="ac">
                     <el-button type="primary" @click="submitForm('params')" size="mini">确定</el-button>
-                    <el-button @click="resetForm('params')" size="mini">取消</el-button>
+                    <el-button @click="resetForm('params')" size="mini">保存</el-button>
+                    <el-button type="primary" @click="saveForm('params')" size="mini">保存</el-button>
                 </el-col>
             </el-row>
         </el-form>
@@ -151,7 +152,7 @@
         },
         // created
         created () {
-
+            this.getFilterInfo()
         },
         // mounted
         // activited
@@ -177,6 +178,38 @@
             //筛选提交
             submitForm (formName) {
                 this.$emit('submit')
+            },
+            // 保存快捷筛选
+            saveForm(){
+                let params = {
+                    pageCode:'bill',
+                    sysCode:this.$local.fetch('userInfo').syscode,
+                    queryCondition:this.params,
+                }
+                this.$api.bizSystemService.saveFilter(params)
+                .then(res=>{
+                    // 保存成功
+                })
+            },
+            // 查询快捷筛选
+            getFilterInfo(){
+                let params = {
+                    pageCode:'bill',
+                    sysCode:this.$local.fetch('userInfo').syscode,
+                }
+                this.$api.bizSystemService.getFilterInfo(params)
+                .then(res=>{
+                    let queryCondition = (res.data || {}).queryCondition || {}
+                    for(let key in this.params){
+                        if(key == 'page' || key == 'limit'){
+                            this.params[key] = this.params[key]
+                        }else if(key == 'feeStartbeginDate' || key == 'feeStartFinishDate'|| key == 'feeEndbeginDate'|| key == 'feeEndFinishDate'){
+                           this.params[key] = ''
+                        }else{
+                            this.params[key] = queryCondition[key]
+                        }
+                    }
+                })
             },
         },
         // filter
