@@ -48,16 +48,28 @@
                 ></el-input>
             </el-form-item>
             <el-form-item label="费用类型" style="width:100%" size="mini" prop="feeType">
-                <d-select
+                <el-select
+                    v-model="params.feeType"
+                    placeholder="请选择费用类型">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option
+                        :label="item.content"
+                        :value="item.code"
+                        v-for="(item,index) of dictionaryOptions('ZD_FY_LX')"
+                        :key="index"
+                    ></el-option>
+                </el-select>
+                <!-- <d-select
                     placeholder="请选择费用类型"
                     v-model="params.feeType"
                     valueKey="code"
                     size="mini"
                     dicCode="ZD_FY_LX"
-                ></d-select>
+                ></d-select> -->
             </el-form-item>
             <el-form-item label="逾期状态" style="width:100%" size="mini" class="mb5" prop="overDays">
                 <el-select v-model="params.overDays" style="width:100%" placeholder="请选择逾期状态">
+                    <el-option label="全部" value=""></el-option>
                     <el-option label="正常" value="1"></el-option>
                     <el-option label="逾期" value="2"></el-option>
                 </el-select>
@@ -128,7 +140,7 @@
             <el-row>
                 <el-col :span="24" class="ac">
                     <el-button type="primary" @click="submitForm('params')" size="mini">确定</el-button>
-                    <el-button @click="resetForm('params')" size="mini">保存</el-button>
+                    <el-button @click="resetForm('params')" size="mini">取消</el-button>
                     <el-button type="primary" @click="saveForm('params')" size="mini">保存</el-button>
                 </el-col>
             </el-row>
@@ -184,7 +196,7 @@
                 let params = {
                     pageCode:'bill',
                     sysCode:this.$local.fetch('userInfo').syscode,
-                    queryCondition:this.params,
+                    queryCondition:JSON.stringify(this.params),
                 }
                 this.$api.bizSystemService.saveFilter(params)
                 .then(res=>{
@@ -199,16 +211,22 @@
                 }
                 this.$api.bizSystemService.getFilterInfo(params)
                 .then(res=>{
-                    let queryCondition = (res.data || {}).queryCondition || {}
+                    let data = res.data || {}
+                    let queryCondition = JSON.parse((data.queryCondition || '')) || {}
                     for(let key in this.params){
                         if(key == 'page' || key == 'limit'){
                             this.params[key] = this.params[key]
                         }else if(key == 'feeStartbeginDate' || key == 'feeStartFinishDate'|| key == 'feeEndbeginDate'|| key == 'feeEndFinishDate'){
                            this.params[key] = ''
-                        }else{
+                        }else if(key =='revenueArray' || key =='unclearedArray'){
+                            this.params[key] = queryCondition[key] || []
+                        }
+                        else{
                             this.params[key] = queryCondition[key]
                         }
                     }
+                    // 加载完成重新获取数据
+                    this.$emit('submit')
                 })
             },
         },

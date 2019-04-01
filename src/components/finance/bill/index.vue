@@ -346,6 +346,7 @@
                     revenueArray:[1,2,3,4,5], // 付款方快捷检索条件
                     unclearedArray:[1], // 未结清快捷检索条件
                     billCode: "", // 账单编号
+                    contractCode:"",// 合同号
                     accountName: "", // 对方名称
                     communityName: "", // 楼盘名称
                     feeType: "", //费用类型
@@ -370,7 +371,7 @@
         created () {
             // 根据条件统计客户账单数量
             this.queryFbillClientTypeStatistics(this.queryForm)
-            // 根据条件统计客户未结清数量
+            // 根据条件统计客户账单数量
             this.getFbillUnclearedStatistics(this.queryForm)
         },
         // mounted
