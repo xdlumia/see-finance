@@ -16,9 +16,9 @@
         <el-form :model="newBillForm" v-loading="loading" :rules="rules" ref="newBillForm" size="small" label-width="100px" class="pr20"  >
             <el-row :gutter="30">
                 <el-col :span="12">
-                    <el-form-item label="关联合同" 
+                    <el-form-item label="关联合同"
                     :rules="{ required: false, message: '请选择合同'}"
-                    prop="contractCode" 
+                    prop="contractCode"
                     style="height:32px">
                         <el-input placeholder="请输入姓名/合同编号" disabled v-model.trim="newBillForm.contractCode">
                             <el-button slot="append" icon="el-icon-search" @click='choiceContract()'></el-button>
@@ -31,7 +31,7 @@
                         <el-radio :label="1" v-model="newBillForm.billType" >付款</el-radio>
                     </el-form-item>
                 </el-col>
-                
+
                 <el-col :span="12">
                     <el-form-item label="对方名称" prop="accountName">
                         <el-input type="text" v-model.trim="newBillForm.accountName" placeholder="请输入名称"></el-input>
@@ -100,7 +100,7 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item>
-                        
+
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -129,7 +129,7 @@
                 </el-table-column>
                 <el-table-column
                 label="合同编号"
-                prop="contractCode" 
+                prop="contractCode"
                 width="180"
                 align='center'>
                 </el-table-column>
@@ -144,7 +144,7 @@
                 </el-table-column>
                 <el-table-column
                 align='center'
-                prop="address" 
+                prop="address"
                 show-overflow-tooltip
                 label="房间地址">
                 </el-table-column>
@@ -283,6 +283,7 @@ export default {
         this.newBillForm.roomAddress = data.address;
         this.newBillForm.contractCode = data.contractCode;
         this.newBillForm.systemCode  = data.contractKind;
+        this.newBillForm.communityId = data.communityId;
         this.dialogTableVisible = false;
     },
   }
