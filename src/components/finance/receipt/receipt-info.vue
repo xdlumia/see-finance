@@ -19,20 +19,20 @@
         <!-- 回收目前不需要审核 -->
         <el-button @click="updateInvalidAudit" type="danger" v-if="popupInfo.status == 1  && !receiptInfo.taskCode" size="mini">作废</el-button>
         <!-- 如果是非操作人员显示作废状态 -->
-        
+
         <!-- 此作废为显示状态 -->
         <!-- <el-button type="danger" v-if="receiptInfo.status == 6" size="mini">作废驳回</el-button> -->
-        <!-- 如果是操作人员显示操作 
+        <!-- 如果是操作人员显示操作
         asystem_finance_1015 财务审核
         asystem_finance_1016 责任人审核-->
         <span v-if="receiptInfo.status == 4 && receiptInfo.taskCode">
             <el-button @click="updateInvalidAudit(6)" type="danger" size="mini">作废驳回</el-button>
-            <el-button @click="updateInvalidAudit('asystem_finance_1015')" v-if="receiptInfo.taskCode == 'asystem_finance_1015' && checkAuthorityButton('asystem_finance_1015',popupInfo.communityId)" type="primary" size="mini">财务审核</el-button>
-            <el-button @click="updateInvalidAudit('asystem_finance_1016')" v-if="receiptInfo.taskCode == 'asystem_finance_1016' && checkAuthorityButton('asystem_finance_1015',popupInfo.communityId)" type="primary" size="mini">财务责任人审核</el-button>
+            <el-button @click="updateInvalidAudit('asystem_finance_1015')" v-if="receiptInfo.taskCode == 'asystem_finance_1015' && checkAuthorityButton('asystem_finance_1016',popupInfo.communityId)" type="primary" size="mini">财务审核</el-button>
+            <el-button @click="updateInvalidAudit('asystem_finance_1016')" v-if="receiptInfo.taskCode == 'asystem_finance_1016' && checkAuthorityButton('asystem_finance_1017',popupInfo.communityId)" type="primary" size="mini">财务责任人审核</el-button>
         </span>
-        
-        
-        
+
+
+
     </div>
     <!--  body区域 -->
     <el-scrollbar class="hfull" v-loading="loading" v-if="popupInfo.visible">
@@ -253,8 +253,8 @@
     </el-scrollbar>
   </side-popup>
 </template>
-<script> 
-import {dataAuthority} from "see-web-basic"; 
+<script>
+import {dataAuthority} from "see-web-basic";
 import auditRecord from "./audit-record"
 export default {
 mixins:[dataAuthority],
@@ -348,7 +348,7 @@ mixins:[dataAuthority],
             })
         }).catch(() => {});
 
-        
+
     },
     // 保存账单
     // saveReceipt() {
