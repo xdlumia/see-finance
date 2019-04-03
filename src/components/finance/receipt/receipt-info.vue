@@ -27,8 +27,8 @@
         asystem_finance_1016 责任人审核-->
         <span v-if="receiptInfo.status == 4 && receiptInfo.taskCode">
             <el-button @click="updateInvalidAudit(6)" type="danger" size="mini">作废驳回</el-button>
-            <el-button @click="updateInvalidAudit('asystem_finance_1015')" v-if="receiptInfo.taskCode == 'asystem_finance_1015'" type="primary" size="mini">财务审核</el-button>
-            <el-button @click="updateInvalidAudit('asystem_finance_1016')" v-if="receiptInfo.taskCode == 'asystem_finance_1016'" type="primary" size="mini">财务责任人审核</el-button>
+            <el-button @click="updateInvalidAudit('asystem_finance_1015')" v-if="receiptInfo.taskCode == 'asystem_finance_1015' && dataAuthority('asystem_finance_1015',popupInfo.communityId)" type="primary" size="mini">财务审核</el-button>
+            <el-button @click="updateInvalidAudit('asystem_finance_1016')" v-if="receiptInfo.taskCode == 'asystem_finance_1016' && dataAuthority('asystem_finance_1015',popupInfo.communityId)" type="primary" size="mini">财务责任人审核</el-button>
         </span>
         
         
@@ -254,8 +254,10 @@
   </side-popup>
 </template>
 <script> 
+import {dataAuthority} from "see-web-basic"; 
 import auditRecord from "./audit-record"
 export default {
+mixins:[dataAuthority],
   components: {
       auditRecord,
   },

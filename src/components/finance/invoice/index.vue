@@ -10,7 +10,7 @@
   <div class="d-relative">
       <!-- 责任人设置 -->
       <dutySetting
-          v-if="authorityButtons.includes('asystem_finance_res_1004')"
+          v-if="authorityButtons.includes('asystem_finance_res_1003')"
           title="分配财务-发票记录责任人" 
           parent="发票记录" size="16" 
           class="d-absolute"

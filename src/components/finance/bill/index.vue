@@ -60,7 +60,7 @@
                 >批量打印</el-button>
                 <!-- 责任人设置 -->
                 <dutySetting
-                    v-if="authorityButtons.includes('asystem_finance_res_1002')"
+                    v-if="authorityButtons.includes('asystem_finance_res_1001')"
                     title="分配财务-账单管理责任人" 
                     parent="账单管理" size="16" 
                     color="#666"
