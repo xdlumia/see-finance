@@ -522,8 +522,8 @@
              * 备注：合同详情页有编辑发票信息功能，此处需要查询最新的发票信息
              */
             getContractInvoice () {
-                // 只有新增时才获取下发票信息
-                if(this.dialogInfo.type === 'add') {
+                // 只有新增并且businessCode存在时才获取下发票信息
+                if(this.dialogInfo.type === 'add' && this.dialogInfo.businessCode) {
                     this.loading = true
                     this.$api.seeFinanceService.getContractInvoice({ businessCode: this.dialogInfo.businessCode, businessType: this.dialogInfo.businessType }).then(res => {
                         res.code == 200 && res.data && Object.keys(res.data).forEach((key, index) => {
