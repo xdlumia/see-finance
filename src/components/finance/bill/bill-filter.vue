@@ -212,21 +212,23 @@
                 this.$api.bizSystemService.getFilterInfo(params)
                 .then(res=>{
                     let data = res.data || {}
-                    let queryCondition = JSON.parse((data.queryCondition || '')) || {}
-                    for(let key in this.params){
-                        if(key == 'page' || key == 'limit'){
-                            this.params[key] = this.params[key]
-                        }else if(key == 'feeStartbeginDate' || key == 'feeStartFinishDate'|| key == 'feeEndbeginDate'|| key == 'feeEndFinishDate'){
-                           this.params[key] = ''
-                        }else if(key =='revenueArray' || key =='unclearedArray'){
-                            this.params[key] = queryCondition[key] || []
+                    if(data.queryCondition){
+                        let queryCondition = JSON.parse((data.queryCondition || '')) || {}
+                        for(let key in this.params){
+                            if(key == 'page' || key == 'limit'){
+                                this.params[key] = this.params[key]
+                            }else if(key == 'feeStartbeginDate' || key == 'feeStartFinishDate'|| key == 'feeEndbeginDate'|| key == 'feeEndFinishDate'){
+                            this.params[key] = ''
+                            }else if(key =='revenueArray' || key =='unclearedArray'){
+                                this.params[key] = queryCondition[key] || []
+                            }
+                            else{
+                                this.params[key] = queryCondition[key]
+                            }
                         }
-                        else{
-                            this.params[key] = queryCondition[key]
-                        }
+                        // 加载完成重新获取数据
+                        this.$emit('submit')
                     }
-                    // 加载完成重新获取数据
-                    this.$emit('submit')
                 })
             },
         },
