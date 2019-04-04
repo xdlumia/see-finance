@@ -141,7 +141,7 @@
                 <el-col :span="24" class="ac">
                     <el-button type="primary" @click="submitForm('params')" size="mini">确定</el-button>
                     <el-button @click="resetForm('params')" size="mini">取消</el-button>
-                    <el-button type="primary" @click="saveForm('params')" size="mini">保存</el-button>
+                    <el-button type="primary" @click="saveForm('params')" size="mini">保存快捷筛选</el-button>
                 </el-col>
             </el-row>
         </el-form>
