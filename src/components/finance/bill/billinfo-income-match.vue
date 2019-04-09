@@ -176,6 +176,7 @@ export default {
         matchFilterForm: {
             matchStates:[0,1],//匹配状态
             incomeTypes:[this.dialogInfo.billType],//流水类型
+            incomeType: this.dialogInfo.billType.toString(),
             page:1,//显示第几页
             limit:10,//每页显示数量
             incomeWaterCode:'',//流水号
