@@ -38,11 +38,11 @@
                     size="mini"
                 ></el-input>
             </el-form-item>
-            <el-form-item label="楼盘名称" prop="communityName">
+            <el-form-item label="楼盘名称/房间地址" prop="communityName">
                 <el-input
                     type="text"
                     v-model.trim="params.communityName"
-                    placeholder="请输入名称"
+                    placeholder="请输入楼盘名称/房间地址"
                     style="width:100%"
                     size="mini"
                 ></el-input>
@@ -124,13 +124,13 @@
                     align="right"
                 ></el-date-picker>
             </el-form-item>
-            <el-form-item label="收/付款日期" size="mini" class="mb5" prop="accountDateArry">
+            <el-form-item label="最近收/付款日期" size="mini" class="mb5" prop="accountDateArry">
                 <el-date-picker
                     style="width:100%"
                     v-model="accountDateArry"
                     type="daterange"
                     value-format="timestamp"
-                    :picker-options="$pickerOptionsRange"
+                    :picker-options="$dateOptionsAfter"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
@@ -139,9 +139,9 @@
             </el-form-item>
             <el-row>
                 <el-col :span="24" class="ac">
+                    <el-button type="primary" @click="saveForm('params')" size="mini">保存快捷筛选</el-button>
                     <el-button type="primary" @click="submitForm('params')" size="mini">确定</el-button>
                     <el-button @click="resetForm('params')" size="mini">取消</el-button>
-                    <el-button type="primary" @click="saveForm('params')" size="mini">保存快捷筛选</el-button>
                 </el-col>
             </el-row>
         </el-form>
