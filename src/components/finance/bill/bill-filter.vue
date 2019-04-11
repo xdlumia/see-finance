@@ -130,7 +130,7 @@
                     v-model="accountDateArry"
                     type="daterange"
                     value-format="timestamp"
-                    :picker-options="$dateOptionsAfter"
+                    :picker-options="timeFilter"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
@@ -282,6 +282,13 @@
                     this.params.feeEndbeginDate = arr[0];
                     this.params.feeEndFinishDate = arr[1];
                 }
+            },
+            // 时间框快捷筛选
+            timeFilter(){
+                let shortcuts = [].concat(...this.$pickerOptionsRange.shortcuts, ...this.$dateOptionsAfter.shortcuts);
+                return {
+                    shortcuts
+                };
             }
         },
         watch: {
