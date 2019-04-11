@@ -207,7 +207,7 @@
                 >
                     <template
                         slot-scope="scope"
-                    >{{scope.row.billSource==1?'手动添加':scope.row.billSource==2?'物业生成':'合同生成'}}</template>
+                    >{{ billSourceType[scope.row.billSource] || '未知' }}</template>
                 </el-table-column>
                 <el-table-column show-overflow-tooltip label="操作" align="center" width="80px">
                     <template slot-scope="scope">
@@ -366,6 +366,18 @@
                 },
                 isShirk:false, //是否显示金额统计
             };
+        },
+        computed: {
+            // 账单来源类型
+            billSourceType(){
+                return {
+                    0: '合同生成',
+                    1: '手动添加',
+                    2: '物业生成',
+                    3: '退租结算',
+                    4: '服务订单'
+                }
+            }
         },
         // created
         created () {
