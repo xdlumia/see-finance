@@ -28,7 +28,7 @@
                 </el-col>
                 <el-col :span='24'>
                 <el-form-item label="收支状态" style='width:100%' size='mini'  class='mb5' prop='incomeType'>
-                    <el-select v-model="matchFilterForm.incomeType" placeholder="请选择收支状态"  style='width:100%'>
+                    <el-select v-model="matchFilterForm.incomeType" placeholder="请选择收支状态"  style='width:100%' @change='incomeTypeChange'>
                         <el-option label="收入" value="0"></el-option>
                         <el-option label="支出" value="1"></el-option>
                     </el-select>
@@ -210,6 +210,10 @@ export default {
   // beforeRouteUpdate
   // metods
   methods: {
+      // 类型选择
+    incomeTypeChange(val){
+        this.matchFilterForm.incomeTypes = [val]
+    },
     //  筛选
     filterMactchTable(){
         this.$refs.matchTable.reload()
