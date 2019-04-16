@@ -124,7 +124,7 @@
                     align="right"
                 ></el-date-picker>
             </el-form-item>
-            <el-form-item label="最近收/付款日期" size="mini" class="mb5" prop="accountDateArry">
+            <el-form-item label="收/付款日期" size="mini" class="mb5" prop="accountDateArry">
                 <el-date-picker
                     style="width:100%"
                     v-model="accountDateArry"
