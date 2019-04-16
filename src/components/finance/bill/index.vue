@@ -354,6 +354,7 @@
                     settleStatus: "9", //结清状态 0 未结清 1 已结清，2已关闭 9 全部
                     payStartDate: "",
                     payEndDate: "",
+                    paymentRange:'',//最近收/付款日期 范围
                     feeStartbeginDate: "", // 计费周期起始时间的开始时间
                     feeStartFinishDate: "", // 计费周期起始时间的结束时间
                     feeEndbeginDate: "", // 计费周期结束时间的开始时间
@@ -362,7 +363,7 @@
                     order: "",
                     limit: 15,
                     page: 1,
-                    systemCode:this.$local.fetch('userInfo').syscode
+                    systemCode:this.$local.fetch('userInfo').syscode,
                 },
                 isShirk:false, //是否显示金额统计
             };

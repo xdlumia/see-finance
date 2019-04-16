@@ -137,6 +137,16 @@
                     align="right"
                 ></el-date-picker>
             </el-form-item>
+            <el-form-item label="最近收/付款日期" size="mini" class="mb5" prop="accountDateArry">
+                <el-select v-model="params.paymentRange" placeholder="请选择">
+                    <el-option
+                    v-for="(item,index) of paymentRangeOption"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.code">
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-row>
                 <el-col :span="24" class="ac">
                     <el-button type="primary" @click="saveForm('params')" size="mini">保存快捷筛选</el-button>
@@ -159,7 +169,21 @@
         // data
         data () {
             return {
-                filterFlag: false
+                filterFlag: false,
+                // 最近收付款范围
+                paymentRangeOption:[{
+                    label:'后一周',
+                    code:7,
+                },{
+                    label:'后二周',
+                    code:14,
+                },{
+                    label:'后一月',
+                    code:30,
+                },{
+                    label:'后三月',
+                    code:90,
+                }],
             };
         },
         // created
@@ -217,8 +241,13 @@
                         for(let key in this.params){
                             if(key == 'page' || key == 'limit'){
                                 this.params[key] = this.params[key]
-                            }else if(key == 'feeStartbeginDate' || key == 'feeStartFinishDate'|| key == 'feeEndbeginDate'|| key == 'feeEndFinishDate'){
-                            this.params[key] = ''
+                            }else if(key == 'payStartDate' || key == 'payEndDate'){
+                                var start = new Date();
+                                // this.params['payStartDate'] = start //开始时间
+                                // this.params['payEndDate'] = start.getTime() + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
+                                
+                                let end = start.getTime() + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
+                                this.accountDateArry = [start,end]
                             }else if(key =='revenueArray' || key =='unclearedArray'){
                                 this.params[key] = queryCondition[key] || []
                             }
@@ -249,8 +278,13 @@
                     return arr
                 },
                 set (arr) {
-                    this.params.payStartDate = arr[0];
-                    this.params.payEndDate = arr[1];
+                    if (arr) {
+                        this.params.payStartDate = arr[0];
+                        this.params.payEndDate = arr[1];
+                    }else{
+                        this.params.payStartDate = ''
+                        this.params.payEndDate = ''
+                    }
                 }
             },
             // 计费周期开始时间数组
@@ -264,8 +298,13 @@
                     return arr
                 },
                 set (arr) {
-                    this.params.feeStartbeginDate = arr[0];
-                    this.params.feeStartFinishDate = arr[1];
+                    if (arr) {
+                        this.params.feeStartbeginDate = arr[0];
+                        this.params.feeStartFinishDate = arr[1];
+                    }else{
+                        this.params.feeStartbeginDate = ''
+                        this.params.feeStartFinishDate = ''
+                    }
                 }
             },
             // 计费周期结束时间数组
@@ -279,8 +318,13 @@
                     return arr
                 },
                 set (arr) {
-                    this.params.feeEndbeginDate = arr[0];
-                    this.params.feeEndFinishDate = arr[1];
+                    if (arr) {
+                        this.params.feeEndbeginDate = arr[0];
+                        this.params.feeEndFinishDate = arr[1];
+                    }else{
+                        this.params.feeEndbeginDate = ''
+                        this.params.feeEndFinishDate = ''
+                    }
                 }
             },
             // 时间框快捷筛选
