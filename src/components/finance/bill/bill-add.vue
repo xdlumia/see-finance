@@ -99,9 +99,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
-                    <el-form-item>
-
-                    </el-form-item>
+                    <upload-otherfile ref="fileInfo" :fileData="fileForm" />
                 </el-col>
             </el-row>
         </el-form>
@@ -178,9 +176,13 @@
     </div>
 </template>
 <script>
+import uploadOtherfile from "./upload-otherfile"; //其他信息
+
 export default {
   // components
-  components: {},
+  components: {
+    uploadOtherfile
+  },
   // props:[''],
   // data
   data() {
@@ -198,6 +200,10 @@ export default {
         feeStartDate: "", //计费开始
         feeEndDate: "", //计费结束
         notes: "" //备注
+      },
+      fileForm: {
+        attachmentList: [],
+        contractAttachment: ''
       },
       rules: {
         billType: [
@@ -252,19 +258,35 @@ export default {
         //   systemCode区分是分散式还是集中式 5是分散式 7是集中式
           this.newBillForm.systemCode = this.isRentSystem?5:7
           this.newBillForm.settleStatus = "0";
-          //发送请求
-          this.$api.seeFinanceService.getSaveNewBill(this.newBillForm)
-            .then(res => {
-              if (res.code == 200) {
-                // 关闭侧边栏
-                this.$emit("update:visible", false);
-                // 提交刷新
-                this.$emit("submit", "reload");
-              }
-            })
-            .finally(()=>{
-                this.loading = false
-            })
+
+          // 验证附件
+          this.$refs.fileInfo.$refs.fileForm.validate(res => {
+            if( res ){
+
+                let otherFbillContent = JSON.stringify({file: {
+                    url: this.fileForm.contractAttachment,
+                    fileNames: this.fileForm.attachmentList.map(item => item.attachmentName)
+                }})
+
+                let params = Object.assign({}, this.newBillForm, {otherFbillContent});
+
+                //发送请求
+                this.$api.seeFinanceService.getSaveNewBill(params)
+                  .then(res => {
+                    if (res.code == 200) {
+                      // 关闭侧边栏
+                      this.$emit("update:visible", false);
+                      // 提交刷新
+                      this.$emit("submit", "reload");
+                    }
+                  })
+                  .finally(()=>{
+                      this.loading = false
+                  })
+            }
+            
+          });
+ 
         }
       });
     },

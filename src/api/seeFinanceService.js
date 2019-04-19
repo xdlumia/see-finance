@@ -183,6 +183,11 @@ export default {
         return Api.post(baseURL.seeFinanceService + '/fbill/printFileFbillBatch', params)
     },
 
+    //批量更新账单
+    updateBatchFbill(params) {
+        return Api.post(baseURL.seeFinanceService + '/fbill/updateBatchFbill', params);
+    },
+
 
 
     /**

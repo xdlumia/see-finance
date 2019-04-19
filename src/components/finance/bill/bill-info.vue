@@ -340,6 +340,33 @@
             </d-table>
         </form-card>
 
+
+        <!-- 其他信息 -->
+        <form-card :title="true" v-loading="otherLoading">
+            <el-row slot="title">
+                <el-col :span="12" class='d-text-gray'><h3>其他信息</h3></el-col>
+                <el-col :span="12" class='ar f14 d-text-blue' v-if="authorityButtons.includes('asystem_finance_1022') || true   ">
+                    <span class='d-pointer mr15' v-if="!isShowEdit" @click="toggleOtherInfo">编辑</span>
+                    <template v-else>
+                        <span class='d-pointer mr15' @click="saveOtherInfo">保存</span>
+                        <span class='d-pointer mr15' @click="toggleOtherInfo">取消</span>
+                    </template>
+                </el-col>
+            </el-row>
+
+            <el-form>
+                <el-col :span="24">
+                    <el-form-item label="备注" prop="notes" size='small'>
+                        <el-input type="textarea" v-model="billInfo.notes" :disabled="!isShowEdit" placeholder="请填写备注"></el-input>
+                    </el-form-item>
+                </el-col>
+                
+                <el-col :span="24">
+                    <upload-otherfile ref="fileForm" :fileData="fileForm" :disabled="!isShowEdit" />
+                </el-col>
+            </el-form>
+        </form-card>
+
         <!-- 操作弹出框 -->
         <el-dialog :title="dialogInfo.title" :visible.sync="dialogInfo.visible" v-dialogDrag :append-to-body = "true" :close-on-click-modal="false" top="20px" :width="dialogInfo.width">
             <!-- dialogInfo.component 切换组件
@@ -356,6 +383,8 @@ import billinfoIncomeMacth from "./billinfo-income-match"; //流水匹配
 import billinfoBillAdjustment from "./billinfo-bill-adjustment"; //账单调账
 import billinfoReceiptAdd from "./billinfo-receipt-add"; //开具收据
 import invoiceAdd from "../invoice/invoice-add.vue"; //新增发票
+import uploadOtherfile from "./upload-otherfile"; //其他信息
+
 export default {
     // components
     components:{
@@ -363,7 +392,8 @@ export default {
         billinfoIncomeMacth,
         billinfoBillAdjustment,
         billinfoReceiptAdd,
-        invoiceAdd
+        invoiceAdd,
+        uploadOtherfile
     },
     // props
     props:['billCodeInfo','billIdInfo'],
@@ -410,6 +440,13 @@ export default {
                 data:'', //传值的数据
             },
             invoiceMultipleSelection:[],//发票多选
+            isShowEdit: false, // 其他信息 编辑
+            // 附件
+            fileForm: { 
+                attachmentList: [],
+                contractAttachment: ''
+            },
+            otherLoading: false
         }
     },
     // created
@@ -435,6 +472,22 @@ export default {
         }
     },
     methods:{
+        toggleOtherInfo(){
+            this.isShowEdit = !this.isShowEdit
+        },
+        // 保存 其他信息
+        saveOtherInfo(){
+            let otherFbillContent = JSON.stringify({file: {
+                url: this.fileForm.contractAttachment,
+                fileNames: this.fileForm.attachmentList.map(item => item.attachmentName)
+            }})
+            this.otherLoading = true;
+            this.$api.seeFinanceService.updateBatchFbill([{ id:this.billInfo.id, notes: this.billInfo.notes ,otherFbillContent }]).then(res => {
+                this.toggleOtherInfo();
+            }).finally(() => {
+                this.otherLoading = false;
+            })
+        },
         //默认请求刷新页面
         getBillInfo(){
             //发送请求基本信西
@@ -443,6 +496,15 @@ export default {
             .then(res => {
                 if(res.code==200){
                     this.billInfo = res.data || {}
+                    
+                    if( res.data.otherFbillContent ){
+                        let otherFbillContent = JSON.parse(res.data.otherFbillContent || '{}');
+                        if(!otherFbillContent.file) return ;
+                        this.fileForm = {
+                            attachmentList: (otherFbillContent.file.fileNames || []).map(item => ({ attachmentName: item })),
+                            contractAttachment: otherFbillContent.file.url
+                        }
+                    }
                 }
             })
             .finally(()=>{
