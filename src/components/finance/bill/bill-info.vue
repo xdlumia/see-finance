@@ -345,7 +345,7 @@
         <form-card :title="true" v-loading="otherLoading">
             <el-row slot="title">
                 <el-col :span="12" class='d-text-gray'><h3>其他信息</h3></el-col>
-                <el-col :span="12" class='ar f14 d-text-blue' v-if="authorityButtons.includes('asystem_finance_1022') || true   ">
+                <el-col :span="12" class='ar f14 d-text-blue' v-if="authorityButtons.includes('asystem_finance_1022')">
                     <span class='d-pointer mr15' v-if="!isShowEdit" @click="toggleOtherInfo">编辑</span>
                     <template v-else>
                         <span class='d-pointer mr15' @click="saveOtherInfo">保存</span>
