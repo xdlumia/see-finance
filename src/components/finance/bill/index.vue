@@ -397,7 +397,7 @@
             exportTable () {
                 let strParams = `token=${localStorage.token}&finger=${localStorage.finger}&`
                 this.multipleSelection.forEach(item => {
-                    strParams += "&ids=" + item.id;
+                    strParams += "ids=" + item.id + '&';
                 })
                 for(let key in this.queryForm){
                     if(this.queryForm[key] instanceof Array){

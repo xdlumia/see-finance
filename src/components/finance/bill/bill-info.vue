@@ -55,7 +55,7 @@
                 <el-col :span="12">关联合同：{{billInfo.businessType==0?billInfo.businessCode:'-'}}</el-col>
                 <el-col :span="12">创建时间：{{billInfo.createTime | timeToStr}}</el-col>
                 <el-col :span="12">计费周期：{{billInfo.feeStartDate | timeToStr}} - {{billInfo.feeEndDate | timeToStr}}</el-col>
-                <el-col :span="12">付款方：{{billInfo.accountName || '-'}}</el-col>
+                <el-col :span="12">收/付款方：{{billInfo.accountName || '-'}}</el-col>
                 <el-col :span="12">联系方式：{{billInfo.linkmanPhone || '-'}}</el-col>
                 <el-col :span="12">逾期状态：{{billInfo.overDays==0?'正常':'逾期(' + billInfo.overDays + '天)'}}</el-col>
                 <el-col :span="12" v-if="!isRentSystem">滞纳金上限：{{billInfo.lateFeeLimit || '-'}} %</el-col>

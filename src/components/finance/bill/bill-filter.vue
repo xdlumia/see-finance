@@ -242,11 +242,11 @@
                             if(key == 'page' || key == 'limit'){
                                 this.params[key] = this.params[key]
                             }else if(key == 'payStartDate' || key == 'payEndDate'){
-                                var start = new Date();
+                                var start = new Date().getTime();
                                 // this.params['payStartDate'] = start //开始时间
                                 // this.params['payEndDate'] = start.getTime() + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
                                 
-                                let end = start.getTime() + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
+                                let end = start + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
                                 this.accountDateArry = [start,end]
                             }else if(key =='revenueArray' || key =='unclearedArray'){
                                 this.params[key] = queryCondition[key] || []
