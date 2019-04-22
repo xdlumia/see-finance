@@ -137,7 +137,7 @@
                     align="right"
                 ></el-date-picker>
             </el-form-item>
-            <el-form-item label="最近收/付款日期" size="mini" class="mb5" prop="accountDateArry">
+            <el-form-item label="最近收/付款日期" size="mini" class="mb5" prop="paymentRange">
                 <el-select v-model="params.paymentRange" placeholder="请选择">
                     <el-option
                     v-for="(item,index) of paymentRangeOption"
@@ -240,7 +240,7 @@
                         let queryCondition = JSON.parse((data.queryCondition || '')) || {}
                         for(let key in this.params){
                             if(key == 'page' || key == 'limit'){
-                                this.params[key] = this.params[key]
+                                this.params[key] = this.params[key] || ''
                             }else if(key == 'payStartDate' || key == 'payEndDate'){
                                 var start = new Date().getTime();
                                 // this.params['payStartDate'] = start //开始时间
@@ -252,7 +252,7 @@
                                 this.params[key] = queryCondition[key] || []
                             }
                             else{
-                                this.params[key] = queryCondition[key]
+                                this.params[key] = queryCondition[key] || ''
                             }
                         }
                         // 加载完成重新获取数据
