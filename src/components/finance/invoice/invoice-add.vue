@@ -148,7 +148,7 @@
                             >
                                 <el-input
                                     v-model.trim="invoiceForm.buyerBankAccount"
-                                    maxlength="19"
+                                    maxlength="25"
                                     placeholder="请输入卡号"
                                 ></el-input>
                             </el-form-item>
