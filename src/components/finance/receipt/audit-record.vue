@@ -11,7 +11,9 @@
               <span>
                 {{item.approvaUserName}} [{{item.taskName}}] : 
                 {{item.approvalState==1?'通过':'驳回'}}
-                {{item.approvalOpinion}}
+                <template v-if="item.approvalOpinion && item.approvalOpinion != 'null'">
+                    {{item.approvalOpinion}}
+                </template>
               </span>
               <span class="fr f12">{{item.approvalTime | timeToStr('YYYY-MM-DD HH:mm')}}</span>
             </li>
