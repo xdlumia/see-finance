@@ -313,5 +313,10 @@ export default {
   // computed
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+.popup-body{
+  /deep/ .el-form-item{
+    padding-bottom: 10px;
+  }
+}
 </style>
