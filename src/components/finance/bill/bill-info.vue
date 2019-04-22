@@ -138,7 +138,7 @@
             <el-row slot="title">
                 <el-col :span="12" class='d-text-gray'><h3>账单调整</h3></el-col>
                 <el-col :span="12" class='ar f14 d-text-blue'>
-                    <span class='d-pointer mr15' @click="adjustmentBill && authorityButtons.includes('asystem_finance_1021')">调整</span>
+                    <span class='d-pointer mr15' @click="adjustmentBill" v-if="authorityButtons.includes('asystem_finance_1021')">调整</span>
                 </el-col>
             </el-row>
             <!-- 表格 -->
