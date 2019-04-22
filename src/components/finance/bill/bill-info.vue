@@ -478,6 +478,7 @@ export default {
         // 保存 其他信息
         saveOtherInfo(){
             let otherFbillContent = JSON.stringify({file: {
+                filename: this.fileForm.filename,
                 url: this.fileForm.contractAttachment,
                 fileNames: this.fileForm.attachmentList.map(item => item.attachmentName)
             }})
@@ -501,6 +502,7 @@ export default {
                         let otherFbillContent = JSON.parse(res.data.otherFbillContent || '{}');
                         if(!otherFbillContent.file) return ;
                         this.fileForm = {
+                            filename: otherFbillContent.file.filename || '',
                             attachmentList: (otherFbillContent.file.fileNames || []).map(item => ({ attachmentName: item })),
                             contractAttachment: otherFbillContent.file.url
                         }

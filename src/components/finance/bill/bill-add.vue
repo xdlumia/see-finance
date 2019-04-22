@@ -95,7 +95,7 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="备注" prop="notes" size='small'  >
-                        <el-input type="textarea" v-model.trim="newBillForm.desc" placeholder="请填写备注"></el-input>
+                        <el-input type="textarea" v-model.trim="newBillForm.notes" placeholder="请填写备注"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -202,6 +202,7 @@ export default {
         notes: "" //备注
       },
       fileForm: {
+        filename: '',
         attachmentList: [],
         contractAttachment: ''
       },
@@ -264,6 +265,7 @@ export default {
             if( res ){
 
                 let otherFbillContent = JSON.stringify({file: {
+                    filename: this.fileForm.filename,
                     url: this.fileForm.contractAttachment,
                     fileNames: this.fileForm.attachmentList.map(item => item.attachmentName)
                 }})

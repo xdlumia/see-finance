@@ -32,7 +32,7 @@
             <el-col :span="24" class="d-color-qray f14"></el-col>
             <el-col :span="24" v-show="fileData.contractAttachment">
                 <div>
-                    <a :href="fileData.contractAttachment" class="d-text-blue">{{fileData.contractAttachment}}</a>
+                    <a :href="fileData.contractAttachment" class="d-text-blue">{{fileData.contractAttachment.filename}}</a>
                     <i class="el-icon-remove-outline d-pointer ml10" @click="clearUploadAttachment" v-if="fileData.contractAttachment && !disabled"></i>
                 </div>
             </el-col>
@@ -105,6 +105,7 @@ export default {
     created() {},
     methods: {
         uploadAttachment (fileInfo) {
+            this.fileData.filename = fileInfo.oldName
             this.fileData.contractAttachment = fileInfo.url;
             this.$message({
                 type: 'success',
@@ -125,6 +126,7 @@ export default {
             this.fileData.attachmentList.splice(index, 1);
         },
         clearUploadAttachment () {
+            this.fileData.filename = ''
             this.fileData.contractAttachment = ''
             this.fileData.attachmentList = []
         }
