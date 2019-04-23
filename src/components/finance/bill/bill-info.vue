@@ -443,9 +443,16 @@ export default {
             isShowEdit: false, // 其他信息 编辑
             // 附件
             fileForm: { 
+                filename: '',
                 attachmentList: [],
                 contractAttachment: ''
             },
+            oldFileForm: {
+                filename: '',
+                attachmentList: [],
+                contractAttachment: ''
+            },
+            notes: '',
             otherLoading: false
         }
     },
@@ -472,6 +479,13 @@ export default {
         }
     },
     methods:{
+        // 取消逻辑
+        cleanOtherInfo(){
+            this.toggleOtherInfo();
+            this.fileForm = Object.assign({}, this.oldFileForm);
+            this.billInfo.notes = this.notes;
+        },
+        // 编辑 显隐
         toggleOtherInfo(){
             this.isShowEdit = !this.isShowEdit
         },
@@ -497,11 +511,18 @@ export default {
             .then(res => {
                 if(res.code==200){
                     this.billInfo = res.data || {}
-                    
+
+                    this.notes = res.data.notes
                     if( res.data.otherFbillContent ){
                         let otherFbillContent = JSON.parse(res.data.otherFbillContent || '{}');
                         if(!otherFbillContent.file) return ;
                         this.fileForm = {
+                            filename: otherFbillContent.file.filename || '',
+                            attachmentList: (otherFbillContent.file.fileNames || []).map(item => ({ attachmentName: item })),
+                            contractAttachment: otherFbillContent.file.url
+                        }
+
+                        this.oldFileForm = {
                             filename: otherFbillContent.file.filename || '',
                             attachmentList: (otherFbillContent.file.fileNames || []).map(item => ({ attachmentName: item })),
                             contractAttachment: otherFbillContent.file.url
