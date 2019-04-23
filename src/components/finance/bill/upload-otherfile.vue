@@ -32,10 +32,11 @@
             <el-col :span="24" class="d-color-qray f14"></el-col>
             <el-col :span="24" v-show="fileData.contractAttachment">
                 <div>
-                    <a :href="fileData.contractAttachment" class="d-text-blue">{{fileData.contractAttachment.filename}}</a>
+                    <a :href="fileData.contractAttachment" class="d-text-blue">{{fileData.filename}}</a>
                     <i class="el-icon-remove-outline d-pointer ml10" @click="clearUploadAttachment" v-if="fileData.contractAttachment && !disabled"></i>
                 </div>
             </el-col>
+
             <!-- <el-col :span="18" class="mt10 mb10" v-show="fileData.contractAttachment">
                 <el-input  v-model.trim="fileData.contractAttachment" size="small" disabled></el-input> 
             </el-col>
@@ -44,6 +45,7 @@
                     <el-button type="primary" size="small">下载附件</el-button>
                 </a>
             </el-col> -->
+            
         </el-row>
 
         <el-row class="mb20" v-show="fileData.attachmentList && fileData.attachmentList.length > 0">
