@@ -482,7 +482,7 @@ export default {
         // 取消逻辑
         cleanOtherInfo(){
             this.toggleOtherInfo();
-            this.fileForm = Object.assign({}, this.oldFileForm);
+            this.fileForm = JSON.parse(JSON.stringify(this.oldFileForm));
             this.billInfo.notes = this.notes;
         },
         // 编辑 显隐
@@ -496,11 +496,23 @@ export default {
                 url: this.fileForm.contractAttachment,
                 fileNames: this.fileForm.attachmentList.map(item => item.attachmentName)
             }})
-            this.otherLoading = true;
-            this.$api.seeFinanceService.updateBatchFbill([{ id:this.billInfo.id, notes: this.billInfo.notes ,otherFbillContent }]).then(res => {
-                this.toggleOtherInfo();
-            }).finally(() => {
-                this.otherLoading = false;
+
+             this.$refs.fileForm.$refs.fileForm.validate(res => {
+                 if(res){
+                        this.otherLoading = true;
+                        this.$api.seeFinanceService.updateBatchFbill([{ id:this.billInfo.id, notes: this.billInfo.notes ,otherFbillContent }]).then(res => {
+                            this.toggleOtherInfo();
+                            this.oldFileForm = Object.assign({}, {
+                                filename: this.fileForm.filename || '',
+                                attachmentList: [...this.fileForm.attachmentList] || [],
+                                contractAttachment: this.fileForm.contractAttachment
+                            })
+                            this.notes = this.billInfo.notes
+                        }).finally(() => {
+                            this.otherLoading = false;
+                        })
+                 }
+                
             })
         },
         //默认请求刷新页面
