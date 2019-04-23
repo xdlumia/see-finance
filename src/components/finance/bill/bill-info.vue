@@ -349,7 +349,7 @@
                     <span class='d-pointer mr15' v-if="!isShowEdit" @click="toggleOtherInfo">编辑</span>
                     <template v-else>
                         <span class='d-pointer mr15' @click="saveOtherInfo">保存</span>
-                        <span class='d-pointer mr15' @click="toggleOtherInfo">取消</span>
+                        <span class='d-pointer mr15' @click="cleanOtherInfo">取消</span>
                     </template>
                 </el-col>
             </el-row>
