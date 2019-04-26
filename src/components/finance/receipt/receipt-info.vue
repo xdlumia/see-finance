@@ -26,9 +26,10 @@
         asystem_finance_1015 财务审核
         asystem_finance_1016 责任人审核-->
         <span v-if="receiptInfo.status == 4 && receiptInfo.taskCode">
-            <el-button @click="updateInvalidAudit(6)" type="danger" size="mini">作废驳回</el-button>
-            <el-button @click="updateInvalidAudit('asystem_finance_1015')" v-if="receiptInfo.taskCode == 'asystem_finance_1015' && checkAuthorityButton('asystem_finance_1016',popupInfo.communityId)" type="primary" size="mini">财务审核</el-button>
-            <el-button @click="updateInvalidAudit('asystem_finance_1016')" v-if="receiptInfo.taskCode == 'asystem_finance_1016' && checkAuthorityButton('asystem_finance_1017',popupInfo.communityId)" type="primary" size="mini">财务责任人审核</el-button>
+            <el-button @click="updateInvalidAudit(6)" v-if=" checkAuthorityButton(receiptInfo.taskCode == 'asystem_finance_1015' ? 'asystem_finance_1016' : 'asystem_finance_1017', popupInfo.communityId)"
+                       type="danger" size="mini">作废驳回</el-button>
+            <el-button @click="updateInvalidAudit('asystem_finance_1015')" v-if="receiptInfo.taskCode == 'asystem_finance_1015' && checkAuthorityButton('asystem_finance_1016', popupInfo.communityId)" type="primary" size="mini">财务审核</el-button>
+            <el-button @click="updateInvalidAudit('asystem_finance_1016')" v-if="receiptInfo.taskCode == 'asystem_finance_1016' && checkAuthorityButton('asystem_finance_1017', popupInfo.communityId)" type="primary" size="mini">财务责任人审核</el-button>
         </span>
 
 
