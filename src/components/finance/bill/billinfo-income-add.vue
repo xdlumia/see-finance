@@ -20,7 +20,7 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="发生金额" prop="payCosts" :rules="[{required:true,type:'price'}]">
+                <el-form-item label="发生金额" prop="payCosts">
                     <el-input maxlength="18" v-model.number="addIncomeForm.payCosts" size="small" placeholder="请填写金额"></el-input>
                 </el-form-item>
             </el-col>
@@ -111,7 +111,8 @@ export default {
       addIncomeRules: {
         incomeType: [{ required: true, message: "请选择收支状态" }],
         accountName: [{ required: true, message: "请输入对方帐户名" }],
-        accountDate: [{ required: true, message: "请选择日期时间" }]
+        accountDate: [{ required: true, message: "请选择日期时间" }],
+        payCosts: [{required: true, message: "请输入金额"}, {type: 'positiveFloat'}]
       }
     };
   },
