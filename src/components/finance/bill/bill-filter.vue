@@ -138,7 +138,7 @@
                 ></el-date-picker>
             </el-form-item>
             <el-form-item label="最近收/付款日期" size="mini" class="mb5" prop="paymentRange">
-                <el-select v-model="params.paymentRange" placeholder="请选择">
+                <el-select v-model="params.paymentRange" placeholder="请选择" clearable>
                     <el-option
                     v-for="(item,index) of paymentRangeOption"
                     :key="index"
@@ -242,12 +242,15 @@
                             if(key == 'page' || key == 'limit'){
                                 this.params[key] = this.params[key] || ''
                             }else if(key == 'payStartDate' || key == 'payEndDate'){
-                                var start = new Date().getTime();
-                                // this.params['payStartDate'] = start //开始时间
-                                // this.params['payEndDate'] = start.getTime() + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
                                 
-                                let end = start + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
-                                this.accountDateArry = [start,end]
+                                if( queryCondition['paymentRange'] ){
+                                    var start = new Date().getTime();
+                                    let end = start + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
+                                    this.accountDateArry = [start,end]
+                                }else if( queryCondition['payStartDate'] && queryCondition['payEndDate'] ){
+                                     this.accountDateArry = [queryCondition['payStartDate'], queryCondition['payEndDate']]
+                                }
+                         
                             }else if(key =='revenueArray' || key =='unclearedArray'){
                                 this.params[key] = queryCondition[key] || []
                             }
