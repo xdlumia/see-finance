@@ -160,7 +160,7 @@
                         <el-col :span="12">
                             <el-form-item
                                 prop="sellerName"
-                                :rules="{required:true,message:'请输入名称'}"
+                                :rules="{required:true && !isAsysbusiness,message:'请输入名称'}"
                                 label="名称"
                             >
                                 <el-input
@@ -173,7 +173,7 @@
                         <el-col :span="12">
                             <el-form-item
                                 prop="sellerRatepayerCoding"
-                                :rules="{required:true,message:'请输入纳税人识别号'}"
+                                :rules="{required:true && !isAsysbusiness,message:'请输入纳税人识别号'}"
                                 label="纳税人识别号"
                             >
                                 <el-input
@@ -186,7 +186,7 @@
                         <el-col :span="12">
                             <el-form-item
                                 prop="sellerAddress"
-                                :rules="{required:true,message:'请输入地址'}"
+                                :rules="{required:true && !isAsysbusiness,message:'请输入地址'}"
                                 label="地址"
                             >
                                 <el-input
@@ -199,7 +199,7 @@
                         <el-col :span="12">
                             <el-form-item
                                 prop="sellerPhone"
-                                :rules="[{required:true,min:7,max:20, message:'请输入正确的电话'},{type: 'telePhone', message: '请输入正确的电话'}]"
+                                :rules="[{required:true && !isAsysbusiness,min:7,max:20, message:'请输入正确的电话'},{type: 'telePhone', message: '请输入正确的电话'}]"
                                 label="电话"
                             >
                                 <el-input
@@ -212,7 +212,7 @@
                         <el-col :span="12">
                             <el-form-item
                                 prop="sellerBankName"
-                                :rules="{required:true,message:'请输入开户行'}"
+                                :rules="{required:true && !isAsysbusiness,message:'请输入开户行'}"
                                 label="开户行"
                             >
                                 <el-input
@@ -225,7 +225,7 @@
                         <el-col :span="12">
                             <el-form-item
                                 prop="sellerBankAccount"
-                                :rules="[{required:true,message:'请输入开户行账号'},{type:'bankCard'}]"
+                                :rules="[{required:true && !isAsysbusiness,message:'请输入开户行账号'},{type:'bankCard'}]"
                                 label="开户行账号"
                             >
                                 <el-input
@@ -434,6 +434,10 @@
             //   invoiceForm(){
             //       return this.dialogInfo.data || {}
             //   }
+             isAsysbusiness(){
+                // 判断当前系统为集中式
+                return this.$local.fetch('userInfo').syscode == 'asysbusiness';
+            }
         },
         created () {
             //   如果有id form表单是编辑要回写数据
