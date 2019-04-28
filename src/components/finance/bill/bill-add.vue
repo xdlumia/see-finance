@@ -316,7 +316,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.popup-body{
+.bill-add-box{
   /deep/ .el-form-item{
     padding-bottom: 10px;
   }
