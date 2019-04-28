@@ -13,7 +13,7 @@
             <el-button @click="$emit('update:visible', false)" size='small' class=''>取消</el-button>
             <el-button type="primary" @click="submitForm()" size='small' class=''>保存</el-button>
         </div>
-        <el-form :model="newBillForm" v-loading="loading" :rules="rules" ref="newBillForm" size="small" label-width="100px" class="pr20"  >
+        <el-form :model="newBillForm" v-loading="loading" :rules="rules" ref="newBillForm" size="small" label-width="100px" class="pr20 bill-add-box"  >
             <el-row :gutter="30">
                 <el-col :span="12">
                     <el-form-item label="关联合同"
@@ -315,7 +315,7 @@ export default {
   // computed
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .bill-add-box{
   /deep/ .el-form-item{
     padding-bottom: 10px;
