@@ -220,6 +220,13 @@ export default {
       }
     };
   },
+  computed: {
+    systemCodeNum () {
+      let  code = this.$local.fetch('userInfo').syscode;
+
+      return code === 'asyshotel' ? 9 : code === 'asysbusiness' ? 7 : 5
+    }
+  },
   // created
   // mounted
   // activited
@@ -257,7 +264,7 @@ export default {
             this.newBillForm.feeEndDate = this.newBillForm.feeDateArray[1];
           }
         //   systemCode区分是分散式还是集中式 5是分散式 7是集中式
-          this.newBillForm.systemCode = this.isRentSystem?5:7
+          this.newBillForm.systemCode = this.systemCodeNum
           this.newBillForm.settleStatus = "0";
 
           // 验证附件
@@ -286,9 +293,9 @@ export default {
                       this.loading = false
                   })
             }
-            
+
           });
- 
+
         }
       });
     },
