@@ -63,8 +63,8 @@
         <form-card title="收款方">
             <el-row :gutter="20">
                 <el-col :span='12'>
-                    <el-form-item label="收款单位" prop="takerCompany" :rules="{required:true,message:'请输入交款单位'}">
-                        <el-input type="text" v-model.trim="receiptForm.takerCompany" maxlength="32" placeholder="请输入交款单位" size='small'></el-input>
+                    <el-form-item label="收款单位" prop="takerCompany" :rules="{required:true,message:'请输入收款单位'}">
+                        <el-input type="text" v-model.trim="receiptForm.takerCompany" maxlength="32" placeholder="请输入收款单位" size='small'></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span='12'>
