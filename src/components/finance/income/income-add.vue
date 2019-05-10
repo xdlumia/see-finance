@@ -20,7 +20,7 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="发生金额" prop="payCosts" :rules="{required:true,type:'price'}">
+                <el-form-item label="发生金额" prop="payCosts">
                     <el-input v-model.number="newIncomeForm.payCosts" placeholder="请输入金额"  size="small"></el-input>
                 </el-form-item>
             </el-col>
@@ -116,7 +116,8 @@ export default {
         ],
         accountDate: [
           { required: true, message: "请选择日期时间", trigger: "blur" }
-        ]
+        ],
+        payCosts: [{required: true, message: "请输入金额", trigger: "change"}, {type: 'positiveFloat'}]
       }
     };
   },
