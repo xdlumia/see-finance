@@ -56,13 +56,13 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="联系人" prop="linkman"
-                    :rules="[{required:true,message:'请输入联系人'},{type:'name'}]">
+                    :rules="[{required:!isAsysbusiness,message:'请输入联系人'},{type:'name'}]">
                         <el-input type="text" v-model.trim="newBillForm.linkman" placeholder="请输入联系人"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="联系人方式" prop="linkmanPhone"
-                    :rules="[{required:true,min:7,max:20,message:'请输入正确的联系方式'}]">
+                    :rules="[{required:!isAsysbusiness,min:7,max:20,message:'请输入正确的联系方式'}]">
                         <el-input type="text" v-model.trim="newBillForm.linkmanPhone" placeholder="请输入联系人方式"></el-input>
                     </el-form-item>
                 </el-col>
@@ -225,6 +225,10 @@ export default {
       let  code = this.$local.fetch('userInfo').syscode;
 
       return code === 'asyshotel' ? 9 : code === 'asysbusiness' ? 7 : 5
+    },
+    isAsysbusiness(){
+        // 判断当前系统为集中式
+        return this.$local.fetch('userInfo').syscode == 'asysbusiness';
     }
   },
   // created
