@@ -223,8 +223,7 @@ export default {
   computed: {
     systemCodeNum () {
       let  code = this.$local.fetch('userInfo').syscode;
-
-      return code === 'asyshotel' ? 9 : code === 'asysbusiness' ? 7 : 5
+      return code === 'asyshotel' ? "9" : code === 'asysbusiness' ? "7" : "5"
     },
     isAsysbusiness(){
         // 判断当前系统为集中式

@@ -295,6 +295,11 @@
     import billDunning from "./bill-dunning"; //催缴组件
     import billFooter from "./bill-footer"; //账单列表底部浮层
     let baseURL = window.g.ApiUrl;
+
+    let syscodeType = {
+        'asyshotel' : "9"
+    }
+
     export default {
         // components
         components: {
@@ -363,7 +368,7 @@
                     order: "",
                     limit: 15,
                     page: 1,
-                    systemCode:this.$local.fetch('userInfo').syscode,
+                    systemCode: syscodeType[this.$local.fetch('userInfo').syscode] || this.$local.fetch('userInfo').syscode,
                 },
                 isShirk:false, //是否显示金额统计
             };
