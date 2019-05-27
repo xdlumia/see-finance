@@ -20,12 +20,12 @@
                     size="mini"
                 ></el-input>
             </el-form-item>
-            <el-form-item label="合同号" prop="contractCode">
+            <el-form-item label="合同编号" prop="contractCode">
                 <el-input
                     type="text"
                     v-model.trim="params.contractCode"
                     style="width:100%"
-                    placeholder="请输入合同号"
+                    placeholder="请输入合同编号"
                     size="mini"
                 ></el-input>
             </el-form-item>
