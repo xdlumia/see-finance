@@ -41,7 +41,7 @@
               </el-button>
               <el-button v-if="authorityBtn.includes('asystem_finance_1007')" size='medium' @click='exportFinance'>导出表格</el-button>
               <!-- 筛选 -->
-              <income-filter @submit="$refs.incomeTable.reload()" :params="queryForm"></income-filter>
+              <income-filter @submit="$refs.incomeTable.reload(1)" :params="queryForm"></income-filter>
           </el-col>
         </el-row>
       </div>

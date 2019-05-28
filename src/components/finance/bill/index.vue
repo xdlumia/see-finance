@@ -14,7 +14,7 @@
                     <!-- <el-checkbox :indeterminate="isFundIndeterminate" v-model="Fund" @change="checkAllFund">全选</el-checkbox> -->
                     <article class="d-text-gray">
                         收付款方(笔):
-                        <el-checkbox-group class="d-inline" :min="1" v-model="queryForm.revenueArray" @change="tableReload()">
+                        <el-checkbox-group class="d-inline" :min="1" v-model="queryForm.revenueArray" @change="tableReload(1)">
                             <el-checkbox v-for="(item,index) of revenueData" :key="index" :label="item.value">{{item.label}}({{item.count}})</el-checkbox>
                         </el-checkbox-group>
                     </article>
@@ -23,7 +23,7 @@
                     <!-- <el-checkbox :indeterminate="isUnclearIndeterminate" v-model="checkAll" @change="checkAllUnclear">全选</el-checkbox> -->
                     <article class="d-text-gray">
                         未结清(笔):
-                        <el-checkbox-group class="d-inline" v-model="queryForm.unclearedArray" @change="tableReload()">
+                        <el-checkbox-group class="d-inline" v-model="queryForm.unclearedArray" @change="tableReload(1)">
                             <el-checkbox v-for="(item,index) of unclearedData" :key="index" :label="item.value">{{item.label}}({{item.count}})</el-checkbox>
                         </el-checkbox-group>
                     </article>
@@ -72,7 +72,7 @@
                     v-if="authorityButtons.includes('asystem_contract_res_1001')&&activeContract=='seeContractService.getContractList'" module="contract"
                 ></dutySetting> -->
                 <!-- 筛选组件 -->
-                <bill-filter @submit="tableReload" :params="queryForm"></bill-filter>
+                <bill-filter @submit="tableReload(1)" :params="queryForm"></bill-filter>
             </div>
         </div>
         <div class="d-flex-tcb" style="height:calc(100vh - 176px);">
@@ -495,9 +495,10 @@
                 }
             },
             // 初始化数据
-            tableReload () {
+            tableReload (page = '') {
                 // 表格数据刷新
-                this.$refs.billTable.reload()
+                page && (this.queryForm.page = page);
+                this.$refs.billTable.reload(page)
                 // 根据条件统计客户账单数量
                 this.queryFbillClientTypeStatistics(this.queryForm)
                 // 根据条件统计客户账单数量
