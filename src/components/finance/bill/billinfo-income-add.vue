@@ -53,13 +53,13 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="汇款方式" prop="payMethod">
+                <el-form-item label="收款方式" prop="payMethod">
                     <d-select
                     v-model="addIncomeForm.payMethod"
                     valueKey="code"
                     size="small"
                     dicCode='FM_FUKUAN_FS'
-                    placeholder="请选择汇款方式">
+                    placeholder="请选择收款方式">
                     </d-select>
                 </el-form-item>
             </el-col>
@@ -71,6 +71,18 @@
             <el-col :span="12">
                 <el-form-item label="流水凭证号" prop="serialNumber">
                     <el-input maxlength="32" type="text" v-model.trim="addIncomeForm.serialNumber" size="small" placeholder="请填写流水凭证号"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="12" v-if="isAsysHotel">
+                <el-form-item label="楼盘名称" prop="communityId">
+                    <el-select v-model.trim="communityItem" filterable placeholder="请选择">
+                        <el-option
+                            v-for="item in communityList"
+                            :key="item.id"
+                            :label="item.communityName"
+                            :value="item">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -106,27 +118,42 @@ export default {
         accountDesc: "", //收款机构
         serialNumber: "", //凭证流水号
         transferNotes: "", //备注
-        billId: this.dialogInfo.billId
+        billId: this.dialogInfo.billId,
+        communityName: "", // 楼盘名称
+        communityId: "" //楼盘id
       },
       addIncomeRules: {
         incomeType: [{ required: true, message: "请选择收支状态" }],
         accountName: [{ required: true, message: "请输入对方帐户名" }],
         accountDate: [{ required: true, message: "请选择日期时间" }],
-        payCosts: [{required: true, message: "请输入金额"}, {type: 'positiveFloat'}]
+        payCosts: [{required: true, message: "请输入金额"}, {type: 'positiveFloat'}],
+        communityId: [
+            { required: true, message: "请选择楼盘", trigger: "blur" }
+        ]
       }
     };
   },
   // created
-  created() {},
+  created() {
+        this.isAsysHotel && this.getCommunityList();
+  },
   // mounted
   // activited
   // update
   // beforeRouteUpdate
   // metods
+  computed: {
+      isAsysHotel(){
+        // 判断当前系统为凯亚酒店
+        return this.$local.fetch('userInfo').syscode == 'asyshotel';
+    }
+  },
   methods: {
     //筛选提交
     submitForm(formName) {
-
+        
+      this.addIncomeForm.communityName = this.communityItem.communityName
+      this.addIncomeForm.communityId = this.communityItem.id
       //新增流水匹配保存
       this.$refs.addIncomeForm.validate(valid => {
         if (valid) {
@@ -146,6 +173,15 @@ export default {
             })
         }
       });
+    },
+    getCommunityList(){
+        this.$api.seeFinanceService.querySysCodeCommunityList({
+            syscode: this.$local.fetch('userInfo').syscode
+        }).then(res => {
+            if(res.code == 200){
+                this.communityList = res.data;
+            }
+        })
     }
   },
   // filter

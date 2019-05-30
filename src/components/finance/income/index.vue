@@ -88,6 +88,12 @@
           <el-table-column sortable='custom' prop="unmatchAmount" label="未匹配金额" align='center'>
           </el-table-column>
 
+          <el-table-column sortable='custom' prop="unmatchAmount" label="楼盘名称" align='center'>
+              <template slot-scope="scope">
+                {{ scope.row.communityName || '-' }}
+              </template>
+          </el-table-column>
+
           <el-table-column sortable='custom' prop="serialNumber" label="流水凭证号" align='center'>
           </el-table-column>
 

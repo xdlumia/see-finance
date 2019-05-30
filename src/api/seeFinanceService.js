@@ -86,6 +86,12 @@ export default {
     getFinanceBillInfo(params) { //流水账单详细信息
         return Api.get(baseURL.seeFinanceService + apiURL.getFinanceBillInfo + '/' + params)
     },
+    // 获取系统对应楼盘列表
+    querySysCodeCommunityList(params){
+        return Api.get(baseURL.seeFinanceService + '/fincomerecord/querySysCodeCommunityList', params) 
+    },
+    
+
 
 
     /**
