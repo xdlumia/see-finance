@@ -823,7 +823,7 @@ export default {
             // 刷新当前操作列表
             this.$refs[tableRef].reload()
             // 刷新账单列表
-            this.$emit("submit",'success')
+            this.$emit("submit")
             // 刷新详情
             this.getBillInfo()
             // 如果当前是保存或者打印匹配 刷新收支流水列表 并且刷新账单详情

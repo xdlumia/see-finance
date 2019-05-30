@@ -76,7 +76,7 @@
             </el-col>
             <el-col :span="12" v-if="isAsysHotel">
                 <el-form-item label="楼盘名称" prop="communityId">
-                    <el-select v-model.trim="communityItem" filterable placeholder="请选择">
+                    <el-select v-model.trim="communityItem" filterable placeholder="请选择" class="wfull">
                         <el-option
                             v-for="item in communityList"
                             :key="item.id"

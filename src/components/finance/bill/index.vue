@@ -134,7 +134,7 @@
                     <template slot-scope="scope">{{getHouseNumber(scope.row.houseArray)}}</template>
                 </el-table-column>
                 <el-table-column show-overflow-tooltip align="center" label="解约类型" width="90">
-                    <template slot-scope="scope">{{(scope.row.dissolutionType | dictionary('FM_JYLX')) || '-'}}</template>
+                    <template slot-scope="scope">{{scope.row.dissolutionType | dictionary('FM_JYLX') || '-'}}</template>
                 </el-table-column>
                 <el-table-column show-overflow-tooltip align="center" label="费用类型" width="90">
                     <template slot-scope="scope">{{scope.row.feeType | dictionary('ZD_FY_LX')}}</template>
