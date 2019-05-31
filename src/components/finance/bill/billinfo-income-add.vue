@@ -75,7 +75,7 @@
             </el-col>
             <el-col :span="12" v-if="isAsysHotel">
                 <el-form-item label="楼盘名称" prop="communityId">
-                    <el-select v-model.trim="communityItem" filterable placeholder="请选择" class="wfull">
+                    <el-select v-model.trim="communityItem" value-key='id' filterable placeholder="请选择" class="wfull">
                         <el-option
                             v-for="item in communityList"
                             :key="item.id"
@@ -130,7 +130,9 @@ export default {
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
         ]
-      }
+      },
+      communityList: [],
+      communityItem: null
     };
   },
   // created
@@ -150,10 +152,13 @@ export default {
   },
   methods: {
     //筛选提交
-    submitForm(formName) {
+    submitForm(formName) {  
         
-      this.addIncomeForm.communityName = this.communityItem.communityName
-      this.addIncomeForm.communityId = this.communityItem.id
+    if( this.communityItem ){
+        this.addIncomeForm.communityName = this.communityItem.communityName
+        this.addIncomeForm.communityId = this.communityItem.id
+    }
+      
       //新增流水匹配保存
       this.$refs.addIncomeForm.validate(valid => {
         if (valid) {

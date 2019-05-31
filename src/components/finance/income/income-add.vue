@@ -76,7 +76,7 @@
             </el-col>
             <el-col :span="12" v-if="isAsysHotel">
                 <el-form-item label="楼盘名称" prop="communityId">
-                    <el-select v-model.trim="communityItem" filterable placeholder="请选择" class="wfull">
+                    <el-select v-model.trim="communityItem" value-key="id" filterable placeholder="请选择" class="wfull">
                         <el-option
                             v-for="item in communityList"
                             :key="item.id"
@@ -158,8 +158,10 @@ export default {
   methods: {
     submitForm() {
 
-      this.newIncomeForm.communityName = this.communityItem.communityName
-      this.newIncomeForm.communityId = this.communityItem.id
+        if(this.communityItem){
+            this.newIncomeForm.communityName = this.communityItem.communityName
+            this.newIncomeForm.communityId = this.communityItem.id
+        }
 
       this.$refs.newIncomeForm.validate(valid => {
         if (valid) {
