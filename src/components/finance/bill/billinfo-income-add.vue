@@ -181,7 +181,8 @@ export default {
     },
     getCommunityList(){
         this.$api.seeFinanceService.querySysCodeCommunityList({
-            sysCode: this.$local.fetch('userInfo').syscode
+            sysCode: this.$local.fetch('userInfo').syscode,
+            communityId: this.dialogInfo.communityId
         }).then(res => {
             if(res.code == 200){
                 this.communityList = res.data;

@@ -155,7 +155,8 @@ export default {
         matchStates: [], //匹配状态
         accountBeginDate: "", //入账开始日期
         accountEndDate: "", //入账结束日期
-        accountDateArry: [] //日期数组
+        accountDateArry: [], //日期数组
+        communityName: "" // 楼盘名称
       },
       authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
     };

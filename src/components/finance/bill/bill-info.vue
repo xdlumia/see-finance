@@ -58,6 +58,7 @@
                 <el-col :span="12">收/付款方：{{billInfo.accountName || '-'}}</el-col>
                 <el-col :span="12">联系方式：{{billInfo.linkmanPhone || '-'}}</el-col>
                 <el-col :span="12">逾期状态：{{billInfo.overDays==0?'正常':'逾期(' + billInfo.overDays + '天)'}}</el-col>
+                <el-col :span="12">解约类型：{{billInfo.dissolutionType | dictionary('FM_JYLX') || '-'}}</el-col>
                 <el-col :span="12" v-if="!isRentSystem">滞纳金上限：{{billInfo.lateFeeLimit || '-'}} %</el-col>
                 <el-col :span="12" v-if="!isRentSystem">滞纳金比例：{{billInfo.lateFeeRatio || '-'}} %</el-col>
                 <el-col :span="12" v-if="!isRentSystem">滞纳金金额：{{billInfo.lateFeeMoney || '-'}} 元</el-col>
@@ -553,7 +554,8 @@ export default {
                 title:'添加流水',
                 width:'700px',
                 component:'billinfoIncomeAdd',
-                billId:this.billIdInfo.billId
+                billId:this.billIdInfo.billId,
+                communityId: this.billInfo.communityId
             }
         },
         // 匹配流水

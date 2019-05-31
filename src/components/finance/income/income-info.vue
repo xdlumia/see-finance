@@ -23,6 +23,7 @@
                 <span class='fl mt10' style='width:50%'>收款机构: {{resData.accountDesc}}</span>
                 <span class='fl mt10' style='width:50%'>入账日期: {{resData.accountDate | timeToStr('YYYY-MM-DD HH:mm:ss')}}</span>
                 <span class='fl mt10' style='width:50%'>付款方式: {{resData.payMethod|dictionary('FM_FUKUAN_FS')}}</span>
+                <span class='fl mt10' style='width:50%'>楼盘名称: {{resData.communityName || '-'}}</span>
                 <span class='fl mt10' style='width:50%'>备注: {{resData.transferNotes}}</span>
             </div>
         </div>

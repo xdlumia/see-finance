@@ -101,6 +101,15 @@
         align='center'
         width="120">
         </el-table-column>
+        <el-table-column
+            prop="communityName"
+            label="楼盘名称"
+            align='center'
+        >
+            <template slot-scope="scope">
+                {{scope.row.communityName || '-'}}
+            </template>
+        </el-table-column>
         <el-table-column property="transferNotes" label="备注" align='center'></el-table-column>
         <el-table-column
         sortable

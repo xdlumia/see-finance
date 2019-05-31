@@ -23,6 +23,16 @@
                 <el-input type="text" v-model.trim="params.accountName"  placeholder='请输入名称' style='width:100%' size='mini'></el-input>
             </el-form-item>
 
+            <el-form-item class='mb5' label="楼盘名称" prop="communityName">
+                <el-input
+                    type="text"
+                    v-model.trim="params.communityName"
+                    placeholder="请输入楼盘名称"
+                    style="width:100%"
+                    size="mini"
+                ></el-input>
+            </el-form-item>
+
             <el-form-item label="费用类型" style='width:100%' size='mini' prop='feeType' class='mb5'>
                 <d-select v-model="params.feeType"  placeholder='请选择费用类型' valueKey="code" size="mini" dicCode='ZD_FY_LX'>
                 </d-select>

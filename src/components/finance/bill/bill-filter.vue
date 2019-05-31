@@ -74,6 +74,19 @@
                     <el-option label="逾期" value="2"></el-option>
                 </el-select>
             </el-form-item>
+            
+            <el-form-item label="解约类型" style="width:100%" size="mini" class="mb5" prop="dissolutionType">
+                <el-select v-model="params.dissolutionType" style="width:100%" placeholder="请选择解约类型">
+                    <el-option label="全部" value="" />
+                    
+                    <el-option
+                        v-for="(item, index) in dictionaryOptions('FM_JYLX')"
+                        :key="index"
+                        :label="item.content"
+                        :value="item.code">
+                    </el-option>
+                </el-select>
+            </el-form-item>
 
             <el-form-item
                 label="结清状态"

@@ -367,6 +367,7 @@
                     limit: 15,
                     page: 1,
                     systemCode:this.$local.fetch('userInfo').syscode,
+                    dissolutionType: "" // 解约状态
                 },
                 isShirk:false, //是否显示金额统计
             };
