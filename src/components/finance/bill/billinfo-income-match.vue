@@ -196,6 +196,7 @@ export default {
             serialNumber:'',//凭证流水号
             sidx:'',//排序字段
             order:'',//排序规则
+            communityId: this.dialogInfo.data.communityId
         },
         matchMoneyForm:{
             amount:this.dialogInfo.data.amount,//数量
