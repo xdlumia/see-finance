@@ -225,7 +225,7 @@
                         <el-button
                             size="mini"
                             type="danger"
-                            :disabled="scope.row.factAmount > 0 ||  scope.row.billSource!=1 || scope.row.settleStatus!=0 || scope.row.settleStatus==3"
+                            :disabled="scope.row.factAmount > 0 ||  scope.row.billSource!=1 || scope.row.settleStatus!=0 || scope.row.settleStatus==3 || scope.row.billSource == 6"
                             v-if="authorityBtn.includes('asystem_finance_1005')"
                             @click.stop="delItem(scope.row)"
                         >删除</el-button>
@@ -258,7 +258,7 @@
                 <el-button
                     size="mini"
                     @click="closeFbill"
-                    v-if="authorityBtn.includes('asystem_finance_1020')"
+                    v-if="authorityBtn.includes('asystem_finance_1020') || billRowData.billSource != 6"
                 >关闭账单</el-button>
             </span>
             <bill-info
@@ -381,7 +381,8 @@
                     2: '物业生成',
                     3: '退租结算',
                     4: '服务订单',
-                    5: '合同手动添加'
+                    5: '合同手动添加',
+                    6: '酒店自动生成'
                 }
             }
         },
