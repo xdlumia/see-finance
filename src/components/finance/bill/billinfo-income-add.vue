@@ -53,13 +53,13 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="收款方式" prop="payMethod">
+                <el-form-item label="付款方式" prop="payMethod">
                     <d-select
                     v-model="addIncomeForm.payMethod"
                     valueKey="code"
                     size="small"
                     dicCode='FM_FUKUAN_FS'
-                    placeholder="请选择收款方式">
+                    placeholder="请选择付款方式">
                     </d-select>
                 </el-form-item>
             </el-col>
