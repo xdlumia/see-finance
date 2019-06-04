@@ -60,7 +60,7 @@
                     valueKey="code"  
                     size="small" 
                     placeholder="请选择付款方式"
-                    dicCode='FB_PAYMENT_TYPE'>
+                    dicCode='HT_ZJ_ZFFS'>
                     </d-select>
                 </el-form-item>
             </el-col>

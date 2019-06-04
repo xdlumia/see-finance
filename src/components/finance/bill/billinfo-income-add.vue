@@ -58,7 +58,7 @@
                     v-model="addIncomeForm.payMethod"
                     valueKey="code"
                     size="small"
-                    dicCode='FB_PAYMENT_TYPE'
+                    dicCode='HT_ZJ_ZFFS'
                     placeholder="请选择付款方式">
                     </d-select>
                 </el-form-item>
