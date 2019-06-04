@@ -258,7 +258,7 @@
                 <el-button
                     size="mini"
                     @click="closeFbill"
-                    v-if="authorityBtn.includes('asystem_finance_1020') || billRowData.billSource != 6"
+                    v-if="authorityBtn.includes('asystem_finance_1020') && billRowData.billSource != 6"
                 >关闭账单</el-button>
             </span>
             <bill-info
