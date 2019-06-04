@@ -21,7 +21,7 @@
             </el-col>
             <el-col :span="12">
                 <el-form-item label="发生金额" prop="payCosts">
-                    <el-input v-model.number="newIncomeForm.payCosts" placeholder="请输入金额"  size="small"></el-input>
+                    <el-input maxlength="14" v-model.number="newIncomeForm.payCosts" placeholder="请输入金额"  size="small"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -131,7 +131,7 @@ export default {
         accountDate: [
           { required: true, message: "请选择日期时间", trigger: "blur" }
         ],
-        payCosts: [{required: true, message: "请输入金额", trigger: "change"}, {type: 'positiveFloat'}],
+        payCosts: [{required: true, message: "请输入金额", trigger: "change"}, {type: 'price'}],
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
         ]
