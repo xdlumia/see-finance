@@ -47,6 +47,10 @@
                     size="mini"
                 ></el-input>
             </el-form-item>
+
+            <el-form-item label="隐藏0元账单" prop="isZero">
+                <el-checkbox v-model="isZero">隐藏0元账单</el-checkbox>
+            </el-form-item>
             <el-form-item label="费用类型" style="width:100%" size="mini" prop="feeType">
                 <el-select
                     v-model="params.feeType"
@@ -197,6 +201,7 @@
                     label:'后三月',
                     code:90,
                 }],
+                isZero: false
             };
         },
         // created
@@ -352,6 +357,9 @@
             }
         },
         watch: {
+            isZero(bool){
+                this.params.isZero = +bool
+            }
         }
     };
 </script>
