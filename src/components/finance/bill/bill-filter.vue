@@ -219,6 +219,7 @@
                 this.accountDateArry = []
                 this.feeStartArr = []
                 this.feeEndArr = []
+                this.isZero = false;
                 this.$refs[formName].resetFields();
             },
             //取消筛选
@@ -226,6 +227,7 @@
                 this.accountDateArry = []
                 this.feeStartArr = []
                 this.feeEndArr = []
+                this.isZero = false;
                 this.$refs[formName].resetFields();
                 this.filterFlag = false;
             },
