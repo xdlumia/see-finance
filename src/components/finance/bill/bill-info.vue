@@ -62,7 +62,8 @@
                 <el-col :span="12" v-if="!isRentSystem">滞纳金上限：{{billInfo.lateFeeLimit || '-'}} %</el-col>
                 <el-col :span="12" v-if="!isRentSystem">滞纳金比例：{{billInfo.lateFeeRatio || '-'}} %</el-col>
                 <el-col :span="12" v-if="!isRentSystem">滞纳金金额：{{billInfo.lateFeeMoney || '-'}} 元</el-col>
-                <el-col :span="12">备注：{{billInfo.notes || '-'}}</el-col>
+                <el-col :span="24" v-if="!isAsysbusiness">公司银行账号：开户名称【{{frimData.firmAccountName || '-'}}】，开户银行【{{frimData.firmBankName || '-'}}】，开户账号【{{frimData.firmAccountNumber || '-'}}】</el-col>
+                <el-col :span="24">备注：{{billInfo.notes || '-'}}</el-col>
 
                 <!-- <el-col :span="12">费用类型：{{billInfo.feeType | dictionary('ZD_FY_LX')}}</el-col>
                 <el-col :span="12">逾期状态：{{billInfo.overDays==0?'正常':'逾期(' + billInfo.overDays + '天)'}}</el-col>
@@ -454,12 +455,19 @@ export default {
                 contractAttachment: ''
             },
             notes: '',
-            otherLoading: false
+            otherLoading: false,
+            frimData: {}
         }
     },
     // created
     created(){
         this.getBillInfo()
+    },
+    computed: {
+        isAsysbusiness(){
+            // 判断当前系统为集中式
+            return this.$local.fetch('userInfo').syscode == 'asysbusiness';
+        }
     },
     // mounted
     // activited
@@ -540,6 +548,7 @@ export default {
                             attachmentList: (otherFbillContent.file.fileNames || []).map(item => ({ attachmentName: item })),
                             contractAttachment: otherFbillContent.file.url
                         }
+                        this.frimData = otherFbillContent.firmAccountVo || {}
                     }
                 }
             })
