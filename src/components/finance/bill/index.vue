@@ -421,9 +421,9 @@
                 }
 
 
-                let url = baseURL.seeFinanceService + "/fbill/export?" + strParams;;
+                let url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
                 if( this.isAsysHotel ){
-                    url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
+                    url = baseURL.seeFinanceService + "/fbill/export?" + strParams;;
                 }
                 window.location.href = url;
             },
