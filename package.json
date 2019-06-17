@@ -1,7 +1,7 @@
 {
   "name": "see-finance",
   "description": "see-finance project",
-  "version": "1.0.52",
+  "version": "1.0.53-beta1",
   "author": "xd",
   "license": "MIT",
   "main": "dist/index.js",

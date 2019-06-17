@@ -385,6 +385,10 @@
                     5: '合同手动添加',
                     6: '酒店自动生成'
                 }
+            },
+            isAsysHotel(){
+                // 判断当前系统为凯亚酒店
+                return this.$local.fetch('userInfo').syscode == 'asyshotel';
             }
         },
         // created
@@ -415,7 +419,13 @@
                         strParams += `${key}=${this.queryForm[key]}&`
                     }
                 }
-                window.location.href = baseURL.seeFinanceService + "/fbill/export?" + strParams;
+
+
+                let url = baseURL.seeFinanceService + "/fbill/export?" + strParams;;
+                if( this.isAsysHotel ){
+                    url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
+                }
+                window.location.href = url;
             },
             // 切换账单类型
             // tabsHandle (data) {
