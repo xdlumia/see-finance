@@ -536,6 +536,8 @@ export default {
                     this.notes = res.data.notes
                     if( res.data.otherFbillContent ){
                         let otherFbillContent = JSON.parse(res.data.otherFbillContent || '{}');
+                        this.frimData = otherFbillContent.firmAccountVo || {}
+
                         if(!otherFbillContent.file) return ;
                         this.fileForm = {
                             filename: otherFbillContent.file.filename || '',
@@ -548,7 +550,8 @@ export default {
                             attachmentList: (otherFbillContent.file.fileNames || []).map(item => ({ attachmentName: item })),
                             contractAttachment: otherFbillContent.file.url
                         }
-                        this.frimData = otherFbillContent.firmAccountVo || {}
+
+                        
                     }
                 }
             })
