@@ -15,9 +15,10 @@
                     <el-col :span="14" title="" class="d-elip">{{item.fileName || '-'}}</el-col>
                     <el-col :span="5" class="ac d-pointer">
                       <a v-if="item.state == 0">生成中</a>
-                      <a v-if="item.state == 1" class="active d-text-gray" :href="item.filePath" traget="_blank">下载</a>
+                      <a v-else-if="item.state == 1" class="active d-text-gray" :href="item.filePath" traget="_blank">下载</a>
+                      <a v-else-if="item.state == 2">生成失败</a>
                       </el-col>
-                    <el-col :span="5" class="ac d-pointer"><i class="active el-icon-delete" @click="delBill(item,index)"></i></el-col>
+                    <el-col :span="5" v-if="item.state==1" class="ac d-pointer"><i class="active el-icon-delete" @click="delBill(item,index)"></i></el-col>
                 </el-row>
                 <el-col :span="24" class="ac"><el-button class="d-text-gray" type="text" :disabled="isShowMore" @click="getBillList(true)" :loading="loading">{{isShowMore?'没有了':'加载更多'}}</el-button></el-col>
                 <el-col :span="24" class="ac"><el-button class="wfull d-text-gray bt" type="text" @click="delBill(billList)">清空列表</el-button></el-col>
