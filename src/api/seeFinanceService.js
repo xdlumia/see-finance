@@ -194,6 +194,12 @@ export default {
         return Api.post(baseURL.seeFinanceService + '/fbill/updateBatchFbill', params);
     },
 
+    // 导出表格
+    downloadExportFbill(){
+        return Api.get(baseURL.seeFinanceService + '/fbill/downloadExportFbill', params);
+    },
+    
+
 
 
     /**

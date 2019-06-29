@@ -402,23 +402,29 @@
         methods: {
             //导出
             exportTable () {
-                let strParams = `token=${localStorage.token}&finger=${localStorage.finger}&`
-                this.multipleSelection.forEach(item => {
-                    strParams += "ids=" + item.id + '&';
+                // let strParams = `token=${localStorage.token}&finger=${localStorage.finger}&`
+                // this.multipleSelection.forEach(item => {
+                //     strParams += "ids=" + item.id + '&';
+                // })
+                // for(let key in this.queryForm){
+                //     if(this.queryForm[key] instanceof Array){
+                //         this.queryForm[key].forEach(item => {
+                //            strParams += `${key}=${item}&`
+                //         })
+                //     }else{
+                //         strParams += `${key}=${this.queryForm[key]}&`
+                //     }
+                // }
+
+
+                // let url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
+                // window.location.href = url;
+
+                this.$api.seeFinanceService.downloadExportFbill().then(res => {
+                    console.log(res);
                 })
-                for(let key in this.queryForm){
-                    if(this.queryForm[key] instanceof Array){
-                        this.queryForm[key].forEach(item => {
-                           strParams += `${key}=${item}&`
-                        })
-                    }else{
-                        strParams += `${key}=${this.queryForm[key]}&`
-                    }
-                }
 
 
-                let url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
-                window.location.href = url;
             },
             // 切换账单类型
             // tabsHandle (data) {

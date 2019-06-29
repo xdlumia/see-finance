@@ -75,7 +75,7 @@
             </el-col>
             <el-col :span="12" v-if="isAsysHotel">
                 <el-form-item label="楼盘名称" prop="communityId">
-                    <el-select v-model.trim="communityItem" value-key='id' filterable placeholder="请选择" class="wfull">
+                    <el-select v-model.trim="communityItem" value-key='id' filterable placeholder="请选择" class="wfull" disabled>
                         <el-option
                             v-for="item in communityList"
                             :key="item.id"
@@ -185,6 +185,11 @@ export default {
             communityId: this.dialogInfo.communityId
         }).then(res => {
             if(res.code == 200){
+                res.data.forEach(item => {
+                    item.id == this.dialogInfo.communityId && (
+                        this.communityItem = item
+                    )
+                })
                 this.communityList = res.data;
             }
         })
