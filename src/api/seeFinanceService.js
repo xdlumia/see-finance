@@ -87,10 +87,10 @@ export default {
         return Api.get(baseURL.seeFinanceService + apiURL.getFinanceBillInfo + '/' + params)
     },
     // 获取系统对应楼盘列表
-    querySysCodeCommunityList(params){
-        return Api.get(baseURL.seeFinanceService + '/fincomerecord/querySysCodeCommunityList', params) 
+    querySysCodeCommunityList(params) {
+        return Api.get(baseURL.seeFinanceService + '/fincomerecord/querySysCodeCommunityList', params)
     },
-    
+
 
 
 
@@ -195,10 +195,10 @@ export default {
     },
 
     // 导出表格
-    downloadExportFbill(){
+    downloadExportFbill(params) {
         return Api.get(baseURL.seeFinanceService + '/fbill/downloadExportFbill', params);
     },
-    
+
 
 
 
