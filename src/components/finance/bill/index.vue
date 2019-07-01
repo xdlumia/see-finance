@@ -420,7 +420,7 @@
                 // let url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
                 // window.location.href = url;
 
-                this.$api.seeFinanceService.downloadExportFbill().then(res => {
+                this.$api.seeFinanceService.downloadExportFbill(this.queryForm).then(res => {
                     console.log(res);
                 })
 
