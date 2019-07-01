@@ -4,7 +4,10 @@
             placement="top-end"
             v-model="popoverVisible"
             width="350"
-            trigger="click">
+            trigger="click"
+            @show="show"
+            @hide="hide"
+            >
             <div class="d-absolute" style="right:10px; top:10px; font-size:20px; z-index:1">
                 <i class="el-icon-close d-pointer" title="关闭消息列表" @click="popoverVisible = !popoverVisible"></i>
             </div>
@@ -55,6 +58,12 @@ export default {
   },
   beforeMount () {},
   methods: {
+    show(){
+      this.$emit('toggle', true);
+    },
+    hide(){
+      this.$emit('toggle', false);
+    },
     getBillList (more) {
       if (more) {
           this.queryParams.page+=1
@@ -91,14 +100,11 @@ export default {
       }).catch(() => { })
     }
   },
-  computed: {
-  },
   watch: {
-
-    // 刷新消息列表
-    popoverVisible (val) {
-      if (val) {
-        this.queryParams.page = 1
+    isLockkScreen(bool){
+      this.popoverVisible = bool;
+      if (bool) {
+        this.queryParams.page = 1;
         this.getBillList()
       }
     }
