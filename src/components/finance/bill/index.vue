@@ -421,7 +421,7 @@
                 // window.location.href = url;
 
                 this.$api.seeFinanceService.downloadExportFbill(this.queryForm).then(res => {
-                    console.log(res);
+                    this.$store.commit('setIsDownShow', true);
                 })
 
 
