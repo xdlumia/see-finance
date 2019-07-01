@@ -42,7 +42,7 @@ export default {
       // 查询参数。
       queryParams: {
         sysCode: this.$local.fetch('userInfo').syscode,
-        limit: 1,
+        limit: 10,
         page: 1
       },
       // 账单列表。
@@ -62,10 +62,11 @@ export default {
       this.$api.bizSystemService.downloadList(this.queryParams)
         .then(res => {
           let data = res.data || []
-          this.billList = data
           this.isShowMore = res.curr == res.pagers
           if (more) {
             this.billList = [...this.billList, ...data]
+          }else{
+            this.billList = data
           }
         })
         .finally(() => {
