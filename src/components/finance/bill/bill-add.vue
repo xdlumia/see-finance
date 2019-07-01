@@ -290,7 +290,7 @@ export default {
                       // 关闭侧边栏
                       this.$emit("update:visible", false);
                       // 提交刷新
-                      this.$emit("submit", "reload");
+                      this.$emit("submit");
                     }
                   })
                   .finally(()=>{
