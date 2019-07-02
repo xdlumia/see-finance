@@ -23,8 +23,8 @@
                       </el-col>
                     <el-col :span="5" v-if="item.state==1" class="ac d-pointer"><i class="active el-icon-delete" @click="delBill(item,index)"></i></el-col>
                 </el-row>
-                <el-col :span="24" class="ac"><el-button class="d-text-gray" type="text" :disabled="isShowMore" @click="getBillList(true)" :loading="loading">{{isShowMore?'没有了':'加载更多'}}</el-button></el-col>
-                <el-col :span="24" class="ac"><el-button class="wfull d-text-gray bt" type="text" @click="delBill(billList)">删除全部</el-button></el-col>
+                <el-col :span="24" class="ac"><el-button class="d-text-gray" type="text" :disabled="isShowMore || !billList.length" @click="getBillList(true)" :loading="loading">{{isShowMore || !billList.length?'没有了':'加载更多'}}</el-button></el-col>
+                <el-col :span="24" class="ac" v-if="billList.length"><el-button class="wfull d-text-gray bt" type="text" @click="delBill(billList)">删除全部</el-button></el-col>
             </div>
             <slot><i slot="reference" class="f18 el-icon-download d-pointer"></i></slot>
         </el-popover>
