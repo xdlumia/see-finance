@@ -403,9 +403,7 @@
             //导出
             exportTable () {
                 // let strParams = `token=${localStorage.token}&finger=${localStorage.finger}&`
-                // this.multipleSelection.forEach(item => {
-                //     strParams += "ids=" + item.id + '&';
-                // })
+                
                 // for(let key in this.queryForm){
                 //     if(this.queryForm[key] instanceof Array){
                 //         this.queryForm[key].forEach(item => {
@@ -419,8 +417,10 @@
 
                 // let url = baseURL.seeFinanceService + "/fbill/exportFbill?" + strParams;;
                 // window.location.href = url;
-
-                this.$api.seeFinanceService.downloadExportFbill(this.queryForm).then(res => {
+                let ids = this.multipleSelection.map(item => item.id) || [];
+                let params = this.queryForm
+                ids.length && (params.ids = ids);
+                this.$api.seeFinanceService.downloadExportFbill(params).then(res => {
                     this.$store.commit('setIsDownShow', true);
                 })
 
