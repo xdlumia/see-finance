@@ -95,7 +95,7 @@
                         <p
                             class="d-text-blue d-pointer"
                             @click="viewBillInfo(scope.row)"
-                        >{{scope.row.billCode}}</p>
+                        >{{scope.row.billCode}} <el-tag class="ml5" v-if="scope.row.intalBank" size="mini" >{{scope.row.intalBank}}</el-tag></p>
                     </template>
                 </el-table-column>
                 <el-table-column
