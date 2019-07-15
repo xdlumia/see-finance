@@ -89,13 +89,13 @@
                     show-overflow-tooltip
                     align="center"
                     label="账单编号"
-                    width="200"
+                    width="230"
                     prop="billCode">
                     <template slot-scope="scope">
                         <p
                             class="d-text-blue d-pointer"
                             @click="viewBillInfo(scope.row)"
-                        >{{scope.row.billCode}} <el-tag class="ml5" v-if="scope.row.intalBank" size="mini" >{{scope.row.intalBank}}</el-tag></p>
+                        >{{scope.row.billCode}} <el-tag class="ml5" v-if="scope.row.instalBank" size="mini" >{{scope.row.instalBank}}</el-tag></p>
                     </template>
                 </el-table-column>
                 <el-table-column
