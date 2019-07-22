@@ -190,6 +190,12 @@ export default {
 };
 </script>
 <style scoped>
+  /deep/ .el-table:before{
+      background: transparent;
+  }
+  /deep/ .el-pagination{
+      border-top: 1px solid #e5e5e5;
+  }
     .handle-filter{ position:absolute; right: 5px; top:0px}
 </style>
 

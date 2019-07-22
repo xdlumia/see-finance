@@ -467,6 +467,9 @@ export default {
         isAsysbusiness(){
             // 判断当前系统为集中式
             return this.$local.fetch('userInfo').syscode == 'asysbusiness';
+        },
+        isRentSystem(){
+            return this.$local.fetch('userInfo').syscode == 'asystem';
         }
     },
     // mounted

@@ -385,6 +385,9 @@
                     5: '合同手动添加',
                     6: '酒店自动生成'
                 }
+            },
+            isRentSystem(){
+                return this.$local.fetch('userInfo').syscode == 'asystem';
             }
         },
         // created
@@ -676,6 +679,12 @@
     };
 </script>
 <style scoped>
+    /deep/ .el-table:before{
+        background: transparent;
+    }
+    /deep/ .el-pagination{
+        border-top: 1px solid #e5e5e5;
+    }
     .bill-footer{
         padding:5px 10px;
         box-sizing: border-box;

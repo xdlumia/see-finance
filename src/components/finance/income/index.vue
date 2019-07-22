@@ -328,6 +328,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+/deep/ .el-table:before{
+    background: transparent;
+}
+/deep/ .el-pagination{
+    border-top: 1px solid #e5e5e5;
+}
 .income-header {border: 1px solid #efefef;border-radius: 5px;}
 .income-header .header-info{display: inline-block;overflow: hidden;}
 .income-header .header-info li{display: inline-block;padding: 5px 15px;line-height: 24px; color: #666;border-right: 1px solid #efefef;}
