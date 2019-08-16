@@ -38,6 +38,11 @@
                 </d-select>
             </el-form-item>
 
+            <el-form-item label="付款方式" style='width:100%' size='mini' prop='payMethod' class='mb5'>
+                <d-select v-model="params.payMethod"  placeholder='请选择付款方式' valueKey="code" size="mini" dicCode='HT_ZJ_ZFFS'>
+                </d-select>
+            </el-form-item>
+
             <el-form-item label="收支状态" style='width:100%' size='mini' prop='incomeTypes' class='mb5'>
                 <el-checkbox-group v-model="params.incomeTypes">
                     <el-checkbox label="0">收入</el-checkbox>

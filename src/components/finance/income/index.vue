@@ -85,6 +85,12 @@
           <el-table-column sortable='custom' prop="matchedAmount" label="已匹配金额" align='center'>
           </el-table-column>
 
+          <el-table-column sortable='custom' label="付款方式" align='center'>
+            <template slot-scope="scope">
+                {{ scope.row.payMethod | dictionary('HT_ZJ_ZFFS') }}
+            </template>
+          </el-table-column>
+
           <el-table-column sortable='custom' prop="unmatchAmount" label="未匹配金额" align='center'>
           </el-table-column>
 
