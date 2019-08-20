@@ -337,4 +337,5 @@ export default {
   /deep/ .el-time-panel{
     left: -25px;
   }
+}
 </style>
