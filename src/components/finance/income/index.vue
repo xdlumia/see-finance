@@ -54,7 +54,9 @@
       :params="queryForm"
       @row-click='viewIncome'
       ref="incomeTable" 
-      @selection-change='selectionChange'>
+      @selection-change='selectionChange'
+      @sort-change='sortChange'
+      >
           <el-table-column type="selection" width="50">
           </el-table-column>
 
@@ -94,7 +96,7 @@
           <el-table-column sortable='custom' prop="unmatchAmount" label="未匹配金额" align='center'>
           </el-table-column>
 
-          <el-table-column sortable='custom' prop="unmatchAmount" label="楼盘名称" align='center'>
+          <el-table-column prop="unmatchAmount" label="楼盘名称" align='center'>
               <template slot-scope="scope">
                 {{ scope.row.communityName || '-' }}
               </template>
@@ -293,6 +295,15 @@ export default {
     selectionChange(val) {
       this.allDelId = [];
       this.choiceSelection = val;
+    },
+    sortChange(columnData){
+      let type = {
+        ascending: 'asc',
+        descending: 'desc'
+      }
+      this.queryForm.sidx = columnData.prop || ''
+      this.queryForm.order = type[columnData.order] || ''
+      this.tableReload();
     },
     allDel() {
       //批量删除
