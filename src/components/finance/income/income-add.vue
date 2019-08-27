@@ -38,6 +38,7 @@
                     type="datetime"
                     value-format='timestamp'
                     placeholder="请选择日期时间"
+                    popper-class='date-time'
                     >
                     </el-date-picker>
                 </el-form-item>
@@ -203,5 +204,10 @@ export default {
   // computed
 };
 </script>
-<style scoped>
+<style lang='scss'>
+.date-time{
+  /deep/ .el-time-panel{
+    left: -25px;
+  }
+}
 </style>
