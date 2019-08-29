@@ -157,6 +157,7 @@ export default {
     if( this.communityItem ){
         this.addIncomeForm.communityName = this.communityItem.communityName
         this.addIncomeForm.communityId = this.communityItem.id
+        this.addIncomeForm.cityId = this.communityItem.cityId || ''
     }
       
       //新增流水匹配保存

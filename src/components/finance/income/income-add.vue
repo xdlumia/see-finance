@@ -162,7 +162,7 @@ export default {
         if(this.communityItem){
             this.newIncomeForm.communityName = this.communityItem.communityName
             this.newIncomeForm.communityId = this.communityItem.id
-            this.newIncomeForm.cityId = this.communityItem.cityId
+            this.newIncomeForm.cityId = this.communityItem.cityId || ''
         }
 
       this.$refs.newIncomeForm.validate(valid => {
