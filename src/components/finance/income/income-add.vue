@@ -120,7 +120,8 @@ export default {
         serialNumber: "", //凭证流水号
         transferNotes: "", //备注
         communityName: "", // 楼盘名称
-        communityId: "" //楼盘id
+        communityId: "", //楼盘id
+        systemCode: this.$local.fetch('userInfo').syscode,
       },
       newIncomeRules: {
         incomeType: [
@@ -162,7 +163,6 @@ export default {
         if(this.communityItem){
             this.newIncomeForm.communityName = this.communityItem.communityName
             this.newIncomeForm.communityId = this.communityItem.id
-            this.newIncomeForm.cityId = this.communityItem.cityId || ''
         }
 
       this.$refs.newIncomeForm.validate(valid => {

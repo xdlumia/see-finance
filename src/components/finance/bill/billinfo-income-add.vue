@@ -120,7 +120,8 @@ export default {
         transferNotes: "", //备注
         billId: this.dialogInfo.billId,
         communityName: "", // 楼盘名称
-        communityId: "" //楼盘id
+        communityId: "", //楼盘id
+        systemCode: this.$local.fetch('userInfo').syscode,
       },
       addIncomeRules: {
         incomeType: [{ required: true, message: "请选择收支状态" }],
@@ -157,7 +158,6 @@ export default {
     if( this.communityItem ){
         this.addIncomeForm.communityName = this.communityItem.communityName
         this.addIncomeForm.communityId = this.communityItem.id
-        this.addIncomeForm.cityId = this.communityItem.cityId || ''
     }
       
       //新增流水匹配保存
