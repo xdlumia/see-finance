@@ -40,6 +40,16 @@
                 <a :href="baseURL.ossUrl+'/a_tenement/template/RunningAccountTemplate.xlsx'" target="_blank">下载模板</a>
               </el-button>
               <el-button v-if="authorityBtn.includes('asystem_finance_1007')" size='medium' @click='exportFinance'>导出表格</el-button>
+              <dutySetting
+                  v-if="authorityButtons.includes('asystem_finance_res_1009')"
+                  title="分配财务-收支流水责任人" 
+                  parent="收支流水"
+                  size="16" 
+                  color="#666"
+                  :syscode="syscode" 
+                  pageCode="asystem_finance_1006"
+                  module="finance"
+              ></dutySetting>
               <!-- 筛选 -->
               <income-filter @submit="$refs.incomeTable.reload(1)" :params="queryForm"></income-filter>
           </el-col>
@@ -87,7 +97,7 @@
           <el-table-column sortable='custom' prop="matchedAmount" label="已匹配金额" align='center'>
           </el-table-column>
 
-          <el-table-column sortable='custom' prop="payMethod" label="付款方式" align='center'>
+          <el-table-column prop="payMethod" label="付款方式" align='center'>
             <template slot-scope="scope">
                 {{ scope.row.payMethod | dictionary('HT_ZJ_ZFFS') }}
             </template>
@@ -134,6 +144,7 @@ export default {
   },
   data() {
     return {
+      syscode:this.$local.fetch("userInfo").syscode, //系统编码
       baseURL: baseURL,
       popupMeta:{
         visible:false,
@@ -164,7 +175,8 @@ export default {
         accountBeginDate: "", //入账开始日期
         accountEndDate: "", //入账结束日期
         accountDateArry: [], //日期数组
-        communityName: "" // 楼盘名称
+        communityName: "", // 楼盘名称
+        sysCode: this.$local.fetch("userInfo").syscode, //系统编码
       },
       authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
     };
@@ -219,7 +231,7 @@ export default {
     // 查看收支流水状态
     getFinanceStat() {
       //请求流水统计接口
-      this.$api.seeFinanceService.getFinanceStat()
+      this.$api.seeFinanceService.getFinanceStat({sysCode: syscode})
       .then(res => {
           //请求正常
           this.matchInfo = res.data || {}
