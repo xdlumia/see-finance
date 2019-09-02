@@ -231,7 +231,7 @@ export default {
     // 查看收支流水状态
     getFinanceStat() {
       //请求流水统计接口
-      this.$api.seeFinanceService.getFinanceStat({sysCode: syscode})
+      this.$api.seeFinanceService.getFinanceStat({sysCode: this.syscode})
       .then(res => {
           //请求正常
           this.matchInfo = res.data || {}
