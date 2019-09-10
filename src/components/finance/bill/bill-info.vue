@@ -1,11 +1,12 @@
-<!--财务组件-财务管理-账单管理-账单详情：账单详情组件
-/**
-* 财务管理：账单详情组件
-* @/components/finance/bill-info.vue 组件存放位置
-* @author web-高鹏
-* @date 2018年8月7日
-**/
--->
+/*
+ * @Author: web.高鹏
+ * @Date: 2019-04-09 10:59:47
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-10 16:40:02
+ * @Description: 财务管理：账单详情组件
+ * @/components/finance/bill-info.vue 组件存放位置
+ */
+
 <template>
     <el-scrollbar class="hfull" v-loading="loading">
         <!-- 头信息 -->
@@ -13,7 +14,7 @@
             <el-row class="d-text-gray">
                 <el-col :span="5">账单信息(<span class='d-text-blue'> {{billInfo.settleStatus==0?'未结清':(billInfo.settleStatus==1?"已结清":"已关闭")}} </span>)</el-col>
                 <!-- 如果是分散式租住 -->
-                <el-col :span="10" v-if="isRentSystem">账单金额：{{(billInfo.amount - 0)}}元(账单金额+滞纳金金额)</el-col>
+                <el-col :span="10" v-if="isRentSystem && !isAsyshotel">账单金额：{{(billInfo.amount - 0)}}元(账单金额+滞纳金金额)</el-col>
                 <el-col :span="10" v-else>总金额：{{(billInfo.amount - 0) + (billInfo.lateFeeMoney - 0)}}元(账单金额+滞纳金金额)</el-col>
                 <el-col :span="6">实收/付金额：{{billInfo.factAmount}}元</el-col>
                 <el-col :span="3" class="ar"><span class='d-text-blue d-pointer' @click='billLogVisible=true'>操作记录</span></el-col>
@@ -470,6 +471,9 @@ export default {
         },
         isRentSystem(){
             return this.$local.fetch('userInfo').syscode == 'asystem';
+        },
+        isAsyshotel(){
+            return this.$local.fetch('userInfo').syscode == 'asyshotel';
         }
     },
     // mounted
