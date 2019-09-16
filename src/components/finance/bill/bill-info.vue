@@ -2,7 +2,7 @@
  * @Author: web.高鹏
  * @Date: 2019-04-09 10:59:47
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-16 11:06:10
+ * @LastEditTime: 2019-09-16 11:09:02
  * @Description: 财务管理：账单详情组件
  * @/components/finance/bill-info.vue 组件存放位置
  */
@@ -587,7 +587,7 @@ export default {
                 billId:this.billIdInfo.billId,
                 billType:this.billInfo.billType,
                 data:this.billInfo,
-                billPayingAmount:(+this.billInfo.amount + +this.billInfo.lateFeeMoney) - +this.billInfo.factAmount,
+                billPayingAmount:(+this.billInfo.amount + +this.billInfo.lateFeeMoney || 0) - +this.billInfo.factAmount,
             }
         },
         //收支流水列表删除
