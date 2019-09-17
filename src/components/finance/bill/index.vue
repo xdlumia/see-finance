@@ -1,11 +1,11 @@
-<!--财务组件：财务主页
-/**
-* 财务组件：财务主页
-* @/components/finance/index.vue 组件存放位置
-* @author web-王晓冬
-* @date 2018年11月6日
-**/
--->
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-04-09 10:59:47
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-17 11:51:41
+ * @Description: 财务组件：财务主页
+ */
+
 <template>
     <div>
         <div class="d-relative">
@@ -167,6 +167,14 @@
                     prop="amount"
                     label="账单金额"
                     width="100"
+                ></el-table-column>
+                <el-table-column
+                    show-overflow-tooltip
+                    align="center"
+                    prop="lateFeeMoney"
+                    label="滞纳金"
+                    width="100"
+                    v-if="!isRentSystem || isAsyshotel"
                 ></el-table-column>
                 <el-table-column
                     show-overflow-tooltip
@@ -388,6 +396,9 @@
             },
             isRentSystem(){
                 return this.$local.fetch('userInfo').syscode == 'asystem';
+            },
+            isAsyshotel(){
+                return this.$local.fetch('userInfo').syscode == 'asyshotel';
             }
         },
         // created
