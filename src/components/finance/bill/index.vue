@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-04-09 10:59:47
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-17 11:51:41
+ * @LastEditTime: 2019-09-19 14:26:29
  * @Description: 财务组件：财务主页
  */
 
@@ -196,6 +196,11 @@
                         slot-scope="scope"
                     >{{scope.row.feeStartDate | timeToStr('YYYY-MM-DD')}}~{{scope.row.feeEndDate | timeToStr('YYYY-MM-DD')}}</template>
                 </el-table-column>
+                
+                <el-table-column align="center" label="预付款" width="80" v-if="isAsyshotel">
+                    <template slot-scope="scope">{{!scope.row.isBargainMoney ? '否' : '是'}}</template>
+                </el-table-column>
+                
                 <el-table-column show-overflow-tooltip align="center" label="应收/应付时间" width="140">
                     <template
                         slot-scope="scope"
@@ -391,7 +396,8 @@
                     3: '退租结算',
                     4: '服务订单',
                     5: '合同手动添加',
-                    6: '酒店自动生成'
+                    6: '酒店自动生成',
+                    7: '房态入账生成'
                 }
             },
             isRentSystem(){

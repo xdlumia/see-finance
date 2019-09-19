@@ -2,7 +2,7 @@
  * @Author: web.高鹏
  * @Date: 2019-04-09 10:59:47
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-16 11:09:02
+ * @LastEditTime: 2019-09-19 14:27:53
  * @Description: 财务管理：账单详情组件
  * @/components/finance/bill-info.vue 组件存放位置
  */
@@ -56,6 +56,7 @@
                 <el-col :span="12">关联合同：{{billInfo.businessType==0?billInfo.businessCode:'-'}}</el-col>
                 <el-col :span="12">创建时间：{{billInfo.createTime | timeToStr}}</el-col>
                 <el-col :span="12">计费周期：{{billInfo.feeStartDate | timeToStr}} - {{billInfo.feeEndDate | timeToStr}}</el-col>
+                <el-col :span="12" v-if="isAsyshotel">预付款：{{!+billInfo.isBargainMoney ? '否' : '是'}}</el-col>
                 <el-col :span="12">收/付款方：{{billInfo.accountName || '-'}}</el-col>
                 <el-col :span="12">联系方式：{{billInfo.linkmanPhone || '-'}}</el-col>
                 <el-col :span="12">逾期状态：{{billInfo.overDays==0?'正常':'逾期(' + billInfo.overDays + '天)'}}</el-col>
