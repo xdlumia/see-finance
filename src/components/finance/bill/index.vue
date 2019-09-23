@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-04-09 10:59:47
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-19 14:26:29
+ * @LastEditTime: 2019-09-20 09:28:47
  * @Description: 财务组件：财务主页
  */
 
@@ -198,7 +198,7 @@
                 </el-table-column>
                 
                 <el-table-column align="center" label="预付款" width="80" v-if="isAsyshotel">
-                    <template slot-scope="scope">{{!scope.row.isBargainMoney ? '否' : '是'}}</template>
+                    <template slot-scope="scope">{{!+scope.row.isBargainMoney ? '否' : '是'}}</template>
                 </el-table-column>
                 
                 <el-table-column show-overflow-tooltip align="center" label="应收/应付时间" width="140">
