@@ -47,9 +47,24 @@
                     size="mini"
                 ></el-input>
             </el-form-item>
-
             <el-form-item label="隐藏0元账单" prop="isZero">
-                <el-checkbox v-model="isZero">隐藏0元账单</el-checkbox>
+              <el-checkbox v-model="isZero">隐藏0元账单</el-checkbox>
+            </el-form-item>
+            <el-form-item label="所属项目" prop="projectId" v-if ="isAsysbusiness">
+              <el-select
+                class="wfull"
+                size="mini"
+                v-model="params.projectId"
+                placeholder="请选择所属项目"
+              >
+                <el-option label="全部" value=""></el-option>
+                <el-option
+                  v-for="item in projectList"
+                  :key="item.projectId"
+                  :label="item.projectName"
+                  :value="item.projectId"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="费用类型" style="width:100%" size="mini" prop="feeType">
                 <el-select
@@ -78,11 +93,11 @@
                     <el-option label="逾期" value="2"></el-option>
                 </el-select>
             </el-form-item>
-            
+
             <el-form-item label="解约类型" style="width:100%" size="mini" class="mb5" prop="dissolutionType">
                 <el-select v-model="params.dissolutionType" style="width:100%" placeholder="请选择解约类型">
                     <el-option label="全部" value="" />
-                    
+
                     <el-option
                         v-for="(item, index) in dictionaryOptions('FM_JYLX')"
                         :key="index"
@@ -201,12 +216,14 @@
                     label:'后三月',
                     code:90,
                 }],
+                projectList: [],
                 isZero: false
             };
         },
         // created
         created () {
             this.getFilterInfo()
+            this.isAsysbusiness && this.getProjectList();
         },
         // mounted
         // activited
@@ -247,6 +264,11 @@
                     // 保存成功
                 })
             },
+            getProjectList() {
+              return this.$api.seeTenementBusinessService.projectDropDownList({}).then(res => {
+                this.projectList = res.data
+              })
+            },
             // 查询快捷筛选
             getFilterInfo(){
                 let params = {
@@ -262,7 +284,7 @@
                             if(key == 'page' || key == 'limit'){
                                 this.params[key] = this.params[key] || ''
                             }else if(key == 'payStartDate' || key == 'payEndDate'){
-                                
+
                                 if( queryCondition['paymentRange'] ){
                                     var start = new Date().getTime();
                                     let end = start + 3600 * 1000 * 24 * queryCondition['paymentRange'] //结束时间
@@ -270,7 +292,7 @@
                                 }else if( queryCondition['payStartDate'] && queryCondition['payEndDate'] ){
                                      this.accountDateArry = [queryCondition['payStartDate'], queryCondition['payEndDate']]
                                 }
-                         
+
                             }else if(key =='revenueArray' || key =='unclearedArray'){
                                 this.params[key] = queryCondition[key] || []
                             }
@@ -356,6 +378,9 @@
                 return {
                     shortcuts
                 };
+            },
+            isAsysbusiness() {
+              return this.$local.fetch('userInfo').syscode === 'asysbusiness';
             }
         },
         watch: {

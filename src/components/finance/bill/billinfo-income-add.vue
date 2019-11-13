@@ -10,7 +10,18 @@
     <!-- 表单 -->
     <el-form v-loading="loading" :model="addIncomeForm" :rules="addIncomeRules" ref="addIncomeForm" label-width="100px" class="mt15" >
         <form-card>
+          <el-row v-if="supportMultiAccount">
+            <el-col :span="12">
+              <!--如果有id，证明是编辑，编辑不能修改i公司账号-->
+              <el-form-item class="wfull" label="公司账户" size="mini" prop="accountId">
+                <el-select v-model="addIncomeForm.accountId" size="mini" placeholder="请选择" class="wfull">
+                  <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
             <el-row>
+
             <el-col :span="12">
                 <el-form-item label="收支状态" prop="incomeType">
                     <el-select v-model="addIncomeForm.incomeType" size="small" style='width:100%' placeholder="请选择收支状态">
@@ -108,6 +119,7 @@ export default {
     return {
       loading:false,
       addIncomeForm: {
+        accountId: null,
         incomeType: "", //收支状态
         payCosts: "", //发生金额
         accountName: "", //对方名称
@@ -130,15 +142,19 @@ export default {
         payCosts: [{required: true, message: "请输入金额"}, {type: 'price'}],
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
-        ]
+        ],
+        accountId: [ { required: true, message: "请选择关联账户", trigger: "blur" }]
       },
       communityList: [],
-      communityItem: null
+      communityItem: null,
+      // 公司账户列表
+      userAccountList: []
     };
   },
   // created
   created() {
         this.isAsysHotel && this.getCommunityList();
+        this.supportMultiAccount && this.getCompanyAccountList()
   },
   // mounted
   // activited
@@ -149,36 +165,40 @@ export default {
       isAsysHotel(){
         // 判断当前系统为凯亚酒店
         return this.$local.fetch('userInfo').syscode == 'asyshotel';
-    }
+      },
+     // 是否支持多账号
+       supportMultiAccount() {
+         return this.$local.fetch('userInfo').syscode === 'asysbusiness';
+       }
   },
   methods: {
     //筛选提交
-    submitForm(formName) {  
-        
-    if( this.communityItem ){
-        this.addIncomeForm.communityName = this.communityItem.communityName
-        this.addIncomeForm.communityId = this.communityItem.id
-    }
-      
-      //新增流水匹配保存
-      this.$refs.addIncomeForm.validate(valid => {
-        if (valid) {
-          //通过验证
-          this.loading = true
-          //发送请求保存
-          this.$api.seeFinanceService.saveMatchFinance(this.addIncomeForm)
-            .then(res => {
-              if (res.code == 200) {
-                //关闭弹出框
-                this.dialogInfo.visible = false;
-                this.$emit("submit", "incomeTable");
-              }
-            })
-            .finally(res=>{
-                this.loading = false
-            })
-        }
-      });
+    submitForm(formName) {
+
+      if( this.communityItem ){
+          this.addIncomeForm.communityName = this.communityItem.communityName
+          this.addIncomeForm.communityId = this.communityItem.id
+      }
+
+        //新增流水匹配保存
+        this.$refs.addIncomeForm.validate(valid => {
+          if (valid) {
+            //通过验证
+            this.loading = true
+            //发送请求保存
+            this.$api.seeFinanceService.saveMatchFinance(this.addIncomeForm)
+              .then(res => {
+                if (res.code == 200) {
+                  //关闭弹出框
+                  this.dialogInfo.visible = false;
+                  this.$emit("submit", "incomeTable");
+                }
+              })
+              .finally(res=>{
+                  this.loading = false
+              })
+          }
+        });
     },
     getCommunityList(){
         this.$api.seeFinanceService.querySysCodeCommunityList({
@@ -194,6 +214,11 @@ export default {
                 this.communityList = res.data;
             }
         })
+    },
+    getCompanyAccountList() {
+      this.$api.seeBaseinfoService.getCompanyAccountList().then(({data}) => {
+        this.userAccountList = data || []
+      })
     }
   },
   // filter

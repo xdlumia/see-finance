@@ -61,10 +61,10 @@
                 <!-- 责任人设置 -->
                 <dutySetting
                     v-if="authorityButtons.includes('asystem_finance_res_1001')"
-                    title="分配财务-账单管理责任人" 
-                    parent="账单管理" size="16" 
+                    title="分配财务-账单管理责任人"
+                    parent="账单管理" size="16"
                     color="#666"
-                    :syscode="syscode" 
+                    :syscode="syscode"
                     pageCode="asystem_finance_1001"
                     module="finance"
                 ></dutySetting>
@@ -196,11 +196,11 @@
                         slot-scope="scope"
                     >{{scope.row.feeStartDate | timeToStr('YYYY-MM-DD')}}~{{scope.row.feeEndDate | timeToStr('YYYY-MM-DD')}}</template>
                 </el-table-column>
-                
+
                 <el-table-column align="center" label="预付款" width="80" v-if="isAsyshotel">
                     <template slot-scope="scope">{{!+scope.row.isBargainMoney ? '否' : '是'}}</template>
                 </el-table-column>
-                
+
                 <el-table-column show-overflow-tooltip align="center" label="应收/应付时间" width="140">
                     <template
                         slot-scope="scope"
@@ -366,6 +366,7 @@
                     accountName: "", // 对方名称
                     communityName: "", // 楼盘名称
                     feeType: "", //费用类型
+                    projectId: '', // 项目id
                     overDays: "", //逾期状态
                     settleStatus: "9", //结清状态 0 未结清 1 已结清，2已关闭 9 全部
                     payStartDate: "",
@@ -423,7 +424,7 @@
             //导出
             exportTable () {
                 // let strParams = `token=${localStorage.token}&finger=${localStorage.finger}&`
-                
+
                 // for(let key in this.queryForm){
                 //     if(this.queryForm[key] instanceof Array){
                 //         this.queryForm[key].forEach(item => {
@@ -477,13 +478,13 @@
             },
             // 未结清全选
             // checkAllUnclear(){
-                
+
             // },
             // 未结清查询
             checkedUnclear(val){
                 this.tableReload()
             },
-            
+
             //批量删除 和删除
             delItem (row) {
                 let ids = []
@@ -692,7 +693,7 @@
         // computed
         watch: {
         }
-        
+
     };
 </script>
 <style scoped>
@@ -705,7 +706,7 @@
     .bill-footer{
         padding:5px 10px;
         box-sizing: border-box;
-        height: 120px; 
+        height: 120px;
         background:#fff;
         box-shadow: 0 0 5px rgba(0,0,0,.1);
         border-top:1px solid #efefef;
@@ -736,11 +737,11 @@
         border:none;
         box-shadow: none;
     }
-    .bill-footer.active .billFooterMain{ 
+    .bill-footer.active .billFooterMain{
         height: 0;
         transform:scale(1,0)
     }
-    .bill-footer.active .bill-footer-shirk{ 
+    .bill-footer.active .bill-footer-shirk{
         top: 0px;
         transform:rotateX(180deg)
     }

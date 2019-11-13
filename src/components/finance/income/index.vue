@@ -26,8 +26,8 @@
         <el-row class="d-inline">
           <el-col :span="24" class="al">
               <el-button v-if="authorityBtn.includes('asystem_finance_1008')" icon='el-icon-plus' size='medium' @click='addIncome' >添加</el-button>
-              <el-button v-if="authorityBtn.includes('asystem_finance_1009')" size='medium' type="danger" @click='allDel' >批量删除</el-button> 
-              <el-upload v-if="authorityBtn.includes('asystem_finance_1011')" 
+              <el-button v-if="authorityBtn.includes('asystem_finance_1009')" size='medium' type="danger" @click='allDel' >批量删除</el-button>
+              <el-upload v-if="authorityBtn.includes('asystem_finance_1011')"
                   class='ml10 d-inline'
                   :action="baseURL.seeFinanceService+'/fincomerecord/import'"
                   :headers="headers"
@@ -42,28 +42,28 @@
               <el-button v-if="authorityBtn.includes('asystem_finance_1007')" size='medium' @click='exportFinance'>导出表格</el-button>
               <dutySetting
                   v-if="authorityButtons.includes('asystem_finance_res_1009')"
-                  title="分配财务-收支流水责任人" 
+                  title="分配财务-收支流水责任人"
                   parent="收支流水"
-                  size="16" 
+                  size="16"
                   color="#666"
-                  :syscode="syscode" 
+                  :syscode="syscode"
                   pageCode="asystem_finance_1006"
                   module="finance"
               ></dutySetting>
               <!-- 筛选 -->
-              <income-filter @submit="$refs.incomeTable.reload(1)" :params="queryForm"></income-filter>
+              <income-filter @submit="$refs.incomeTable.reload(1)" :supportMultiAccount="supportMultiAccount" :userAccountList="userAccountList"  :params="queryForm"></income-filter>
           </el-col>
         </el-row>
       </div>
       <el-alert class='mt10 mb10 d-text-blue' style='backgroundColor:#E6F7FF;border:1px solid #189eff' :title="`已勾选${choiceSelection.length}项`" type="success" :closable="false">
       </el-alert>
       <!-- 表格 -->
-      <d-table 
+      <d-table
       style="height:calc(100vh - 269px)"
       api="seeFinanceService.getFinanceTableList"
       :params="queryForm"
       @row-click='viewIncome'
-      ref="incomeTable" 
+      ref="incomeTable"
       @selection-change='selectionChange'
       @sort-change='sortChange'
       >
@@ -126,7 +126,7 @@
       </d-table>
         <!--流水 新增 / 详情 弹出 -->
         <side-popup :visible.sync='popupMeta.visible ' :title='popupMeta.title' width='800px'>
-            <components :is="popupMeta.component" :dialogInfo='popupMeta' v-if="popupMeta.visible" @submit="tableReload"></components>
+            <components :is="popupMeta.component" :dialogInfo='popupMeta' v-if="popupMeta.visible" :userAccountList="userAccountList" :supportMultiAccount="supportMultiAccount" @submit="tableReload"></components>
         </side-popup>
     </div>
 </template>
@@ -179,15 +179,22 @@ export default {
         sysCode: this.$local.fetch("userInfo").syscode, //系统编码
       },
       authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
+      // 公司账户列表
+      userAccountList: []
     };
   },
   created() {
+    this.supportMultiAccount && this.getCompanyAccountList()
     // 查看收支流水统计
     this.getFinanceStat();
   },
   computed: {
     headers() {
       return { token: localStorage.token, finger: localStorage.finger };
+    },
+    // 是否支持多账号
+    supportMultiAccount() {
+      return this.$local.fetch('userInfo').syscode === 'asysbusiness';
     }
   },
   methods: {
@@ -352,6 +359,11 @@ export default {
           this.$message.error("请勿勾选不能删除的选项!");
         }
       }
+    },
+    getCompanyAccountList() {
+      this.$api.seeBaseinfoService.getCompanyAccountList().then(({data}) => {
+        this.userAccountList = data || []
+      })
     }
   }
 };

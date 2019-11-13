@@ -10,6 +10,16 @@
     <div>
         <!-- 表单 -->
         <el-form v-loading="loading" :model="newIncomeForm" size="small" :rules="newIncomeRules" ref="newIncomeForm" label-width="100px" class="p10 mt15"  >
+          <el-row v-if="supportMultiAccount" :gutter="40">
+            <el-col :span="12">
+              <!--如果有id，证明是编辑，编辑不能修改i公司账号-->
+              <el-form-item class="wfull" label="公司账户" size="mini" prop="accountId">
+                <el-select v-model="newIncomeForm.accountId" size="mini" placeholder="请选择" class="wfull">
+                  <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
             <el-row :gutter="40">
             <el-col :span="12">
                 <el-form-item label="收支状态" prop="incomeType">
@@ -55,11 +65,11 @@
             </el-col>
             <el-col :span="12">
                 <el-form-item label="付款方式" prop="payMethod">
-                    <d-select 
+                    <d-select
                     style='width:100%'
-                    v-model="newIncomeForm.payMethod" 
-                    valueKey="code"  
-                    size="small" 
+                    v-model="newIncomeForm.payMethod"
+                    valueKey="code"
+                    size="small"
                     placeholder="请选择付款方式"
                     dicCode='HT_ZJ_ZFFS'>
                     </d-select>
@@ -92,23 +102,24 @@
                     <el-input type="textarea" v-model.trim="newIncomeForm.transferNotes" placeholder="请填写备注"  size="small"></el-input>
                 </el-form-item>
             </el-col>
-            <el-col :span='24' class='ac'> 
-                <el-button @click="resetForm('newIncomeForm')" size='small' >取消</el-button>  
-                <el-button type="primary" @click="submitForm()" size='small' >提交</el-button> 
+            <el-col :span='24' class='ac'>
+                <el-button @click="resetForm('newIncomeForm')" size='small' >取消</el-button>
+                <el-button type="primary" @click="submitForm()" size='small' >提交</el-button>
             </el-col>
             </el-row>
-        </el-form>       
+        </el-form>
     </div>
 </template>
 <script>
 export default {
   components: {
   },
-  props:['dialogInfo'],
+  props:['dialogInfo', 'userAccountList', 'supportMultiAccount'],
   data() {
     return {
       loading:false,
       newIncomeForm: {
+        accountId: null,
         incomeType: "", //收支状态
         payCosts: "", //发生金额
         accountName: "", //对方名称
@@ -136,7 +147,8 @@ export default {
         payCosts: [{required: true, message: "请输入金额", trigger: "change"}, {type: 'price'}],
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
-        ]
+        ],
+        accountId: [ { required: true, message: "请选择关联账户", trigger: "blur" }]
       },
       communityItem: null,
       communityList: []
@@ -154,8 +166,8 @@ export default {
   computed: {
       isAsysHotel(){
         // 判断当前系统为凯亚酒店
-        return this.$local.fetch('userInfo').syscode == 'asyshotel';
-    }
+        return this.$local.fetch('userInfo').syscode === 'asyshotel';
+      }
   },
   methods: {
     submitForm() {
