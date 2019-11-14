@@ -10,16 +10,6 @@
     <!-- 表单 -->
     <el-form v-loading="loading" :model="addIncomeForm" :rules="addIncomeRules" ref="addIncomeForm" label-width="100px" class="mt15" >
         <form-card>
-          <el-row v-if="supportMultiAccount">
-            <el-col :span="12">
-              <!--如果有id，证明是编辑，编辑不能修改i公司账号-->
-              <el-form-item class="wfull" label="公司账户" size="mini" prop="accountId">
-                <el-select v-model="addIncomeForm.accountId" size="mini" placeholder="请选择" class="wfull">
-                  <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
             <el-row>
 
             <el-col :span="12">
@@ -75,7 +65,12 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="收款机构" prop="accountDesc" >
+              <el-form-item class="wfull" label="结算账户" size="small" prop="accountId" v-if="supportMultiAccount">
+                <el-select v-model="addIncomeForm.accountId" size="small" placeholder="请选择" class="wfull">
+                  <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+                </el-select>
+              </el-form-item>
+                <el-form-item label="收款机构" prop="accountDesc" v-else>
                     <el-input maxlength="32" type="text" v-model.trim="addIncomeForm.accountDesc" size="small" placeholder="请填写收款机构"></el-input>
                 </el-form-item>
             </el-col>
@@ -143,7 +138,7 @@ export default {
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
         ],
-        accountId: [ { required: true, message: "请选择关联账户", trigger: "blur" }]
+        accountId: [ { required: true, message: "请选择结算账户", trigger: "blur" }]
       },
       communityList: [],
       communityItem: null,

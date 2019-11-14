@@ -38,6 +38,22 @@
                     size="mini"
                 ></el-input>
             </el-form-item>
+            <el-form-item label="项目" prop="projectId" v-if ="isAsysbusiness">
+              <el-select
+                class="wfull"
+                size="mini"
+                v-model="params.projectId"
+                placeholder="请选择项目"
+              >
+                <el-option label="全部" value=""></el-option>
+                <el-option
+                  v-for="item in projectList"
+                  :key="item.projectId"
+                  :label="item.projectName"
+                  :value="item.projectId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item label="楼盘名称/房间地址" prop="communityName">
                 <el-input
                     type="text"
@@ -49,22 +65,6 @@
             </el-form-item>
             <el-form-item label="隐藏0元账单" prop="isZero">
               <el-checkbox v-model="isZero">隐藏0元账单</el-checkbox>
-            </el-form-item>
-            <el-form-item label="所属项目" prop="projectId" v-if ="isAsysbusiness">
-              <el-select
-                class="wfull"
-                size="mini"
-                v-model="params.projectId"
-                placeholder="请选择所属项目"
-              >
-                <el-option label="全部" value=""></el-option>
-                <el-option
-                  v-for="item in projectList"
-                  :key="item.projectId"
-                  :label="item.projectName"
-                  :value="item.projectId"
-                ></el-option>
-              </el-select>
             </el-form-item>
             <el-form-item label="费用类型" style="width:100%" size="mini" prop="feeType">
                 <el-select
@@ -122,6 +122,21 @@
                     <el-option label="全部" value="9"></el-option>
                 </el-select>
             </el-form-item>
+
+          <el-form-item
+            label="审核状态"
+            style="width:100%"
+            size="mini"
+            class="mb5"
+            prop="payApprovalStatus"
+          >
+            <el-select v-model="params.payApprovalStatus" style="width:100%" placeholder="请选择结清状态">
+              <el-option label="全部" value="" />
+              <el-option label="新增" value="1"></el-option>
+              <el-option label="审核中" value="2"></el-option>
+              <el-option label="驳回" value="3"></el-option>
+            </el-select>
+          </el-form-item>
 
             <!-- <el-form-item label="账单类型" style='width:100%'  size='mini'  class='mb5' prop='billType'>
               <el-select v-model="params.billType" style='width:100%' placeholder="请选择账单类型">
@@ -197,7 +212,7 @@
         // components
         components: {
         },
-        props: ['params'],
+        props: ['params', 'projectList', 'isAsysbusiness'],
         // data
         data () {
             return {
@@ -216,14 +231,12 @@
                     label:'后三月',
                     code:90,
                 }],
-                projectList: [],
                 isZero: false
             };
         },
         // created
         created () {
             this.getFilterInfo()
-            this.isAsysbusiness && this.getProjectList();
         },
         // mounted
         // activited
@@ -263,11 +276,6 @@
                 .then(res=>{
                     // 保存成功
                 })
-            },
-            getProjectList() {
-              return this.$api.seeTenementBusinessService.projectDropDownList({}).then(res => {
-                this.projectList = res.data
-              })
             },
             // 查询快捷筛选
             getFilterInfo(){
@@ -378,9 +386,6 @@
                 return {
                     shortcuts
                 };
-            },
-            isAsysbusiness() {
-              return this.$local.fetch('userInfo').syscode === 'asysbusiness';
             }
         },
         watch: {

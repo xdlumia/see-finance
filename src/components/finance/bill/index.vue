@@ -72,7 +72,7 @@
                     v-if="authorityButtons.includes('asystem_contract_res_1001')&&activeContract=='seeContractService.getContractList'" module="contract"
                 ></dutySetting> -->
                 <!-- 筛选组件 -->
-                <bill-filter @submit="tableReload(1)" :params="queryForm"></bill-filter>
+                <bill-filter @submit="tableReload(1)" :projectList="projectList" :isAsysbusiness="isAsysbusiness" :params="queryForm"></bill-filter>
             </div>
         </div>
         <div class="d-flex-tcb" style="height:calc(100vh - 176px);">
@@ -212,7 +212,7 @@
                     prop="settleStatus"
                     :formatter="formatSettleStatus"
                     label="结清状态"
-                    width="90"
+                    :width="isAsysbusiness ? 130 : 80"
                 ></el-table-column>
                 <el-table-column
                     show-overflow-tooltip
@@ -225,23 +225,35 @@
                         slot-scope="scope"
                     >{{ billSourceType[scope.row.billSource] || '未知' }}</template>
                 </el-table-column>
-                <el-table-column show-overflow-tooltip label="操作" align="center" width="80px">
+                <el-table-column label="操作" align="center" :width="isAsysbusiness ? 180 : 80">
                     <template slot-scope="scope">
-                        <!-- settleStatus 0未结清 1已清 2关闭 -->
-                        <!-- <el-button
-                            size="mini"
-                            type="danger"
-                            v-if="!scope.row.factAmount &&  scope.row.billSource==1 && scope.row.settleStatus==0 && authorityBtn.includes('asystem_finance_1004')"
-                            @click.stop='delItem(scope.row)'>
-                                删除
-                        </el-button>-->
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            :disabled="scope.row.factAmount > 0 ||  scope.row.billSource!=1 || scope.row.settleStatus!=0 || scope.row.settleStatus==3 || scope.row.billSource == 6"
-                            v-if="authorityBtn.includes('asystem_finance_1005')"
-                            @click.stop="delItem(scope.row)"
-                        >删除</el-button>
+                      <!--应收 && 未结清的，显示催缴-->
+                      <el-button
+                        size="mini"
+                        type="primary"
+                        v-if="isAsysbusiness && scope.row.billType == 0 && scope.row.settleStatus == 0 && authorityBtn.includes('asystem_finance_1023')"
+                        @click.stop="startBusinessDunning(scope.row)"
+                      >催缴</el-button>
+                      <!--应收 && 未结清的 && 审核状态为新增or驳回的，显示付款申请-->
+                      <el-button
+                        size="mini"
+                        type="primary"
+                        v-if="isAsysbusiness && scope.row.billType == 1 && scope.row.settleStatus == 0 && (scope.row.payApprovalStatus == 1  || scope.row.payApprovalStatus == 3) && authorityBtn.includes('asystem_finance_1024')"
+                        @click.stop="startPaymentApplication(scope.row)"
+                      >付款申请</el-button>
+                      <el-button
+                        size="mini"
+                        type="primary"
+                        v-if="isAsysbusiness && scope.row.billType == 1 && scope.row.settleStatus == 0 && (scope.row.payApprovalStatus == 2) && authorityBtn.includes('asystem_finance_1024')"
+                        @click.stop="cancelPaymentApplication(scope.row)"
+                      >撤销</el-button>
+                      <el-button
+                        size="mini"
+                        type="danger"
+                        :disabled="scope.row.factAmount > 0 ||  scope.row.billSource!=1 || scope.row.settleStatus!=0 || scope.row.settleStatus==3 || scope.row.billSource == 6"
+                        v-if="authorityBtn.includes('asystem_finance_1005')"
+                        @click.stop="delItem(scope.row)"
+                      >删除</el-button>
                     </template>
                 </el-table-column>
             </d-table>
@@ -301,6 +313,12 @@
                 @submit="tableReload"
             ></component>
         </el-dialog>
+        <side-popup :visible.sync="businessDunningVisible" title="催缴" width="800px">
+          <business-dunning :visible.sync="businessDunningVisible" :bill-info="currentBillInfo" v-if="businessDunningVisible"></business-dunning>
+        </side-popup>
+        <side-popup :visible.sync="paymentApplicationVisible" title="付款申请" width="800px">
+          <payment-application :visible.sync="paymentApplicationVisible" :projectList="projectList"  :bill-info="currentBillInfo" @submit="tableReload" v-if="paymentApplicationVisible"></payment-application>
+        </side-popup>
     </div>
 </template>
 <script>
@@ -310,6 +328,9 @@
     import billFilter from "./bill-filter"; //筛选组件
     import billDunning from "./bill-dunning"; //催缴组件
     import billFooter from "./bill-footer"; //账单列表底部浮层
+    import businessDunning from './business-dunning'
+    import paymentApplication from './payment-application'
+
     let baseURL = window.g.ApiUrl;
     export default {
         // components
@@ -319,7 +340,9 @@
             billFilter,
             billDunning,
             billFooter,
-            billBulkprint
+            billBulkprint,
+            businessDunning,
+            paymentApplication
         },
         // props
         // data
@@ -327,6 +350,7 @@
             return {
                 syscode:this.$local.fetch("userInfo").syscode, //系统编码
                 authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
+                currentBillInfo: {},
                 billIdInfo: "",
                 billCodeInfo: "", //帐单编号查询
                 multipleSelection: [], //当前表格多选
@@ -342,6 +366,8 @@
                 billRowData: {}, //当前账单行数据
                 isFundIndeterminate:false, // 款项样式
                 isUnclearIndeterminate:false, // 未结清样式
+                businessDunningVisible: false, // 催缴页面
+                paymentApplicationVisible: false, // 付款申请页面
                 // 收付款筛选数据
                 revenueData:[
                     {label:'租客应收',value:1,count:0,},
@@ -350,6 +376,13 @@
                     {label:'业主应付',value:4,count:0,},
                     {label:'其他',value:5,count:0,},
                 ],
+                // 审核状态数据
+                payApprovalStatusList:[
+                  {label:'新增',value:1},
+                  {label:'审核中',value:2},
+                  {label:'驳回',value:3},
+                  {label:'审核通过',value:4},
+                ],
                 // 未结清筛选数据
                 unclearedData:[
                     {label:'本期',value:1,count:0,key:'currentPeriodCount'},
@@ -357,6 +390,8 @@
                     {label:'退租',value:3,count:0,key:'terminationCount'},
                     {label:'自建',value:4,count:0,key:'manualCount'},
                 ],
+                // 项目列表，托管系统用
+                projectList: [],
                 queryForm: {
                     //筛选表单
                     revenueArray:[1,2,3,4,5], // 付款方快捷检索条件
@@ -369,6 +404,7 @@
                     projectId: '', // 项目id
                     overDays: "", //逾期状态
                     settleStatus: "9", //结清状态 0 未结清 1 已结清，2已关闭 9 全部
+                    payApprovalStatus: '', // 审核状态
                     payStartDate: "",
                     payEndDate: "",
                     paymentRange:'',//最近收/付款日期 范围
@@ -385,6 +421,7 @@
                     isZero: 0
                 },
                 isShirk:false, //是否显示金额统计
+
             };
         },
         computed: {
@@ -406,6 +443,9 @@
             },
             isAsyshotel(){
                 return this.$local.fetch('userInfo').syscode == 'asyshotel';
+            },
+            isAsysbusiness() {
+              return this.$local.fetch('userInfo').syscode === 'asysbusiness';
             }
         },
         // created
@@ -414,6 +454,7 @@
             this.queryFbillClientTypeStatistics(this.queryForm)
             // 根据条件统计客户账单数量
             this.getFbillUnclearedStatistics(this.queryForm)
+            this.isAsysbusiness && this.getProjectList();
         },
         // mounted
         // activited
@@ -529,6 +570,11 @@
                     component: 'billBulkprint',//组件切换
                     data: this.multipleSelection, //传值的数据
                 }
+            },
+            getProjectList() {
+              return this.$api.seeTenementBusinessService.projectDropDownList({}).then(res => {
+                this.projectList = res.data
+              })
             },
             // 初始化数据
             tableReload (page = '') {
@@ -676,16 +722,48 @@
                 }
                 return str;
             },
+            // 开启催缴
+            startBusinessDunning(row) {
+                this.currentBillInfo = {...row}
+                this.businessDunningVisible = true;
+            },
+            // 开启付款申请
+            startPaymentApplication(row) {
+                this.currentBillInfo = {...row}
+                this.paymentApplicationVisible = true;
+            },
+            // 撤销付款申请
+            cancelPaymentApplication(row) {
+              this.$confirm('流程正在审核中，是否确定要撤销?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+              }).then(() => {
+                return this.$api.seeFinanceService.payBillPayCancel(row.id)
+              }).then(() => {
+                this.tableReload()
+              })
+            },
             // 格式化结清状态
             formatSettleStatus (row) {
-                if (row.settleStatus == 0) {
-                    return '未结清'
+                if ( row.settleStatus == 0) {
+                  let status = '未结清'
+
+                  // 项目托管系统付款需要审批
+                  if (this.isAsysbusiness && row.billType == 1) {
+                    if([1, 2, 3].includes(row.payApprovalStatus) ) {
+                      status += '(' + this.payApprovalStatusList.find(item => item.value === row.payApprovalStatus).label + ')'
+                    }
+                  }
+
+                  return status
                 } else if (row.settleStatus == 1) {
                     return '已结清'
                 } else if (row.settleStatus == 2) {
                     return '已关闭'
                 } else if (row.settleStatus == 3) {
-                    return '转退租结算'
+                    return  '转退租结算'
                 }
             },
         },

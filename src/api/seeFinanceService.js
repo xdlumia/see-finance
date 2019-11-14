@@ -47,7 +47,7 @@ const apiURL = {
     getExportExcelData: '/fbill/export', //导出表格
     saveMatchItem: '/fincomerecordmatch/saveMatchFromIncomes', //匹配
     queryBillByContractCode: '/fbill/queryBillByContractCode', //根据合同编号查询账单
-    queryFbillByHouseCode: '/fbill/queryFbillByHouseCode' // 根据房源code,账单列表
+    queryFbillByHouseCode: '/fbill/queryFbillByHouseCode', // 根据房源code,账单列表
 };
 
 
@@ -289,5 +289,20 @@ export default {
     updateAuditFreceipt(params) {
         return Api.post(baseURL.seeFinanceService + '/freceipt/updateaudit', params)
     },
-
+    // 应付账单付款申请
+    payBillPayApply(billId) {
+      return Api.post(baseURL.seeFinanceService + '/fbill/payBillPayApply/' + billId)
+    },
+    // 应付账单付款撤销
+    payBillPayCancel(billId) {
+      return Api.post(baseURL.seeFinanceService + '/fbill/payBillPayCancel/' + billId)
+    },
+    // 应付账单付款审核
+    payBillPayApproval(params) {
+      return Api.post(baseURL.seeFinanceService + '/fbill/payBillPayApproval' , params)
+    },
+    // 应收账单催缴
+    receiveBillDunning(params) {
+      return Api.post(baseURL.seeFinanceService + '/fbill/receiveBillDunning' , params)
+    }
 }

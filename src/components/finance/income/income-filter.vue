@@ -18,15 +18,14 @@
             <el-form-item label="流水筛选" class='mb5' prop='incomeWaterCode'>
                 <el-input type="text" v-model.trim="params.incomeWaterCode" placeholder='请输入流水号' style='width:100%' size='mini'></el-input>
             </el-form-item>
-            <el-form-item v-if="supportMultiAccount" class="mb5" label="公司账户" prop="accountId">
-              <el-select v-model="params.accountId" size="mini" placeholder="请选择" class="wfull">
-                <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
             <el-form-item label="对方名称" class='mb5' prop='accountName'>
                 <el-input type="text" v-model.trim="params.accountName"  placeholder='请输入名称' style='width:100%' size='mini'></el-input>
             </el-form-item>
-
+          <el-form-item v-if="supportMultiAccount" class="mb5" label="结算账户" prop="accountId">
+            <el-select v-model="params.accountId" size="mini" placeholder="请选择" class="wfull">
+              <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
             <el-form-item class='mb5' label="楼盘名称" prop="communityName">
                 <el-input
                     type="text"

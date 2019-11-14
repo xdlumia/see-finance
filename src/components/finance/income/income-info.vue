@@ -20,11 +20,10 @@
                 <span class='fl mt10' style='width:50%'>未匹配: {{resData.unmatchAmount}}</span>
                 <span class='fl mt10' style='width:50%'>流水凭证号: {{resData.serialNumber}}</span>
                 <span class='fl mt10' style='width:50%'>收支状态: {{resData.incomeType}}</span>
-                <span class='fl mt10' style='width:50%'>收款机构: {{resData.accountDesc}}</span>
+                <span class='fl mt10' style='width:50%' v-if="supportMultiAccount">结算账户: {{resData.companyAccountName}}</span>
+                <span class='fl mt10' style='width:50%' v-else>收款机构: {{resData.accountDesc}}</span>
                 <span class='fl mt10' style='width:50%'>入账日期: {{resData.accountDate | timeToStr('YYYY-MM-DD HH:mm:ss')}}</span>
                 <span class='fl mt10' style='width:50%'>付款方式: {{resData.payMethod|dictionary('HT_ZJ_ZFFS')}}</span>
-                <span class='fl mt10' style='width:50%'>公司名称: {{resData.companyAccountName}}</span>
-                <span class='fl mt10' style='width:50%'>开户行账号: {{resData.companyAccountNo}}</span>
                 <span class='fl mt10' style='width:50%'>楼盘名称: {{resData.communityName || '-'}}</span>
                 <span class='fl mt10' style='width:50%'>备注: {{resData.transferNotes}}</span>
             </div>
@@ -81,15 +80,12 @@ export default {
                     let account = this.userAccountList.find((item) =>  item.id = this.resData.accountId)
 
                     if (account) {
-                      this.resData.companyAccountName = account.corporationName
-                      this.resData.companyAccountNo = account.account
+                      this.resData.companyAccountName = account.corporationName + '(' + account.account + ')'
                     } else {
-                      this.resData.companyAccountName = '未知的公司'
-                      this.resData.companyAccountNo  = '未知的账号'
+                      this.resData.companyAccountName = '未知账号'
                     }
                   } else {
                     this.resData.companyAccountName = '-'
-                    this.resData.companyAccountNo  = '-'
                   }
                 }
 

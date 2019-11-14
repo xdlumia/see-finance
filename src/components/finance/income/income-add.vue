@@ -10,16 +10,6 @@
     <div>
         <!-- 表单 -->
         <el-form v-loading="loading" :model="newIncomeForm" size="small" :rules="newIncomeRules" ref="newIncomeForm" label-width="100px" class="p10 mt15"  >
-          <el-row v-if="supportMultiAccount" :gutter="40">
-            <el-col :span="12">
-              <!--如果有id，证明是编辑，编辑不能修改i公司账号-->
-              <el-form-item class="wfull" label="公司账户" size="mini" prop="accountId">
-                <el-select v-model="newIncomeForm.accountId" size="mini" placeholder="请选择" class="wfull">
-                  <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
             <el-row :gutter="40">
             <el-col :span="12">
                 <el-form-item label="收支状态" prop="incomeType">
@@ -74,12 +64,17 @@
                     dicCode='HT_ZJ_ZFFS'>
                     </d-select>
                 </el-form-item>
-            </el-col>
-            <el-col :span="12">
-                <el-form-item label="收款机构" prop="accountDesc" >
-                    <el-input type="text" v-model.trim="newIncomeForm.accountDesc" placeholder="请填写收款机构" size="small"></el-input>
+            </el-col >
+              <el-col :span="12">
+                <el-form-item class="wfull" label="结算账户" size="small" prop="accountId" v-if="supportMultiAccount">
+                  <el-select v-model="newIncomeForm.accountId" size="small" placeholder="请选择" class="wfull">
+                    <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+                  </el-select>
                 </el-form-item>
-            </el-col>
+                <el-form-item label="收款机构" prop="accountDesc" v-else>
+                  <el-input type="text" v-model.trim="newIncomeForm.accountDesc" placeholder="请填写收款机构" size="small"></el-input>
+                </el-form-item>
+              </el-col>
             <el-col :span="12">
                 <el-form-item label="流水凭证号" prop="serialNumber"  >
                     <el-input type="text" v-model.trim="newIncomeForm.serialNumber" placeholder="请填写流水凭证号" size="small"></el-input>
@@ -148,7 +143,7 @@ export default {
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
         ],
-        accountId: [ { required: true, message: "请选择关联账户", trigger: "blur" }]
+        accountId: [ { required: true, message: "请选择结算账户", trigger: "blur" }]
       },
       communityItem: null,
       communityList: []
