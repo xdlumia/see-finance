@@ -87,8 +87,8 @@
             <el-row slot="title">
                 <el-col :span="12" class='d-text-gray'><h3>收支流水</h3></el-col>
                 <el-col :span="12" class='ar f14 d-text-blue' v-show="billInfo.settleStatus==0">
-                    <span class='d-pointer mr15 el-icon-plus' @click="addIncome" v-if="authorityButtons.includes('asystem_finance_1008')">新增</span>
-                    <span class='d-pointer mr15' @click='matchIncome'>匹配</span>
+                    <span class='d-pointer mr15 el-icon-plus' @click="addIncome" v-if="canOperatorWithApprovalStatus([4]) && authorityButtons.includes('asystem_finance_1008')">新增</span>
+                    <span class='d-pointer mr15' @click='matchIncome' v-if="canOperatorWithApprovalStatus([4])">匹配</span>
                 </el-col>
             </el-row>
             <!-- 收支流水 -->
@@ -142,7 +142,7 @@
             <el-row slot="title">
                 <el-col :span="12" class='d-text-gray'><h3>账单调整</h3></el-col>
                 <el-col :span="12" class='ar f14 d-text-blue'>
-                    <span class='d-pointer mr15' @click="adjustmentBill" v-if="authorityButtons.includes('asystem_finance_1021')">调整</span>
+                    <span class='d-pointer mr15' @click="adjustmentBill" v-if="canOperatorWithApprovalStatus([1, 3]) && authorityButtons.includes('asystem_finance_1021')">调整</span>
                 </el-col>
             </el-row>
             <!-- 表格 -->
@@ -364,7 +364,7 @@
                         <el-input type="textarea" v-model="billInfo.notes" :disabled="!isShowEdit" placeholder="请填写备注"></el-input>
                     </el-form-item>
                 </el-col>
-                
+
                 <el-col :span="24">
                     <upload-otherfile ref="fileForm" :fileData="fileForm" :disabled="!isShowEdit" />
                 </el-col>
@@ -446,7 +446,7 @@ export default {
             invoiceMultipleSelection:[],//发票多选
             isShowEdit: false, // 其他信息 编辑
             // 附件
-            fileForm: { 
+            fileForm: {
                 filename: '',
                 attachmentList: [],
                 contractAttachment: ''
@@ -529,7 +529,7 @@ export default {
                             this.otherLoading = false;
                         })
                  }
-                
+
             })
         },
         //默认请求刷新页面
@@ -559,7 +559,7 @@ export default {
                             contractAttachment: otherFbillContent.file.url
                         }
 
-                        
+
                     }
                 }
             })
@@ -859,6 +859,20 @@ export default {
                 return false
             }
             else{return true}
+        },
+       // 判断账单是否可以操作
+        canOperatorWithApprovalStatus(supportArr) {
+          if (this.billInfo.ifLock) {
+            return false
+          }
+
+          // 只有托管系统的付款单才做判断
+          if (!this.isAsysbusiness || this.billInfo.billType !== 1) {
+            return true;
+          }
+
+
+          return supportArr.includes(this.billInfo.payApprovalStatus)
         }
     }
     // filter

@@ -12,9 +12,9 @@
           <el-col :span="12">
             <el-form-item label="反馈类型" prop="dunningType">
               <el-select v-model="dunningForm.dunningType" size="small" style='width:100%' placeholder="请选择">
-                <el-option label="有问题" value="1"></el-option>
+                <el-option label="正常" value="1"></el-option>
                 <el-option label="退租" value="2"></el-option>
-                <el-option label="正常" value="3"></el-option>
+                <el-option label="有问题" value="3"></el-option>
               </el-select>
             </el-form-item>
           </el-col>

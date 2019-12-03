@@ -278,12 +278,12 @@
                 <el-button
                     size="mini"
                     @click="saveLateFee"
-                    v-if="authorityBtn.includes('asystem_finance_1019')"
+                    v-if="!billRowData.ifLock && (!isAsysbusiness || (billRowData.billType !== 1 || (billRowData.payApprovalStatus === 1 || billRowData.payApprovalStatus === 3))) && authorityBtn.includes('asystem_finance_1019')"
                 >收滞纳金</el-button>
                 <el-button
                     size="mini"
                     @click="closeFbill"
-                    v-if="authorityBtn.includes('asystem_finance_1020') && billRowData.billSource != 6"
+                    v-if="!billRowData.ifLock && (!isAsysbusiness || (billRowData.billType !== 1 || (billRowData.payApprovalStatus !== 2))) && authorityBtn.includes('asystem_finance_1020') && billRowData.billSource != 6"
                 >关闭账单</el-button>
             </span>
             <bill-info
