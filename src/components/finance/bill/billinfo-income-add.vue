@@ -67,7 +67,11 @@
             <el-col :span="12">
               <el-form-item class="wfull" label="结算账户" size="small" prop="accountId" v-if="supportMultiAccount">
                 <el-select v-model="addIncomeForm.accountId" size="small" placeholder="请选择" class="wfull">
-                  <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+                  <el-option v-for="(item, index) of userAccountList" :key="index" :value="item.id">
+                    <span>{{`${item.corporationName}(`}}</span>
+                    <span>{{item.accountType | dictionary('PSI_GSSZ_ZHLX')}}</span>
+                    <span>{{`: ${item.account})`}}</span>
+                  </el-option>
                 </el-select>
               </el-form-item>
                 <el-form-item label="收款机构" prop="accountDesc" v-else>
