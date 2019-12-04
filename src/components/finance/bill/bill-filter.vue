@@ -135,6 +135,7 @@
               <el-option label="新增" value="1"></el-option>
               <el-option label="审核中" value="2"></el-option>
               <el-option label="驳回" value="3"></el-option>
+              <el-option label="已通过" value="4"></el-option>
             </el-select>
           </el-form-item>
 
