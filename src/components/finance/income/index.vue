@@ -51,7 +51,7 @@
                   module="finance"
               ></dutySetting>
               <!-- 筛选 -->
-              <income-filter @submit="$refs.incomeTable.reload(1)" :supportMultiAccount="supportMultiAccount" :userAccountList="userAccountList"  :params="queryForm"></income-filter>
+              <income-filter @submit="$refs.incomeTable.reload(1)" :supportMultiAccount="supportMultiAccount" :userAccountList="userAccountViewList"  :params="queryForm"></income-filter>
           </el-col>
         </el-row>
       </div>
@@ -126,7 +126,7 @@
       </d-table>
         <!--流水 新增 / 详情 弹出 -->
         <side-popup :visible.sync='popupMeta.visible ' :title='popupMeta.title' width='800px'>
-            <components :is="popupMeta.component" :dialogInfo='popupMeta' v-if="popupMeta.visible" :userAccountList="userAccountList" :supportMultiAccount="supportMultiAccount" @submit="tableReload"></components>
+            <components :is="popupMeta.component" :dialogInfo='popupMeta' v-if="popupMeta.visible" :userAccountList="userAccountViewList" :supportMultiAccount="supportMultiAccount" @submit="tableReload"></components>
         </side-popup>
     </div>
 </template>
@@ -195,6 +195,18 @@ export default {
     // 是否支持多账号
     supportMultiAccount() {
       return this.$local.fetch('userInfo').syscode === 'asysbusiness';
+    },
+    userAccountViewList() {
+      return this.userAccountList.map(item => {
+        let obj = this.dictionaryOptions('PSI_GSSZ_ZHLX').find(op => {
+          return op.code === item.accountType
+        })
+        let accountType = (obj && obj.content) ? obj.content : ''
+        return {
+          ...item,
+          showName: obj && obj.code === 'PSI_GSSZ_ZHLX-4' ? `${item.corporationName}(${accountType}: ${item.accountName})`:`${item.corporationName}(${accountType}: ${item.account})`
+        }
+      })
     }
   },
   methods: {
@@ -363,15 +375,6 @@ export default {
     getCompanyAccountList() {
       this.$api.seeBaseinfoService.getCompanyAccountList().then(({data}) => {
         this.userAccountList = data || []
-
-        this.userAccountList.forEach(item => {
-          let obj = this.dictionaryOptions('PSI_GSSZ_ZHLX').find(op => {
-            return op.code === item.accountType
-          })
-          let accountType = (obj && obj.content) ? obj.content : ''
-
-          item.showName = obj && obj.code === 'PSI_GSSZ_ZHLX-4' ? `${item.corporationName}(${accountType}: ${item.accountName})`:`${item.corporationName}(${accountType}: ${item.account})`
-        })
       })
     }
   }

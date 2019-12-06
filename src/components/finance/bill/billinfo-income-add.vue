@@ -67,7 +67,7 @@
             <el-col :span="12">
               <el-form-item class="wfull" label="结算账户" size="small" prop="accountId" v-if="supportMultiAccount">
                 <el-select v-model="addIncomeForm.accountId" size="small" placeholder="请选择" class="wfull">
-                  <el-option v-for="(item, index) of userAccountList" :key="index" :value="item.id" :label="item.showName">
+                  <el-option v-for="(item, index) of userAccountViewList" :key="index" :value="item.id" :label="item.showName">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -165,7 +165,19 @@ export default {
      // 是否支持多账号
        supportMultiAccount() {
          return this.$local.fetch('userInfo').syscode === 'asysbusiness';
-       }
+       },
+      userAccountViewList() {
+        return this.userAccountList.map(item => {
+          let obj = this.dictionaryOptions('PSI_GSSZ_ZHLX').find(op => {
+            return op.code === item.accountType
+          })
+          let accountType = (obj && obj.content) ? obj.content : ''
+          return {
+            ...item,
+            showName: obj && obj.code === 'PSI_GSSZ_ZHLX-4' ? `${item.corporationName}(${accountType}: ${item.accountName})`:`${item.corporationName}(${accountType}: ${item.account})`
+          }
+        })
+    }
   },
   methods: {
     //筛选提交
@@ -214,15 +226,6 @@ export default {
     getCompanyAccountList() {
       this.$api.seeBaseinfoService.getCompanyAccountList().then(({data}) => {
         this.userAccountList = data || []
-
-        this.userAccountList.forEach(item => {
-          let obj = this.dictionaryOptions('PSI_GSSZ_ZHLX').find(op => {
-            return op.code === item.accountType
-          })
-          let accountType = (obj && obj.content) ? obj.content : ''
-
-          item.showName = obj && obj.code === 'PSI_GSSZ_ZHLX-4' ? `${item.corporationName}(${accountType}: ${item.accountName})`:`${item.corporationName}(${accountType}: ${item.account})`
-        })
       })
     }
   },
