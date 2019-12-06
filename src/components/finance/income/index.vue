@@ -363,6 +363,15 @@ export default {
     getCompanyAccountList() {
       this.$api.seeBaseinfoService.getCompanyAccountList().then(({data}) => {
         this.userAccountList = data || []
+
+        this.userAccountList.forEach(item => {
+          let obj = this.dictionaryOptions('PSI_GSSZ_ZHLX').find(op => {
+            return op.code === item.accountType
+          })
+          let accountType = (obj && obj.content) ? obj.content : ''
+
+          item.showName = obj && obj.code === 'PSI_GSSZ_ZHLX-4' ? `${item.corporationName}(${accountType}: ${item.accountName})`:`${item.corporationName}(${accountType}: ${item.account})`
+        })
       })
     }
   }

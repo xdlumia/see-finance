@@ -23,7 +23,7 @@
             </el-form-item>
           <el-form-item v-if="supportMultiAccount" class="mb5" label="结算账户" prop="accountId">
             <el-select v-model="params.accountId" size="mini" placeholder="请选择" class="wfull">
-              <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.corporationName  + '(' + item.account + ')'" :value="item.id"></el-option>
+              <el-option v-for="(item, index) of userAccountList" :key="index" :label="item.showName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
             <el-form-item class='mb5' label="楼盘名称" prop="communityName">

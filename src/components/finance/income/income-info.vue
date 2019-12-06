@@ -80,7 +80,7 @@ export default {
                     let account = this.userAccountList.find((item) =>  item.id = this.resData.accountId)
 
                     if (account) {
-                      this.resData.companyAccountName = account.corporationName + '(' + account.account + ')'
+                      this.resData.companyAccountName = account.showName
                     } else {
                       this.resData.companyAccountName = '未知账号'
                     }
