@@ -244,7 +244,7 @@
                       <el-button
                         size="mini"
                         type="primary"
-                        v-if="isAsysbusiness && scope.row.billType == 1 && scope.row.settleStatus == 0 && (scope.row.payApprovalStatus == 2) && authorityBtn.includes('asystem_finance_1024')"
+                        v-if="isAsysbusiness && scope.row.billType == 1 && scope.row.settleStatus == 0 && (scope.row.payApprovalStatus == 2) && scope.row.approvalPromoter === userInfo.id && authorityBtn.includes('asystem_finance_1024')"
                         @click.stop="cancelPaymentApplication(scope.row)"
                       >撤销</el-button>
                       <el-button
@@ -348,6 +348,7 @@
         // data
         data () {
             return {
+                userInfo: this.$local.fetch('userInfo'),
                 syscode:this.$local.fetch("userInfo").syscode, //系统编码
                 authorityBtn: this.$local.fetch("authorityBtn").asystem_finance || [],
                 currentBillInfo: {},
