@@ -225,13 +225,13 @@
                         slot-scope="scope"
                     >{{ billSourceType[scope.row.billSource] || '未知' }}</template>
                 </el-table-column>
-                <el-table-column label="操作" align="center" :width="isAsysbusiness ? 180 : 80">
+                <el-table-column label="操作" align="center" :width="isAsysbusiness ? 180 : 80" fixed="right">
                     <template slot-scope="scope">
                       <!--应收 && 未结清的，显示催缴-->
                       <el-button
                         size="mini"
                         type="primary"
-                        v-if="isAsysbusiness && scope.row.billType == 0 && scope.row.settleStatus == 0 && authorityBtn.includes('asystem_finance_1023')"
+                        v-if="isAsysbusiness && scope.row.ifLock !== 1 && scope.row.billType == 0 && scope.row.settleStatus == 0 && authorityBtn.includes('asystem_finance_1023')"
                         @click.stop="startBusinessDunning(scope.row)"
                       >催缴</el-button>
                       <!--应收 && 未结清的 && 审核状态为新增or驳回的，显示付款申请-->
@@ -250,7 +250,7 @@
                       <el-button
                         size="mini"
                         type="danger"
-                        :disabled="scope.row.factAmount > 0 ||  scope.row.billSource!=1 || scope.row.settleStatus!=0 || scope.row.settleStatus==3 || scope.row.billSource == 6"
+                        :disabled="scope.row.factAmount > 0 || scope.row.ifLock === 1 ||  scope.row.billSource!=1 || scope.row.settleStatus!=0 || scope.row.settleStatus==3 || scope.row.billSource == 6"
                         v-if="authorityBtn.includes('asystem_finance_1005')"
                         @click.stop="delItem(scope.row)"
                       >删除</el-button>

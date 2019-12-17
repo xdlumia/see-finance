@@ -12,9 +12,9 @@
         <label class="b p5">
           房源信息
         </label>
-        <el-row>
+        <el-row v-if="roomInfoArray.length">
           <el-col>
-            <el-form-item label="房间" prop="houseArray">
+            <el-form-item label="房间" prop="houseArray" >
               <el-input v-for="(roomInfo, index) in roomInfoArray" :index="index" :value="roomInfo" class="mb5">
               </el-input>
             </el-form-item>
@@ -22,13 +22,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="申请人" prop="paymentType">
+            <el-form-item label="申请人" prop="userName">
               <el-input  :value="userInfo.userName">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门" prop="paymentType">
+            <el-form-item label="部门" prop="deptName">
               <el-input  :value="userInfo.deptName">
               </el-input>
             </el-form-item>
@@ -36,13 +36,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目" prop="paymentType">
+            <el-form-item label="项目" prop="projectName">
               <el-input  :value="projectName">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="账单编号" prop="paymentType">
+            <el-form-item label="账单编号" prop="billCode">
               <el-input  :value="billInfo.billCode">
               </el-input>
             </el-form-item>
@@ -106,10 +106,7 @@ export default {
   props: ['billInfo', 'projectList'],
   data() {
     return {
-      loading: false,
-      paymentFormRules: {
-        paymentType: [ { required: true, message: "请选择反馈类型", trigger: "blur" }]
-      }
+      loading: false
     };
   },
   computed: {
@@ -117,9 +114,9 @@ export default {
       return this.$local.fetch("userInfo")
     },
     roomInfoArray() {
-      return JSON.parse(this.billInfo.houseArray).map((item) => {
+      return this.billInfo.houseArray ? JSON.parse(this.billInfo.houseArray).map((item) => {
         return item.communityName + '-' + (item.bulidingBlock ? item.bulidingBlock + '栋-' : '') + item.unitInfoName + '单元-' + item.labelFloor + '层-' + item.roomNum
-      })
+      }): []
     },
     projectName() {
       let projectName = null;

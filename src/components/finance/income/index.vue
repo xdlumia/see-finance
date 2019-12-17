@@ -118,9 +118,10 @@
           <el-table-column prop="matchState" label="匹配状态" align='center' :formatter='formatMatchingState'>
           </el-table-column>
 
-          <el-table-column label="操作" align='center' width='80'>
+          <el-table-column label="操作" align='center' width='100'>
               <template slot-scope="scope">
-                  <el-button v-if="authorityBtn.includes('asystem_finance_1012')" size="mini" type="danger" :disabled='scope.row.matchState== "未匹配" ? true:false' @click.stop="handleDelete(scope.row)">删除</el-button>
+                <el-button v-if="scope.row.ifOnlinePay !== 1 && authorityBtn.includes('asystem_finance_1012')" size="mini" type="danger" :disabled='scope.row.matchState== "未匹配" ? true:false' @click.stop="handleDelete(scope.row)">删除</el-button>
+                <el-button v-if="scope.row.ifOnlinePay === 1 && scope.row.matchState === 0" size="mini" type="primary" @click.stop="doOnLineMatch(scope.row)">匹配账单</el-button>
               </template>
           </el-table-column>
       </d-table>
@@ -375,6 +376,19 @@ export default {
     getCompanyAccountList() {
       this.$api.seeBaseinfoService.getCompanyAccountList().then(({data}) => {
         this.userAccountList = data || []
+      })
+    },
+    // 线上账单匹配
+    doOnLineMatch(data) {
+      this.$confirm("是否确认匹配当前流水", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      }).then(() => {
+        this.$api.seeFinanceService.fincomerecordPayNow(data.id).then(() => {
+          data.matchState = 2
+        })
       })
     }
   }

@@ -304,5 +304,9 @@ export default {
     // 应收账单催缴
     receiveBillDunning(params) {
       return Api.post(baseURL.seeFinanceService + '/fbill/receiveBillDunning' , params)
+    },
+    // 应收账单催缴
+    fincomerecordPayNow(incomeId) {
+      return Api.post(baseURL.seeFinanceService + '/fincomerecord/payNow/' + incomeId)
     }
 }
