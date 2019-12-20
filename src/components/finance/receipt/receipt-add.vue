@@ -31,17 +31,17 @@
             </el-col>
             <el-col :span="12">
                 <el-form-item label="费用类型" prop="feeType"  size='small' >
-                    <d-select 
+                    <d-select
                         placeholder="请选择费用类型"
-                        v-model="newBillForm.feeType" 
-                        valueKey="code"  
-                        size="mini" 
+                        v-model="newBillForm.feeType"
+                        valueKey="code"
+                        size="mini"
                         dicCode='ZD_FY_LX'>
                     </d-select>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="账单金额" prop="amount" 
+                <el-form-item label="账单金额" prop="amount"
                 :rules="[{required:true,type:'price'}]">
                     <el-input type="text" v-model.trim="newBillForm.amount" placeholder="请输入金额"></el-input>
                 </el-form-item>
@@ -75,7 +75,7 @@
             </el-col>
             <el-col :span="24">
                 <el-form-item label="备注" prop="notes" size='small'  >
-                    <el-input type="textarea" v-model.trim="newBillForm.desc" placeholder="请填写备注"></el-input>
+                    <el-input type="textarea" v-model.trim="newBillForm.desc" placeholder="请填写备注" maxlength="300" show-word-limit></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="24">
@@ -154,8 +154,8 @@
 export default {
     // components
     components:{},
-    // props:[''],    
-    // data  
+    // props:[''],
+    // data
     data(){
         return{
             accountNameFlag:false,
@@ -258,7 +258,7 @@ export default {
         },
         aginChoice(){
             if(this.newBillForm.contractCode==''){
-               this.newBillForm.accountName='' 
+               this.newBillForm.accountName=''
                this.accountNameFlag=false
             }
         },

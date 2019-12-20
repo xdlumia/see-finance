@@ -374,6 +374,7 @@
                                     type="textarea"
                                     v-model.trim="invoiceForm.notes"
                                     maxlength="140"
+                                    show-word-limit
                                     placeholder="请输入备注(140)"
                                 ></el-input>
                             </el-form-item>

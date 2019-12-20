@@ -21,7 +21,7 @@
         </el-row>
         <el-row>
           <el-form-item label="反馈详情" prop="detail">
-            <el-input v-model="dunningForm.detail" type="textarea" style='width:100%' :rows="5" placeholder="请选择">
+            <el-input v-model="dunningForm.detail" type="textarea" style='width:100%' :rows="5" placeholder="请选择" maxlength="300" show-word-limit>
             </el-input>
           </el-form-item>
         </el-row>

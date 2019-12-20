@@ -15,7 +15,7 @@
                 <el-col :span="5">账单信息(<span class='d-text-blue'> {{billInfo.settleStatus==0?'未结清':(billInfo.settleStatus==1?"已结清":"已关闭")}} </span>)</el-col>
                 <!-- 如果是分散式租住 -->
                 <el-col :span="10" v-if="isRentSystem && !isAsyshotel">账单金额：{{(billInfo.amount - 0)}}元(账单金额+滞纳金金额)</el-col>
-                <el-col :span="10" v-else>总金额：{{(billInfo.amount - 0) + (billInfo.lateFeeMoney - 0)}}元(账单金额+滞纳金金额)</el-col>
+                <el-col :span="10" v-else>总金额：{{parseFloat(((+billInfo.amount ) + (+billInfo.lateFeeMoney)).toFixed(2))}}元(账单金额+滞纳金金额)</el-col>
                 <el-col :span="6">实收/付金额：{{billInfo.factAmount}}元</el-col>
                 <el-col :span="3" class="ar"><span class='d-text-blue d-pointer' @click='billLogVisible=true'>操作记录</span></el-col>
             </el-row>
@@ -361,7 +361,7 @@
             <el-form>
                 <el-col :span="24">
                     <el-form-item label="备注" prop="notes" size='small'>
-                        <el-input type="textarea" v-model="billInfo.notes" :disabled="!isShowEdit" placeholder="请填写备注"></el-input>
+                        <el-input type="textarea" v-model="billInfo.notes" :disabled="!isShowEdit" placeholder="请填写备注" maxlength="300" show-word-limit></el-input>
                     </el-form-item>
                 </el-col>
 
@@ -588,7 +588,7 @@ export default {
                 billId:this.billIdInfo.billId,
                 billType:this.billInfo.billType,
                 data:this.billInfo,
-                billPayingAmount:(+this.billInfo.amount + +this.billInfo.lateFeeMoney || 0) - +this.billInfo.factAmount,
+                billPayingAmount:parseFloat(((+this.billInfo.amount + +this.billInfo.lateFeeMoney || 0) - +this.billInfo.factAmount).toFixed(2)),
             }
         },
         //收支流水列表删除

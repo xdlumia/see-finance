@@ -96,7 +96,7 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="备注" prop="notes" size='small'  >
-                        <el-input type="textarea" v-model.trim="newBillForm.notes" placeholder="请填写备注"></el-input>
+                        <el-input type="textarea" v-model.trim="newBillForm.notes" placeholder="请填写备注" maxlength="300" show-word-limit></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">

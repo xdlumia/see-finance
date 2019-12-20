@@ -82,7 +82,7 @@
         <el-row>
           <el-col>
             <el-form-item label="备注" prop="detail">
-              <el-input :value="billInfo.notes" type="textarea" style='width:100%' :rows="5">
+              <el-input :value="billInfo.notes" type="textarea" style='width:100%' :rows="5" maxlength="300" show-word-limit>
               </el-input>
             </el-form-item>
           </el-col>

@@ -282,7 +282,7 @@
                     prop="notes"
                     :rules="{message:'请输入备注'}"
                     label="备注">
-                    <el-input type="textarea" v-model="invoiceForm.notes" maxlength="140" :disabled="!isEdit" placeholder="请输入备注(140)"></el-input>
+                    <el-input type="textarea" v-model="invoiceForm.notes" maxlength="140" :disabled="!isEdit" placeholder="请输入备注" show-word-limit></el-input>
                     </el-form-item>
                 </el-col>
                 </el-row>

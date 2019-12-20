@@ -95,7 +95,7 @@
             </el-col>
             <el-col :span="24">
                 <el-form-item label="备注" prop="transferNotes" >
-                    <el-input type="textarea" v-model.trim="newIncomeForm.transferNotes" placeholder="请填写备注"  size="small"></el-input>
+                    <el-input type="textarea" v-model.trim="newIncomeForm.transferNotes" placeholder="请填写备注"  size="small" maxlength="300" show-word-limit></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span='24' class='ac'>
