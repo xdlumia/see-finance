@@ -22,7 +22,7 @@
             </el-col>
             <el-col :span="12">
                 <el-form-item label="发生金额" prop="payCosts">
-                    <el-input maxlength="14" v-model.number="addIncomeForm.payCosts" size="small" placeholder="请填写金额"></el-input>
+                    <el-input maxlength="14" v-model.trim="addIncomeForm.payCosts" size="small" placeholder="请填写金额"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
