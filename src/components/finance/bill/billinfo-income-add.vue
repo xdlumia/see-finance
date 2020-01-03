@@ -135,7 +135,9 @@ export default {
         incomeType: [{ required: true, message: "请选择收支状态" }],
         accountName: [{ required: true, message: "请输入对方帐户名" }],
         accountDate: [{ required: true, message: "请选择日期时间" }],
-        payCosts: [{required: true, message: "请输入金额"}, {type: 'price'}],
+        payCosts: [{required: true, message: "请输入金额"}, {type: 'price'},{
+          type:'positiveNum', message: '流水金额不能为负数'
+        }],
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
         ],
