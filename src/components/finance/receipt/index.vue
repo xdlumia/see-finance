@@ -173,7 +173,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
     /deep/ .el-table:before{
         background: transparent;
     }
