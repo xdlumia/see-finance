@@ -141,7 +141,7 @@ export default {
           { required: true, message: "请选择日期时间", trigger: "blur" }
         ],
         payCosts: [{required: true, message: "请输入金额", trigger: "change"}, {type: 'price'},{
-          type:'positiveNum', message: '流水金额不能为负数'
+          type:'positiveFloat', message: '流水金额不能为负数'
         }],
         communityId: [
             { required: true, message: "请选择楼盘", trigger: "blur" }
