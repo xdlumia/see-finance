@@ -207,7 +207,7 @@
             <i class="iconfont icon-filter mr20"></i>
         </el-button>
         <span slot="reference" class="d-pointer d-text-gray ml10" v-else>
-            <el-button size="small">按条件查询<i class="iconfont icon-filter" style="line-height:0;"></i></el-button>
+            <el-button size="medium">按条件查询<i class="iconfont icon-filter" style="line-height:0;"></i></el-button>
         </span>
     </el-popover>
 </template>
