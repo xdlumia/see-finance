@@ -51,7 +51,7 @@
                 <el-col :span="12">
                     <el-form-item label="账单金额" prop="amount"
                     :rules="[{required:true,message:'请输入账单金额'},{type:'price'},{
-                                        type:'positiveNum', message: '账单金额不能为负数'
+                                        type:'positiveFloat', message: '账单金额不能为负数'
                                     }]">
                         <el-input type="text" v-model.trim="newBillForm.amount" placeholder="请输入金额"></el-input>
                     </el-form-item>
