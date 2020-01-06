@@ -38,12 +38,12 @@
                     size="mini"
                 ></el-input>
             </el-form-item>
-            <el-form-item label="项目" prop="projectId" v-if ="isAsysbusiness">
+            <el-form-item label="项目组" prop="projectId" v-if ="isAsysbusiness">
               <el-select
                 class="wfull"
                 size="mini"
                 v-model="params.projectId"
-                placeholder="请选择项目"
+                placeholder="请选择项目组"
               >
                 <el-option label="全部" value=""></el-option>
                 <el-option

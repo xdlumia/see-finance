@@ -1,6 +1,6 @@
 <!--
 /**
-* 财务管理：项目托管系统-付款申请
+* 财务管理：项目组托管系统-付款申请
 * @author yanchao
 * @date 2019-11-13 17:16:31
 **/
@@ -36,7 +36,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目" prop="projectName">
+            <el-form-item label="项目组" prop="projectName">
               <el-input  :value="projectName">
               </el-input>
             </el-form-item>

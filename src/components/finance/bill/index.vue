@@ -59,7 +59,7 @@
                     @click="bulkPrintBill()"
                 >批量打印</el-button>
                 <!-- 责任人设置 -->
-                <!--项目托管（原贝塔）样式有调整-->
+                <!--项目组托管（原贝塔）样式有调整-->
                 <div class="duty-setting-wrapper" v-if="syscode==='asysbusiness'">
                     <el-button size="small">分配责任人</el-button>
                     <dutySetting
@@ -404,7 +404,7 @@
                     {label:'退租',value:3,count:0,key:'terminationCount'},
                     {label:'自建',value:4,count:0,key:'manualCount'},
                 ],
-                // 项目列表，托管系统用
+                // 项目组列表，托管系统用
                 projectList: [],
                 queryForm: {
                     //筛选表单
@@ -415,7 +415,7 @@
                     accountName: "", // 对方名称
                     communityName: "", // 楼盘名称
                     feeType: "", //费用类型
-                    projectId: '', // 项目id
+                    projectId: '', // 项目组id
                     overDays: "", //逾期状态
                     settleStatus: "9", //结清状态 0 未结清 1 已结清，2已关闭 9 全部
                     payApprovalStatus: '', // 审核状态
@@ -764,7 +764,7 @@
                 if ( row.settleStatus == 0) {
                   let status = '未结清'
 
-                  // 项目托管系统付款需要审批
+                  // 项目组托管系统付款需要审批
                   if (this.isAsysbusiness && row.billType == 1) {
                     if([1, 2, 3].includes(row.payApprovalStatus) ) {
                       status += '(' + this.payApprovalStatusList.find(item => item.value === row.payApprovalStatus).label + ')'
