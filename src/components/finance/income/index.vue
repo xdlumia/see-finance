@@ -119,7 +119,7 @@
           <el-table-column sortable='custom' prop="unmatchAmount" label="未匹配金额" align='center'>
           </el-table-column>
 
-          <el-table-column prop="unmatchAmount" label="楼盘名称" align='center'>
+          <el-table-column prop="unmatchAmount" :label="supportMultiAccount ? '项目名称' : '楼盘名称'" align='center'>
               <template slot-scope="scope">
                 {{ scope.row.communityName || '-' }}
               </template>

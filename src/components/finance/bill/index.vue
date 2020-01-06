@@ -124,7 +124,7 @@
                     align="center"
                     prop="houseArray"
                     min-width="140"
-                    label="楼盘名称"
+                    :label="isAsysbusiness ? '项目名称' : '楼盘名称'"
                 >
                     <template slot-scope="scope">{{getCommunityName (scope.row.houseArray)}}</template>
                 </el-table-column>
