@@ -40,8 +40,21 @@
                 <a :href="baseURL.ossUrl+'/a_tenement/template/RunningAccountTemplate.xlsx'" target="_blank">下载模板</a>
               </el-button>
               <el-button v-if="authorityBtn.includes('asystem_finance_1007')" size='medium' @click='exportFinance'>导出表格</el-button>
+              <div class="duty-setting-wrapper" v-if="syscode==='asysbusiness'">
+                  <el-button size="small">分配责任人</el-button>
+                  <dutySetting
+                      v-if="authorityButtons.includes('asystem_finance_res_1009')"
+                      title="分配财务-收支流水责任人"
+                      parent="收支流水"
+                      size="16"
+                      color="#666"
+                      :syscode="syscode"
+                      pageCode="asystem_finance_1006"
+                      module="finance"
+                  ></dutySetting>
+              </div>
               <dutySetting
-                  v-if="authorityButtons.includes('asystem_finance_res_1009')"
+                  v-if="authorityButtons.includes('asystem_finance_res_1009') && syscode!=='asysbusiness'"
                   title="分配财务-收支流水责任人"
                   parent="收支流水"
                   size="16"
@@ -404,4 +417,21 @@ export default {
 .income-header {border: 1px solid #efefef;border-radius: 5px;}
 .income-header .header-info{display: inline-block;overflow: hidden;}
 .income-header .header-info li{display: inline-block;padding: 5px 15px;line-height: 24px; color: #666;border-right: 1px solid #efefef;}
+
+.duty-setting-wrapper {
+  position: relative;
+}
+/deep/ .duty-setting-wrapper .el-button--small{
+    padding-right: 25px;
+}
+/deep/ .duty-setting-wrapper .duty-dialog .duty-icon{
+    width: 100% !important;
+    padding: 8px 0;
+    line-height: 0;
+    text-align: right;
+}
+/deep/ .duty-setting-wrapper .duty-dialog .duty-icon svg{
+    width: 16px;
+    height: 100%;
+}
 </style>

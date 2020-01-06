@@ -59,8 +59,21 @@
                     @click="bulkPrintBill()"
                 >批量打印</el-button>
                 <!-- 责任人设置 -->
+                <!--项目托管（原贝塔）样式有调整-->
+                <div class="duty-setting-wrapper" v-if="syscode==='asysbusiness'">
+                    <el-button size="small">分配责任人</el-button>
+                    <dutySetting
+                        v-if="authorityButtons.includes('asystem_finance_res_1001')"
+                        title="分配财务-账单管理责任人"
+                        parent="账单管理" size="16"
+                        color="#666"
+                        :syscode="syscode"
+                        pageCode="asystem_finance_1001"
+                        module="finance"
+                    ></dutySetting>
+                </div>
                 <dutySetting
-                    v-if="authorityButtons.includes('asystem_finance_res_1001')"
+                    v-if="authorityButtons.includes('asystem_finance_res_1001') && syscode!=='asysbusiness'"
                     title="分配财务-账单管理责任人"
                     parent="账单管理" size="16"
                     color="#666"
@@ -829,6 +842,22 @@
         position: absolute;
         right: 5px;
         top: -60px;
+    }
+    .duty-setting-wrapper {
+      position: relative;
+    }
+    /deep/ .duty-setting-wrapper .el-button--small{
+        padding-right: 25px;
+    }
+    /deep/ .duty-setting-wrapper .duty-dialog .duty-icon{
+        width: 100% !important;
+        padding: 8px 0;
+        line-height: 0;
+        text-align: right;
+    }
+    /deep/ .duty-setting-wrapper .duty-dialog .duty-icon svg{
+        width: 16px;
+        height: 100%;
     }
 </style>
 

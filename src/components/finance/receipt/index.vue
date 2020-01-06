@@ -9,13 +9,27 @@
 <template>
     <div class="d-relative">
         <!-- 责任人设置 -->
+        <div class="duty-setting-wrapper" v-if="syscode==='asysbusiness'">
+            <el-button size="small">分配责任人</el-button>
+            <dutySetting
+                v-if="authorityButtons.includes('asystem_finance_res_1005')"
+                title="分配财务-收据记录责任人"
+                parent="收据记录" size="16"
+                class="d-absolute"
+                style="right: 10px;top: -47px;"
+                :syscode="syscode"
+                color="#666"
+                pageCode="asystem_finance_1014"
+                module="finance"
+            ></dutySetting>
+        </div>
         <dutySetting
-            v-if="authorityButtons.includes('asystem_finance_res_1005')"
-            title="分配财务-收据记录责任人" 
-            parent="收据记录" size="16" 
+            v-if="authorityButtons.includes('asystem_finance_res_1005') && syscode!=='asysbusiness'"
+            title="分配财务-收据记录责任人"
+            parent="收据记录" size="16"
             class="d-absolute"
             style="right: 10px;top: -47px;"
-            :syscode="syscode" 
+            :syscode="syscode"
             color="#666"
             pageCode="asystem_finance_1014"
             module="finance"
@@ -86,7 +100,7 @@
                 <template slot-scope="scope" >
                     {{receiptStatus[scope.row.status]}}
                 </template>
-            </el-table-column> 
+            </el-table-column>
             <el-table-column prop="notes" label="备注" align='center' width='180px'>
             </el-table-column>
         </d-table>
@@ -167,5 +181,21 @@ export default {
         border-top: 1px solid #e5e5e5;
     }
     .handle-filter{ position:absolute; right: 5px; top:0px}
+    .duty-setting-wrapper {
+      position: relative;
+    }
+    /deep/ .duty-setting-wrapper .el-button--small{
+        padding-right: 25px;
+    }
+    /deep/ .duty-setting-wrapper .duty-dialog .duty-icon{
+        width: 100% !important;
+        padding: 8px 0;
+        line-height: 0;
+        text-align: right;
+    }
+    /deep/ .duty-setting-wrapper .duty-dialog .duty-icon svg{
+        width: 16px;
+        height: 100%;
+    }
 </style>
 
