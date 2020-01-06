@@ -41,7 +41,7 @@
               </el-button>
               <el-button v-if="authorityBtn.includes('asystem_finance_1007')" size='medium' @click='exportFinance'>导出表格</el-button>
               <div class="duty-setting-wrapper" v-if="syscode==='asysbusiness'">
-                  <el-button size="small">分配责任人</el-button>
+                  <el-button size="medium">分配责任人</el-button>
                   <dutySetting
                       v-if="authorityButtons.includes('asystem_finance_res_1009')"
                       title="分配财务-收支流水责任人"
@@ -419,10 +419,23 @@ export default {
 .income-header .header-info li{display: inline-block;padding: 5px 15px;line-height: 24px; color: #666;border-right: 1px solid #efefef;}
 
 .duty-setting-wrapper {
-  position: relative;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
 }
 /deep/ .duty-setting-wrapper .el-button--small{
     padding-right: 25px;
+}
+/deep/ .duty-setting-wrapper .duty-dialog {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: right;
+  line-height: 35px;
+  padding-right: 5px;
 }
 /deep/ .duty-setting-wrapper .duty-dialog .duty-icon{
     width: 100% !important;

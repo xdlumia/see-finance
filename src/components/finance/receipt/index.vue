@@ -10,7 +10,7 @@
     <div class="d-relative">
         <!-- 责任人设置 -->
         <div class="duty-setting-wrapper" v-if="syscode==='asysbusiness'">
-            <el-button size="small">分配责任人</el-button>
+            <el-button size="medium">分配责任人</el-button>
             <dutySetting
                 v-if="authorityButtons.includes('asystem_finance_res_1005')"
                 title="分配财务-收据记录责任人"
@@ -183,9 +183,22 @@ export default {
     .handle-filter{ position:absolute; right: 5px; top:0px}
     .duty-setting-wrapper {
       position: relative;
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 10px;
     }
     /deep/ .duty-setting-wrapper .el-button--small{
         padding-right: 25px;
+    }
+    /deep/ .duty-setting-wrapper .duty-dialog {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      text-align: right;
+      line-height: 35px;
+      padding-right: 5px;
     }
     /deep/ .duty-setting-wrapper .duty-dialog .duty-icon{
         width: 100% !important;

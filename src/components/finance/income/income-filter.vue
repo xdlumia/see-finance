@@ -75,7 +75,7 @@
             </div>
         </el-form>
         <el-button size="small" class="ml5" type="text" slot="reference" v-if="syscode!=='asysbusiness'"><i class="iconfont icon-filter mr20"></i></el-button>
-        <span slot="reference" class="d-pointer d-text-gray" v-else>
+        <span slot="reference" class="d-pointer d-text-gray ml10" v-else>
             <el-button size="small">按条件查询<i class="iconfont icon-filter" style="line-height:0;"></i></el-button>
         </span>
   </el-popover>
@@ -89,6 +89,7 @@ export default {
   // data
   data() {
     return {
+      syscode:this.$local.fetch("userInfo").syscode, //系统编码
       filterFlag:false
     };
   },
