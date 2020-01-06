@@ -15,8 +15,6 @@
                 v-if="authorityButtons.includes('asystem_finance_res_1005')"
                 title="分配财务-收据记录责任人"
                 parent="收据记录" size="16"
-                class="d-absolute"
-                style="right: 10px;top: -47px;"
                 :syscode="syscode"
                 color="#666"
                 pageCode="asystem_finance_1014"
@@ -182,10 +180,9 @@ export default {
     }
     .handle-filter{ position:absolute; right: 5px; top:0px}
     .duty-setting-wrapper {
-      position: relative;
-      display: inline-block;
-      vertical-align: top;
-      margin-left: 10px;
+      position: absolute;
+      right: 0;
+      top: -55px;
     }
     /deep/ .duty-setting-wrapper .el-button--small{
         padding-right: 25px;
